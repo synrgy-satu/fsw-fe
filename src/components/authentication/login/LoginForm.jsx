@@ -40,10 +40,6 @@ export default function LoginForm() {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
-          <div className="flex justify-center">
-            <img src="/images/logo-satu-digibank.png" alt="Logo" />
-          </div>
-
           <div>
             <label
               htmlFor="email"
@@ -67,7 +63,11 @@ export default function LoginForm() {
                   type="email"
                   placeholder="Masukkan Email"
                   {...field}
-                  className="mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90"
+                  className={`mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90 ${
+                    errors.email
+                      ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                      : "focus:ring-indigo-500 focus:border-indigo-500"
+                  }`}
                 />
               )}
             />
@@ -95,7 +95,11 @@ export default function LoginForm() {
                   type="password"
                   placeholder="Masukkan Kata Sandi"
                   {...field}
-                  className="mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90"
+                  className={`mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90 ${
+                    errors.password
+                      ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                      : "focus:ring-indigo-500 focus:border-indigo-500"
+                  }`}
                 />
               )}
             />
