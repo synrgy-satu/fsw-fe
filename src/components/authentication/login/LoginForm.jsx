@@ -40,6 +40,9 @@ export default function LoginForm() {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+          <div className="flex justify-center">
+            <img src="/images/logo-satu-digibank.png" alt="Logo" />
+          </div>
           <div>
             <label
               htmlFor="email"
