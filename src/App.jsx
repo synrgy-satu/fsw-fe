@@ -3,19 +3,22 @@ import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/authentication/Register";
 import Login from "./pages/authentication/Login";
-import './assets/css/style.css';
+import { AuthProvider } from "./context/authContext";
+import "./assets/css/style.css";
 
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Onboarding />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Onboarding />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </>
   );
 }
