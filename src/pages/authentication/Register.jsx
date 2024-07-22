@@ -1,29 +1,13 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...  
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 export default function Register() {
   return (
     <>
-      {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="max-w-[1440px] container h-[100vh] bg-[#333999]">
+        <div className="flex flex-row justify-center">
+          <div className="basis-1/2 text-white"></div>
+          <div className="basis-2/2"></div>
+        </div>
+      </div>
+      {/* <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
@@ -105,7 +89,7 @@ export default function Register() {
             </a>
           </p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

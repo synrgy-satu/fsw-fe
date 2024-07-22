@@ -3,6 +3,7 @@ import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/authentication/Register";
 import Login from "./pages/authentication/Login";
+import './assets/css/style.css';
 
 function App() {
   return (
