@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Onboarding from "./pages/Onboarding";
+import Onboarding from "./pages/landingPage/Onboarding";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/authentication/Register";
 import Login from "./pages/authentication/Login";
