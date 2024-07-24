@@ -1,0 +1,10 @@
+/* background gradient for login */
+.custom-radial-gradient {
+  background: rgb(17, 19, 51);
+  background: linear-gradient(
+    333deg,
+    rgba(17, 19, 51, 1) 0%,
+    rgba(51, 57, 153, 1) 39%,
+    rgba(67, 77, 227, 1) 100%
+  );
+}
