@@ -9,7 +9,9 @@ const RegisterSuccess = () => {
       style={{ fontFamily: "Open Sans" }}
     >
       <img src={ilustrasiRegisterSuccess} alt="" className="w-[280px]" />
-      <h1 className="text-4xl text-white font-bold">Pendaftaran Berhasil!</h1>
+      <h1 className="text-4xl text-white font-bold text-center">
+        Pendaftaran Berhasil!
+      </h1>
       <p className="text-xl text-white font-semibold mt-2">
         Silahkan masuk untuk melanjutkan
       </p>

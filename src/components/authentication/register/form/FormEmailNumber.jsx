@@ -55,7 +55,7 @@ const FormEmailNumber = () => {
               type="email"
               required
               autoComplete="email"
-              className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Masukkan Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -72,14 +72,14 @@ const FormEmailNumber = () => {
             <label htmlFor="activeCard" className="text-base font-normal">
               Nomor Telepon
             </label>
-            <div className="flex flex-row w-[360px] justify-between">
+            <div className="flex flex-row md:w-[360px] justify-between">
               <input
                 id="numberTelp"
                 name="numberTelp"
                 type="text"
                 required
                 autoComplete="numberTelp"
-                className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+                className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Masukkan Nomor Telepon"
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}

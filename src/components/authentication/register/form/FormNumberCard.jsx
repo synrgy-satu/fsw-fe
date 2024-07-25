@@ -2,6 +2,7 @@ import arrow from "../../../../assets/images/arrow.png";
 import arrow1 from "../../../../assets/images/arrow1.png";
 import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const FormNumberCard = () => {
   const [numberCard, setNumberCard] = useState("");
@@ -39,7 +40,7 @@ const FormNumberCard = () => {
               type="text"
               required
               autoComplete="numberCard"
-              className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Masukkan Nomor Kartu"
               value={numberCard}
               onChange={(e) => setNumberCard(e.target.value)}
@@ -59,14 +60,14 @@ const FormNumberCard = () => {
             <label htmlFor="activeCard" className="text-base font-normal">
               Masa Aktif
             </label>
-            <div className="flex flex-row w-[360px] justify-between">
+            <div className="flex flex-row md:w-[360px] justify-between">
               <input
                 id="activeCardMonth"
                 name="activeCardMonth"
                 type="text"
                 required
                 autoComplete="activeCardMonth"
-                className="w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+                className="w-[45%] md:w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Bulan"
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
@@ -77,7 +78,7 @@ const FormNumberCard = () => {
                 type="text"
                 required
                 autoComplete="activeCardYear"
-                className="w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+                className="w-[45%] md:w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Tahun"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
@@ -120,9 +121,9 @@ const FormNumberCard = () => {
           <div className="mt-2 mb-8 w-[85%] flex justify-center items-center">
             <p className="text-base font-normal text-[#000000]">
               Sudah punya akun?{" "}
-              <a href="#" className="font-bold text-[#333999]">
+              <Link to="/login" className="font-bold text-[#333999]">
                 Masuk di sini
-              </a>
+              </Link>
             </p>
           </div>
         </div>

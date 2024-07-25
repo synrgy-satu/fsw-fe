@@ -10,10 +10,10 @@ const VerifNumberCard = () => {
         alt=""
         className="w-[280px] h-[320px]"
       />
-      <h1 className="font-bold text-2xl text-[#00A052] text-center">
+      <h1 className="font-bold text-xl md:text-2xl text-[#00A052] text-center">
         Nomor kartu terverifikasi
       </h1>
-      <p className="text-base font-normal text-center my-0">
+      <p className="text-sm md:text-base font-normal text-center my-0">
         Selamat nomor kamu sudah terverifikasi, <br /> silahkan lanjut ke tahap
         berikutnya
       </p>

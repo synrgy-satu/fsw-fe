@@ -14,62 +14,64 @@ const RegisterEmailNumber = () => {
   return (
     <>
       <div
-        className="max-w-[1440px] container bg-[#333999]"
+        className="w-[100%] md:max-w-[1440px] container bg-[#333999]"
         style={{ fontFamily: "Open Sans" }}
       >
         <img src={dekorasiMask} alt="" className="absolute right-0 top-0" />
-        <div className="flex flex-row justify-between mx-6">
-          <div className="basis-1/2 w-[60%] text-white mt-5">
+        <div className="flex flex-col lg:flex-row items-center justify-between mx-6">
+          <div className="basis-1/2 w-[100%] lg:w-[60%] text-white mt-5">
             <div className="container-head-text">
-              <h1 className="text-[52px] font-extrabold">Selamat Datang!</h1>
-              <p className="text-[28px] font-normal">
+              <h1 className="text-[32px] md:text-[52px] font-bold md:font-extrabold">
+                Selamat Datang!
+              </h1>
+              <p className="text-[24px] md:text-[28px] font-normal">
                 Nikmati kemudahan internet banking dalam
               </p>
-              <div className="flex flex-row items-center text-[28px] font-normal">
+              <div className="flex flex-row items-center text-[24px] md:text-[28px] font-normal">
                 <p>satu aplikasi</p>
                 <img
                   src={logoText}
                   alt=""
-                  className="ms-2 w-[200px] h-[32px]"
+                  className="ms-2 w-[180px] md:w-[200px] h-[32px]"
                 />
               </div>
             </div>
-            <div className="relative w-[100%] h-[680px] ">
+            <div className="relative w-[100%] hidden md:flex md:h-[680px] ">
               <img
                 src={ilustrasi2}
                 alt=""
-                className="absolute z-0 w-[400px] -rotate-12"
+                className="absolute z-0 w-[100px] md:w-[400px] -rotate-12"
               />
               <img
                 src={ilustrasi3}
                 alt=""
-                className="absolute z-0 -top-16 right-0 w-[210px] rotate-12"
+                className="absolute z-0 -top-16 left-96 w-[60px] md:w-[210px] rotate-12"
               />
               <img
                 src={ilustrasi1}
                 alt=""
-                className="absolute z-2 -top-12 left-10 w-[580px]"
+                className="absolute z-2 -top-12 left-10 w-[110px] md:w-[580px]"
               />
             </div>
           </div>
-          <div className="basis-2/2 w-[40%] flex flex-col justify-center">
-            <div className="container-form w-[420px] bg-white rounded-3xl flex justify-center items-center shadow-md">
+          <div className="basis-2/2 w-[100%] md:w-[40%] flex flex-col mt-4 md:mt-0 justify-center items-center">
+            <div className="container-form w-[320px] md:w-[420px] bg-white rounded-3xl flex justify-center items-center shadow-md">
               {/* Component Form */}
               <FormEmailNumber />
               {/* <LoadEmailNumber /> */}
             </div>
-            <div className="w-[420px] flex flex-row justify-between items-center my-10 text-sm font-bold text-white">
-              <div className="flex flex-col justify-center items-center">
+            <div className="w-[100%] md:w-[420px] flex flex-row justify-between items-center my-5 lg:my-10 text-sm font-bold text-white">
+              <div className="flex w-[100%] flex-col justify-center items-center">
                 <img src={protect} alt="" className="w-[44px] h-[45px]" />
-                <p>Transaksi Aman</p>
+                <p className="text-center">Transaksi Aman</p>
               </div>
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex w-[100%] flex-col justify-center items-center">
                 <img src={clock} alt="" className="w-[45px] h-[45px]" />
-                <p>Cepat dan Mudah</p>
+                <p className="text-center">Cepat dan Mudah</p>
               </div>
-              <div className="flex flex-col justify-center items-center">
+              <div className="flex w-[100%] flex-col justify-center items-center">
                 <img src={maps} alt="" className="w-[44px] h-[45px]" />
-                <p>Akses Di manapun</p>
+                <p className="text-center">Akses Di manapun</p>
               </div>
             </div>
           </div>
