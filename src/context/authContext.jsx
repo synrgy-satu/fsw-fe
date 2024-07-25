@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const [error, setError] = useState(null);
+  const [isResetPassword, setIsResetPassword] = useState(false); // New state for form toggle
 
   const login = async (emailAddress, password) => {
     try {
@@ -68,7 +69,16 @@ export const AuthProvider = ({ children }) => {
   }, [authState]);
 
   return (
-    <AuthContext.Provider value={{ authState, login, logout, error }}>
+    <AuthContext.Provider
+      value={{
+        authState,
+        login,
+        logout,
+        error,
+        isResetPassword,
+        setIsResetPassword,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
