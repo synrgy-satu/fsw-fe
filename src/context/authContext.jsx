@@ -45,6 +45,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (emailAddress) => {
+    try {
+      const response = await axios.post(
+        "http://34.126.91.181/api/v1/auth/password",
+        {
+          emailAddress,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Forgot password success");
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(
+        "Forgot password failed",
+        error.response?.data || error.message
+      );
+      setError(error.response?.data || { message: error.message });
+    }
+  };
+
   // Logout function
   const logout = () => {
     localStorage.removeItem("authState");
@@ -77,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         error,
         isResetPassword,
         setIsResetPassword,
+        forgotPassword,
       }}
     >
       {children}
