@@ -9,7 +9,7 @@ import RegisterSuccess from "./pages/authentication/register/RegisterSuccess";
 import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumberCardPage";
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
 import Login from "./pages/authentication/Login";
-import { AuthProvider } from "./context/authContext";
+import { AuthProvider } from "./context/AuthContext";
 import "./assets/css/style.css";
 
 function App() {
