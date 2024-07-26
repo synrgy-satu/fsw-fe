@@ -6,14 +6,15 @@ import protect from "../../../assets/images/protect.png";
 import ilustrasi1 from "../../../assets/images/ilustrasi1.png";
 import ilustrasi2 from "../../../assets/images/ilustrasi2.png";
 import ilustrasi3 from "../../../assets/images/ilustrasi3.png";
+import { useState } from "react";
 
 // Component
 import FormNumberCard from "../../../components/authentication/register/form/FormNumberCard";
 import LoadNumberCard from "../../../components/authentication/register/loading/LoadNumberCard";
-import VerifNumberCard from "../../../components/authentication/register/loading/VerifNumberCard";
-import NotVerifNumberCard from "../../../components/authentication/register/loading/NotVerifNumberCard";
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
       <div
@@ -59,10 +60,11 @@ export default function Register() {
           </div>
           <div className="basis-2/2 w-[100%] md:w-[40%] flex flex-col mt-4 md:mt-0 justify-center items-center">
             <div className="container-form w-[320px] md:w-[420px] bg-white rounded-3xl flex justify-center items-center shadow-md">
-              <FormNumberCard />
-              {/* <LoadNumberCard /> */}
-              {/* <VerifNumberCard /> */}
-              {/* <NotVerifNumberCard /> */}
+              {loading ? (
+                <LoadNumberCard />
+              ) : (
+                <FormNumberCard setLoading={setLoading} />
+              )}
             </div>
             <div className="w-[100%] md:w-[420px] flex flex-row justify-between items-center my-5 lg:my-10 text-sm font-bold text-white">
               <div className="flex w-[100%] flex-col justify-center items-center">

@@ -16,7 +16,7 @@ const RegisterSuccess = () => {
         Silahkan masuk untuk melanjutkan
       </p>
       <Link
-        to="/register/email"
+        to="/login"
         className="w-[280px] h-[48px] bg-white hover:bg-blue-50 transition duration-300 mt-5 flex justify-center items-center text-white rounded-lg"
       >
         <p className="me-2 text-base text-[#333999] font-bold">Masuk</p>

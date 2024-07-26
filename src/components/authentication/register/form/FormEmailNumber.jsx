@@ -2,13 +2,15 @@ import arrow1 from "../../../../assets/images/arrow1.png";
 import arrow from "../../../../assets/images/arrow.png";
 import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import validator from "validator";
 
-const FormEmailNumber = () => {
+const FormEmailNumber = ({ setLoading }) => {
   const [email, setEmail] = useState("");
   const [isEmail, setIsEmail] = useState(false);
   const [number, setNumber] = useState("");
   const [isNumber, setIsNumber] = useState(false);
+  const navigate = useNavigate();
 
   // Validation Email & Number Function
   useEffect(() => handleValidationEmailNumber());
@@ -31,6 +33,10 @@ const FormEmailNumber = () => {
     } else {
       setIsNumber(false);
     }
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
   };
 
   return (
@@ -81,6 +87,8 @@ const FormEmailNumber = () => {
                 autoComplete="numberTelp"
                 className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Masukkan Nomor Telepon"
+                minLength={10}
+                maxLength={12}
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
               />
@@ -95,7 +103,7 @@ const FormEmailNumber = () => {
           </div>
           {isEmail && isNumber ? (
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="w-[85%] h-[48px] bg-[#333999] hover:bg-[#212674] transition duration-300 mt-10 mb-10 flex justify-center items-center text-white rounded-lg"
             >
               <p className="me-2 text-base font-bold">Daftar</p>

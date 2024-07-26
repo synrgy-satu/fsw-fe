@@ -1,18 +1,16 @@
-import logoText from "../../../assets/images/logoText.png";
-import dekorasiMask from "../../../assets/images/dekorasimask.png";
-import clock from "../../../assets/images/clock.png";
-import maps from "../../../assets/images/maps.png";
-import protect from "../../../assets/images/protect.png";
-import ilustrasi1 from "../../../assets/images/ilustrasi1.png";
-import ilustrasi2 from "../../../assets/images/ilustrasi2.png";
-import ilustrasi3 from "../../../assets/images/ilustrasi3.png";
-import { useState } from "react";
+import logoText from "../../../../assets/images/logoText.png";
+import dekorasiMask from "../../../../assets/images/dekorasimask.png";
+import clock from "../../../../assets/images/clock.png";
+import maps from "../../../../assets/images/maps.png";
+import protect from "../../../../assets/images/protect.png";
+import ilustrasi1 from "../../../../assets/images/ilustrasi1.png";
+import ilustrasi2 from "../../../../assets/images/ilustrasi2.png";
+import ilustrasi3 from "../../../../assets/images/ilustrasi3.png";
 
 // Component
-import FormEmailNumber from "../../../components/authentication/register/form/FormEmailNumber";
-import LoadEmailNumber from "../../../components/authentication/register/loading/LoadEmailNumber";
-const RegisterEmailNumber = () => {
-  const [loading, setLoading] = useState(false);
+import NotVerifNumberCard from "../../../../components/authentication/register/loading/NotVerifNumberCard";
+
+const NotVerifNumberCardPage = () => {
   return (
     <>
       <div
@@ -58,12 +56,7 @@ const RegisterEmailNumber = () => {
           </div>
           <div className="basis-2/2 w-[100%] md:w-[40%] flex flex-col mt-4 md:mt-0 justify-center items-center">
             <div className="container-form w-[320px] md:w-[420px] bg-white rounded-3xl flex justify-center items-center shadow-md">
-              {/* Component Form */}
-              {loading ? (
-                <LoadEmailNumber />
-              ) : (
-                <FormEmailNumber setLoading={setLoading} />
-              )}
+              <NotVerifNumberCard />
             </div>
             <div className="w-[100%] md:w-[420px] flex flex-row justify-between items-center my-5 lg:my-10 text-sm font-bold text-white">
               <div className="flex w-[100%] flex-col justify-center items-center">
@@ -86,4 +79,4 @@ const RegisterEmailNumber = () => {
   );
 };
 
-export default RegisterEmailNumber;
+export default NotVerifNumberCardPage;
