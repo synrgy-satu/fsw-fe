@@ -6,6 +6,8 @@ import RegisterEmailNumber from "./pages/authentication/register/RegisterEmailNu
 import RegisterPassword from "./pages/authentication/register/RegisterPassword";
 import RegisterPIN from "./pages/authentication/register/RegisterPIN";
 import RegisterSuccess from "./pages/authentication/register/RegisterSuccess";
+import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumberCardPage";
+import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
 import Login from "./pages/authentication/Login";
 import { AuthProvider } from "./context/AuthContext";
 import "./assets/css/style.css";
@@ -24,6 +26,14 @@ function App() {
             <Route path="/register/password" element={<RegisterPassword />} />
             <Route path="/register/pin" element={<RegisterPIN />} />
             <Route path="/register/success" element={<RegisterSuccess />} />
+            <Route
+              path="/register/verifnumber"
+              element={<VerifNumberCardPage />}
+            />
+            <Route
+              path="/register/notverifnumber"
+              element={<NotVerifNumberCardPage />}
+            />
             {/* End Register Pages */}
             <Route path="*" element={<NotFound />} />
           </Routes>

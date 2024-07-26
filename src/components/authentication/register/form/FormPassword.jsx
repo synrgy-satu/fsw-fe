@@ -4,6 +4,7 @@ import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormPassword = () => {
   const [password, setPassword] = useState("");
@@ -13,6 +14,8 @@ const FormPassword = () => {
   const [icon, setIcon] = useState(eyeOff);
   const [confIcon, setConfIcon] = useState(eyeOff);
   const [isMatch, setIsMatch] = useState(true);
+  const [isValid, setIsValid] = useState(true);
+  const navigate = useNavigate();
 
   // Hide & Show Password Toggle
   const handlePasswordToggle = () => {
@@ -35,7 +38,7 @@ const FormPassword = () => {
     }
   };
 
-  // Match Password Function
+  // Match & Validation Password Function
   useEffect(() => handleMatchPassword());
 
   const handleMatchPassword = () => {
@@ -44,6 +47,19 @@ const FormPassword = () => {
     } else {
       setIsMatch(true);
     }
+
+    // Validation Password
+    const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
+
+    if (password.length >= 8 && regex.test(password)) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    navigate("/register/pin");
   };
 
   return (
@@ -68,8 +84,17 @@ const FormPassword = () => {
               type={type}
               required
               autoComplete="current-password"
-              className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Masukkan Kata Sandi"
+              minLength={8}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -88,7 +113,7 @@ const FormPassword = () => {
         <div className="mt-5 w-[85%]">
           <li>Password minimal terdiri dari 8 digit</li>
           <li>
-            Pasword harus terdirid dari minimal 1 Huruf Kapital, 1 Huruf Kecil,1
+            Pasword harus terdiri dari minimal 1 Huruf Kapital, 1 Huruf Kecil,1
             Angka Numerik, dan 1 Simbol
           </li>
         </div>
@@ -103,8 +128,17 @@ const FormPassword = () => {
               type={confType}
               required
               autoComplete="confPassword"
-              className="w-[100%] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Konfirmasi Kata Sandi"
+              minLength={8}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
               value={confPassword}
               onChange={(e) => setConfPassword(e.target.value)}
             />
@@ -127,9 +161,9 @@ const FormPassword = () => {
             </p>
           )}
         </div>
-        {isMatch && password ? (
+        {isMatch && password && isValid ? (
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="w-[85%] h-[48px] bg-[#333999] hover:bg-[#212674] transition duration-300 mt-10 mb-10 flex justify-center items-center text-white rounded-lg"
           >
             <p className="me-2 text-base font-bold">Lanjut</p>
