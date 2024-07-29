@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/home/Navbar";
-import satuDigibank from "../../../public/images/satuDigibank.png";
-import satuMbanking from "../../../public/images/satuMbanking.png";
-import appStore from "../../../public/images/appStore.png";
-import playStore from "../../../public/images/googlePlay.png";
+import satuDigibank from "/images/satuDigibank.png";
+import satuMbanking from "/images/satuMbanking.png";
+import appStore from "/images/appStore.png";
+import playStore from "/images/googlePlay.png";
 import Cards from "../../components/home/Cards";
 // import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ const Onboarding = () => {
   return (
     <div className="max-w-[1440px] container mx-auto">
       {/* first section */}
-      <div class="h-[989px] bg-right bg-no-repeat bg-[url('../../../public/images/imgHeader.png')]">
+      <div class="h-[989px] bg-right bg-no-repeat bg-[url('/images/imgHeader.png')]">
         <Navbar />
         <section className="mt-[380px] ml-20">
           <h1 className="w-[610px] font-[800] text-[56px] leading-[56px] text-blue-900">
@@ -29,7 +29,7 @@ const Onboarding = () => {
       </div>
 
       {/* Second section */}
-      <div className="mt-[161px] h-[1029px] bg-left bg-no-repeat bg-[url('../../../public/images/imgFooter.png')]">
+      <div className="mt-[161px] h-[1029px] bg-left bg-no-repeat bg-[url('/images/imgFooter.png')]">
         <div className="flex-1 flex items-center justify-end">
           <section className="mt-[200px] mr-20">
             <h1 className="text-right rtl:text-left w-[620px] font-[800] text-[56px] leading-[56px] text-blue-900">
