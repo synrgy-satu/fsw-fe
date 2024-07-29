@@ -2,12 +2,16 @@ import arrow from "../../../../assets/images/arrow.png";
 import arrow1 from "../../../../assets/images/arrow1.png";
 import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const FormNumberCard = () => {
+const FormNumberCard = ({ setLoading }) => {
   const [numberCard, setNumberCard] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  const [policyPrivate, setPolicyPrivate] = useState(false);
   const [isNumberCard, setIsNumberCard] = useState(false);
+  const navigate = useNavigate();
 
   // Validation Number Card Function
   useEffect(() => handleNumberCardValidation());
@@ -18,6 +22,10 @@ const FormNumberCard = () => {
     } else {
       setIsNumberCard(false);
     }
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
   };
 
   return (
@@ -39,8 +47,9 @@ const FormNumberCard = () => {
               type="text"
               required
               autoComplete="numberCard"
-              className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Masukkan Nomor Kartu"
+              maxLength={16}
               value={numberCard}
               onChange={(e) => setNumberCard(e.target.value)}
             />
@@ -59,15 +68,16 @@ const FormNumberCard = () => {
             <label htmlFor="activeCard" className="text-base font-normal">
               Masa Aktif
             </label>
-            <div className="flex flex-row w-[360px] justify-between">
+            <div className="flex flex-row md:w-[360px] justify-between">
               <input
                 id="activeCardMonth"
                 name="activeCardMonth"
                 type="text"
                 required
                 autoComplete="activeCardMonth"
-                className="w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+                className="w-[45%] md:w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Bulan"
+                maxLength={2}
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
               />
@@ -77,8 +87,9 @@ const FormNumberCard = () => {
                 type="text"
                 required
                 autoComplete="activeCardYear"
-                className="w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+                className="w-[45%] md:w-[173px] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Tahun"
+                maxLength={4}
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
               />
@@ -90,6 +101,8 @@ const FormNumberCard = () => {
               name="checkbox"
               id="checkbox"
               className="w-[16px] h-[16px] me-2"
+              checked={policyPrivate}
+              onChange={(e) => setPolicyPrivate(e.target.checked)}
             />
             <p className="text-sm">
               Saya Menyetujui{" "}
@@ -98,9 +111,9 @@ const FormNumberCard = () => {
               </span>
             </p>
           </div>
-          {isNumberCard && month && year ? (
+          {isNumberCard && Number(month) && Number(year) && policyPrivate ? (
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="w-[85%] h-[48px] bg-[#333999] hover:bg-[#212674] transition duration-300 mt-10 flex justify-center items-center text-white rounded-lg"
             >
               <p className="me-2 text-base font-bold">Daftar</p>
@@ -120,9 +133,9 @@ const FormNumberCard = () => {
           <div className="mt-2 mb-8 w-[85%] flex justify-center items-center">
             <p className="text-base font-normal text-[#000000]">
               Sudah punya akun?{" "}
-              <a href="#" className="font-bold text-[#333999]">
+              <Link to="/login" className="font-bold text-[#333999]">
                 Masuk di sini
-              </a>
+              </Link>
             </p>
           </div>
         </div>

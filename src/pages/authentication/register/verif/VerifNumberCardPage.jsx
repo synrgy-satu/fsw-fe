@@ -1,16 +1,16 @@
-import logoText from "../../../assets/images/logoText.png";
-import dekorasiMask from "../../../assets/images/dekorasimask.png";
-import clock from "../../../assets/images/clock.png";
-import maps from "../../../assets/images/maps.png";
-import protect from "../../../assets/images/protect.png";
-import ilustrasi1 from "../../../assets/images/ilustrasi1.png";
-import ilustrasi2 from "../../../assets/images/ilustrasi2.png";
-import ilustrasi3 from "../../../assets/images/ilustrasi3.png";
+import logoText from "../../../../assets/images/logoText.png";
+import dekorasiMask from "../../../../assets/images/dekorasimask.png";
+import clock from "../../../../assets/images/clock.png";
+import maps from "../../../../assets/images/maps.png";
+import protect from "../../../../assets/images/protect.png";
+import ilustrasi1 from "../../../../assets/images/ilustrasi1.png";
+import ilustrasi2 from "../../../../assets/images/ilustrasi2.png";
+import ilustrasi3 from "../../../../assets/images/ilustrasi3.png";
 
 // Component
-import FormPIN from "../../../components/authentication/register/form/FormPIN";
+import VerifNumberCard from "../../../../components/authentication/register/loading/VerifNumberCard";
 
-const RegisterPIN = () => {
+const VerifNumberCardPage = () => {
   return (
     <>
       <div
@@ -36,7 +36,7 @@ const RegisterPIN = () => {
                 />
               </div>
             </div>
-            <div className="relative w-[100%] hidden md:flex md:h-[680px]">
+            <div className="relative w-[100%] hidden md:flex md:h-[680px] ">
               <img
                 src={ilustrasi2}
                 alt=""
@@ -56,8 +56,7 @@ const RegisterPIN = () => {
           </div>
           <div className="basis-2/2 w-[100%] md:w-[40%] flex flex-col mt-4 md:mt-0 justify-center items-center">
             <div className="container-form w-[320px] md:w-[420px] bg-white rounded-3xl flex justify-center items-center shadow-md">
-              {/* Component Form */}
-              <FormPIN />
+              <VerifNumberCard />
             </div>
             <div className="w-[100%] md:w-[420px] flex flex-row justify-between items-center my-5 lg:my-10 text-sm font-bold text-white">
               <div className="flex w-[100%] flex-col justify-center items-center">
@@ -80,4 +79,4 @@ const RegisterPIN = () => {
   );
 };
 
-export default RegisterPIN;
+export default VerifNumberCardPage;

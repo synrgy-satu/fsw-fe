@@ -4,6 +4,7 @@ import { Icon } from "react-icons-kit";
 import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormPIN = () => {
   const [PIN, setPIN] = useState("");
@@ -13,6 +14,8 @@ const FormPIN = () => {
   const [icon, setIcon] = useState(eyeOff);
   const [confIcon, setConfIcon] = useState(eyeOff);
   const [isMatch, setIsMatch] = useState(true);
+  const [isValid, setIsValid] = useState(true);
+  const navigate = useNavigate();
 
   // Hide & Show PIN Toggle
   const handlePINToggle = () => {
@@ -44,6 +47,15 @@ const FormPIN = () => {
     } else {
       setIsMatch(true);
     }
+    if (PIN.length == 6 && Number(PIN)) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    navigate("/register/success");
   };
 
   return (
@@ -65,8 +77,17 @@ const FormPIN = () => {
               type={type}
               required
               autoComplete="pin"
-              className="w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
+              className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Masukkan PIN"
+              maxLength={6}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
               value={PIN}
               onChange={(e) => setPIN(e.target.value)}
             />
@@ -95,6 +116,15 @@ const FormPIN = () => {
               autoComplete="pin"
               className="w-[100%] h-[45px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
               placeholder="Konfirmasi PIN"
+              maxLength={6}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
               value={confPIN}
               onChange={(e) => setConfPIN(e.target.value)}
             />
@@ -115,9 +145,9 @@ const FormPIN = () => {
             <p className="text-xs text-[#CB3A31] mt-1">*PIN tidak sama!</p>
           )}
         </div>
-        {isMatch && PIN ? (
+        {isMatch && PIN && isValid ? (
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="w-[85%] h-[48px] bg-[#333999] hover:bg-[#212674] transition duration-300 mt-10 mb-10 flex justify-center items-center text-white rounded-lg"
           >
             <p className="me-2 text-base font-bold">Lanjut</p>
