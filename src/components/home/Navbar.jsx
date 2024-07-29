@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import logo from "/images/logoTagLine.png"
 
 function Navbar() {
@@ -13,8 +14,8 @@ function Navbar() {
           <li><a href="#" className="text-white mr-4">Tentang Kami</a></li>
         </ul>
         <div className="flex space-x-4">
-          <button className="px-4 py-2 text-sm bg-white text-gray-800 font-semibold rounded-full">Masuk</button>
-          <button className="px-4 py-2 text-sm border border-white text-white font-semibold rounded-full">Mendaftar</button>
+          <Link to="/login" className="px-4 py-2 text-sm bg-white text-gray-800 font-semibold rounded-full">Masuk</Link>
+          <Link to="/register" className="px-4 py-2 text-sm border border-white text-white font-semibold rounded-full">Mendaftar</Link>
         </div>
       </div>
     </nav>
