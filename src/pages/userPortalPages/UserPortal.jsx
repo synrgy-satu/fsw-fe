@@ -1,17 +1,17 @@
 import React from "react";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import { Route, Routes } from "react-router-dom";
-import Homepage from "../../components/userPortal/Homepage";
+import Example from "../../components/userPortal/Example";
 
 const UserPortal = () => {
   return (
     <DefaultLayout>
       <Routes>
         <Route
-          path="/*"
+          index
           element={
             <>
-              <Homepage />
+              <Example />
             </>
           }
         />
