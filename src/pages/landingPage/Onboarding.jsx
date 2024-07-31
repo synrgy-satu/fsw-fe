@@ -12,7 +12,7 @@ const Onboarding = () => {
   return (
     <div className="max-w-[1440px] container mx-auto">
       {/* first section */}
-      <div class="h-[989px] bg-right bg-no-repeat bg-[url('/images/imgHeader.png')]">
+      <div className="h-[989px] bg-right bg-no-repeat bg-[url('/images/imgHeader.png')]">
         <Navbar />
         <section className="mt-[380px] ml-20">
           <h1 className="w-[610px] font-[800] text-[56px] leading-[56px] text-blue-900">

@@ -8,6 +8,7 @@ import RegisterPIN from "./pages/authentication/register/RegisterPIN";
 import RegisterSuccess from "./pages/authentication/register/RegisterSuccess";
 import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumberCardPage";
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
+import UserPortal from "./pages/userPortalPages/UserPortal";
 import Login from "./pages/authentication/Login";
 import { AuthProvider } from "./context/AuthContext";
 import "./assets/css/style.css";
@@ -35,6 +36,7 @@ function App() {
               element={<NotVerifNumberCardPage />}
             />
             {/* End Register Pages */}
+            <Route path="/portal/*" element={<UserPortal />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
