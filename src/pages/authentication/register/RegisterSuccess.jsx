@@ -3,6 +3,13 @@ import arrow2 from "../../../assets/images/arrow2.png";
 import { Link } from "react-router-dom";
 
 const RegisterSuccess = () => {
+  // Secure Local by Remove Item
+  localStorage.removeItem("cardNumber");
+  localStorage.removeItem("email");
+  localStorage.removeItem("number");
+  localStorage.removeItem("password");
+  localStorage.removeItem("pin");
+
   return (
     <div
       className="max-w-[1440px] h-[100vh] container bg-[#333999] flex flex-col justify-center items-center"

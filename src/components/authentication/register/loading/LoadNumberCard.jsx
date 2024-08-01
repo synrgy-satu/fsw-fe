@@ -2,12 +2,16 @@ import loadNumberCardIllustration from "../../../../assets/images/6.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const LoadNumberCard = () => {
+const LoadNumberCard = ({ verifNumber }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigate("/register/verifnumber");
+      if (verifNumber) {
+        navigate("/register/verifnumber");
+      } else {
+        navigate("/register/notVerifnumber");
+      }
     }, 6500);
 
     return () => clearTimeout(timeout);
