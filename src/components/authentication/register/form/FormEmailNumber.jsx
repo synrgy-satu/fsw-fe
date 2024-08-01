@@ -12,6 +12,19 @@ const FormEmailNumber = ({ setLoading }) => {
   const [isNumber, setIsNumber] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const secure = () => {
+      try {
+        if (!localStorage.getItem("cardNumber")) {
+          navigate("/register/");
+        }
+      } catch (error) {
+        return;
+      }
+    };
+    secure();
+  }, []);
+
   // Validation Email & Number Function
   useEffect(() => handleValidationEmailNumber());
 
@@ -23,12 +36,7 @@ const FormEmailNumber = ({ setLoading }) => {
       setIsEmail(false);
     }
     // for Number
-    if (
-      number[0] == "0" &&
-      number[1] == "8" &&
-      number.length >= 10 &&
-      number.length <= 12
-    ) {
+    if (number[0] == "0" && number[1] == "8" && number.length == 13) {
       setIsNumber(true);
     } else {
       setIsNumber(false);
@@ -36,6 +44,9 @@ const FormEmailNumber = ({ setLoading }) => {
   };
 
   const handleSubmit = () => {
+    // Add Email & Number Telp to Local Storage
+    localStorage.setItem("email", email);
+    localStorage.setItem("number", number);
     setLoading(true);
   };
 
@@ -87,8 +98,7 @@ const FormEmailNumber = ({ setLoading }) => {
                 autoComplete="numberTelp"
                 className="w-[100%] md:w-[360px] h-[48px] mt-2 p-3 bg-[#F3F3F3] text-[#000000] font-semibold text-base rounded-lg border border-[#B3B3B3] placeholder:text-[#B3B3B3] focus:outline-none  focus:ring-[#333999] focus:ring-2"
                 placeholder="Masukkan Nomor Telepon"
-                minLength={10}
-                maxLength={12}
+                maxLength={13}
                 value={number}
                 onChange={(e) => setNumber(e.target.value)}
               />

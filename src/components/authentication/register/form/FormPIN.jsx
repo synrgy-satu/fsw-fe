@@ -5,6 +5,7 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const FormPIN = () => {
   const [PIN, setPIN] = useState("");
@@ -38,6 +39,24 @@ const FormPIN = () => {
     }
   };
 
+  useEffect(() => {
+    const secure = () => {
+      try {
+        if (
+          !localStorage.getItem("cardNumber") &&
+          !localStorage.getItem("email") &&
+          !localStorage.getItem("number") &&
+          !localStorage.getItem("password")
+        ) {
+          navigate("/register/");
+        }
+      } catch (error) {
+        return;
+      }
+    };
+    secure();
+  }, []);
+
   // Match PIN Function
   useEffect(() => handleMatchPIN());
 
@@ -54,8 +73,28 @@ const FormPIN = () => {
     }
   };
 
-  const handleSubmit = () => {
-    navigate("/register/success");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    localStorage.setItem("pin", PIN);
+
+    // Register User Account
+    try {
+      await axios
+        .post(`http://34.126.91.181/api/v1/auth/register`, {
+          username: localStorage.getItem("email").split("@")[0],
+          emailAddress: localStorage.getItem("email"),
+          password: localStorage.getItem("password"),
+          cardNumber: Number(localStorage.getItem("cardNumber")),
+          phoneNumber: localStorage.getItem("number"),
+          pin: localStorage.getItem("pin"),
+        })
+        .then((res) => {
+          console.log(res);
+          navigate("/register/success");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
