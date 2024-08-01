@@ -38,6 +38,23 @@ const FormPassword = () => {
     }
   };
 
+  useEffect(() => {
+    const secure = () => {
+      try {
+        if (
+          !localStorage.getItem("cardNumber") &&
+          !localStorage.getItem("email") &&
+          !localStorage.getItem("number")
+        ) {
+          navigate("/register/");
+        }
+      } catch (error) {
+        return;
+      }
+    };
+    secure();
+  }, []);
+
   // Match & Validation Password Function
   useEffect(() => handleMatchPassword());
 
@@ -59,6 +76,7 @@ const FormPassword = () => {
   };
 
   const handleSubmit = () => {
+    localStorage.setItem("password", password);
     navigate("/register/pin");
   };
 
