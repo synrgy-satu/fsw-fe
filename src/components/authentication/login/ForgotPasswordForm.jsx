@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../context/authContext";
 
 export default function ForgotPasswordForm() {
   const { forgotPassword } = useAuth();
