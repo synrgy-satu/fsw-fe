@@ -28,7 +28,7 @@ const Onboarding = () => {
             Mulai
           </button>
         </section>
-        <img src="/images/imgHeader.png" alt="" />
+        <img src="/images/imgHeader.png" alt="image header bank satu" className="max-sm:hidden" />
       </div>
 
       {/* Second section */}
