@@ -16,7 +16,8 @@ export default {
       colors: {
         'primary': '#272D87',
         'primary-background': '#ECEDF9',
-      },
+        'blue-gsm-100': '#333999'
+      }
     },
   },
   safelist: [

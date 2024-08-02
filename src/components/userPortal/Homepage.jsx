@@ -77,7 +77,7 @@ const CURRENCIES = [
   },
 ];
 
-const AssetCard = ({asset, currency, activeCurrency}) => {
+const AssetCard = ({ asset, currency, activeCurrency }) => {
   return (
     <div className="col-span-4 bg-white rounded-[20px] p-4">
       <div className="mb-4">
@@ -97,7 +97,10 @@ const AssetCard = ({asset, currency, activeCurrency}) => {
         <LineChart data={DUMMY_DATA}>
           <XAxis tick={false} dataKey="month" stroke="#8884d8" />
           <YAxis tick={false} stroke="#8884d8" />
-          <Tooltip formatter={(value) => valueFormatter(value)} contentStyle={{ zIndex: 1000 }}/>
+          <Tooltip
+            formatter={(value) => valueFormatter(value)}
+            contentStyle={{ zIndex: 1000 }}
+          />
           <Line
             dot={false}
             type="linear"
@@ -129,9 +132,24 @@ export default function Homepage() {
   };
 
   return (
-    <div className="box-border p-2 relative">
+    <div className="box-border p-2">
+      <div class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+          <li class="inline-flex items-center">
+            <Link
+              to="#"
+              class="inline-flex items-center text-primary"
+            >
+              Beranda
+            </Link>
+          </li>
+        </ol>
+      </div>
+
+      <div className="border mt-4 border-primary mb-6"></div>
+
       {notification && (
-        <div className="bg-white rounded-xl mb-8 ps-3">
+        <div className="bg-white rounded-xl mb-8 ps-3 relative">
           <p
             className="cursor-pointer absolute top-7 right-9 text-2xl font-bold text-gray-600
             hover:font-extrabold hover:text-black"
@@ -246,7 +264,7 @@ export default function Homepage() {
                     currency={currency}
                     activeCurrency={activeCurrency}
                   />
-                )) }
+                ))}
               </div>
             </div>
           </div>
@@ -407,7 +425,10 @@ export default function Homepage() {
               <CartesianGrid strokeDasharray="3 5" />
               <XAxis dataKey="month" />
               <YAxis tickFormatter={tickFormatter} />
-              <Tooltip formatter={(value) => valueFormatter(value)} contentStyle={{ zIndex: 1000 }}/>
+              <Tooltip
+                formatter={(value) => valueFormatter(value)}
+                contentStyle={{ zIndex: 1000 }}
+              />
               <Line
                 type="linear"
                 dataKey="deposit"
