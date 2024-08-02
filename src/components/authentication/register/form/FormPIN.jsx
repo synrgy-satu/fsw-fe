@@ -80,7 +80,7 @@ const FormPIN = () => {
     // Register User Account
     try {
       await axios
-        .post(`http://34.126.91.181/api/v1/auth/register`, {
+        .post(`https://satu.cekrek.shop/api/v1/auth/register`, {
           username: localStorage.getItem("email").split("@")[0],
           emailAddress: localStorage.getItem("email"),
           password: localStorage.getItem("password"),

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (emailAddress, password) => {
     try {
       const response = await axios.post(
-        "http://34.126.91.181/api/v1/auth/login",
+        "https://satu.cekrek.shop/api/v1/auth/login",
         {
           emailAddress,
           password,
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = async (emailAddress) => {
     try {
       const response = await axios.post(
-        "http://34.126.91.181/api/v1/auth/password",
+        "https://satu.cekrek.shop/api/v1/auth/password",
         {
           emailAddress,
         }
