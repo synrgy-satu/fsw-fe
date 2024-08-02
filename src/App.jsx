@@ -10,7 +10,8 @@ import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumb
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
 import UserPortal from "./pages/userPortalPages/UserPortal";
 import Login from "./pages/authentication/Login";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/authContext";
+import Mutation from "./pages/Mutation"; 
 import "./assets/css/style.css";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             />
             {/* End Register Pages */}
             <Route path="/portal/*" element={<UserPortal />} />
+            <Route path="/mutation" element={<Mutation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
