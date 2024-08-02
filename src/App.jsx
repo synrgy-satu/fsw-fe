@@ -10,6 +10,7 @@ import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumb
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
 import UserPortal from "./pages/userPortalPages/UserPortal";
 import Login from "./pages/authentication/Login";
+import Coba from "./pages/Coba";
 import { AuthProvider } from "./context/AuthContext";
 import "./assets/css/style.css";
 
@@ -20,6 +21,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Onboarding />} />
+            <Route path="/coba" element={<Coba />} />
             <Route path="/login" element={<Login />} />
             {/* Register Pages */}
             <Route path="/register" element={<RegisterNumberCard />} />
