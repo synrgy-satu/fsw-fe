@@ -9,6 +9,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Open Sans', ...defaultTheme.fontFamily.sans]
+      },
+      colors: {
+        'blue-gsm-100': '#333999'
       }
     },
   },
