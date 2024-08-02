@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Cards() {
   return (
-    <div className="bg-blue-50 flex items-center justify-center">
+    <div className="bg-blue-50 flex max-sm:flex-col w-[100%] items-center justify-center">
       <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
         <img src="/images/saver.png" alt="logo saver" className="mt-3" />
         <br />
@@ -37,7 +37,7 @@ function Cards() {
           <img src="/images/saverImg.png" alt="Image Saver" />
         </div>
       </div>
-      <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
+      <div className="h-[603px] mt-20 max-sm:mt-0 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
         <img src="/images/prioritas.png" alt="logo saver" className="mt-3" />
         <br />
         <div className="text-gray-900 h-[284px]">
@@ -68,7 +68,7 @@ function Cards() {
           <img src="/images/prioritasImg.png" alt="Image Prioritas" />
         </div>
       </div>
-      <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
+      <div className="h-[603px] mt-20 max-sm:mt-0 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
         <img src="/images/bisnis.png" alt="logo saver" className="mt-3" />
         <br />
         <div className="text-gray-900 h-[284px]">
