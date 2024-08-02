@@ -1,361 +1,103 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Cards() {
   return (
     <div className="bg-blue-50 flex items-center justify-center">
-      <div className="mt-40 mb-40 mr-5 w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-          Standard plan
-        </h5>
-        <div className="flex items-baseline text-gray-900 dark:text-white">
-          <span className="text-3xl font-semibold">$</span>
-          <span className="text-5xl font-extrabold tracking-tight">49</span>
-          <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-            /month
-          </span>
+      <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
+        <img src="/images/saver.png" alt="logo saver" className="mt-3" />
+        <br />
+        <div div className="text-gray-900 h-[264px]">
+          <p>
+            Sambut masa depan keuangan Anda dengan SATU SAVER+! Layanan tabungan
+            hemat dari Bank SATU yang dirancang untuk proses menabung yang lebih
+            sederhana, hemat, dan praktis.
+          </p>
+          <br />
+          <p>
+            {" "}
+            Mulai menabung dengan setoran awal yang rendah, ideal untuk semua
+            kalangan!
+          </p>
+          <br />
+          <p> Biaya administrasi rendah dengan keuntungan yang maksimal.</p>
         </div>
-        <ul role="list" className="space-y-5 my-7">
-          <li className="flex items-center">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              2 team members
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              20GB Cloud storage
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              Integration help
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Sketch Files
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              API Access
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Complete documentation
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              24×7 phone & email support
-            </span>
-          </li>
-        </ul>
-        <button
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+        <br />
+        <Link
+          to="#"
+          className="inline-flex justify-center w-full text-center text-blue-gsm-100 font-bold"
         >
-          Choose plan
-        </button>
+          {" "}
+          Lihat Selengkapnya{" "}
+          <div className="ml-2">
+            <i className="text-1xl fa-solid fa-arrow-right"></i>
+          </div>
+        </Link>
+        <div className="flex justify-center items-center mt-5">
+          <img src="/images/saverImg.png" alt="Image Saver" />
+        </div>
       </div>
-      <div className="mr-5 w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-          Standard plan
-        </h5>
-        <div className="flex items-baseline text-gray-900 dark:text-white">
-          <span className="text-3xl font-semibold">$</span>
-          <span className="text-5xl font-extrabold tracking-tight">49</span>
-          <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-            /month
-          </span>
+      <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
+        <img src="/images/prioritas.png" alt="logo saver" className="mt-3" />
+        <br />
+        <div className="text-gray-900 h-[284px]">
+          <p>
+            Rasakan keunggulan dan kemewahan dalam mengelola tabungan Anda
+            dengan SATU PRIORITAS, layanan tabungan eksklusif dari Bank SATU.
+          </p>
+          <br />
+          <p>
+            {" "}
+            Menawarkan layanan yang dipersonalisasi dan fasilitas premium,
+            solusi ideal bagi Anda yang ingin mengoptimalkan pengelolaan
+            keuangan Anda dengan standar tertinggi.
+          </p>
+          <br />
         </div>
-        <ul role="list" className="space-y-5 my-7">
-          <li className="flex items-center">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              2 team members
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              20GB Cloud storage
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              Integration help
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Sketch Files
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              API Access
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Complete documentation
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              24×7 phone & email support
-            </span>
-          </li>
-        </ul>
-        <button
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+        <Link
+          to="#"
+          className="inline-flex justify-center w-full text-center text-blue-gsm-100 font-bold"
         >
-          Choose plan
-        </button>
+          {" "}
+          Lihat Selengkapnya{" "}
+          <div className="ml-2">
+            <i className="text-1xl fa-solid fa-arrow-right"></i>
+          </div>
+        </Link>
+        <div className="flex justify-center items-center mt-5">
+          <img src="/images/prioritasImg.png" alt="Image Prioritas" />
+        </div>
       </div>
-      <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-          Standard plan
-        </h5>
-        <div className="flex items-baseline text-gray-900 dark:text-white">
-          <span className="text-3xl font-semibold">$</span>
-          <span className="text-5xl font-extrabold tracking-tight">49</span>
-          <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-            /month
-          </span>
+      <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
+        <img src="/images/bisnis.png" alt="logo saver" className="mt-3" />
+        <br />
+        <div className="text-gray-900 h-[284px]">
+          <p>
+            Optimalkan pengelolaan keuangan bisnis Anda dengan SATU BISNIS,
+            layanan tabungan yang dirancang khusus untuk memenuhi kebutuhan
+            bisnis Anda.
+          </p>
+          <br />
+          <p>
+            {" "}
+            Dengan fitur laporan dan analisis, Anda dapat mengelola dan memantau
+            arus kas, serta merencanakan keuangan bisnis dengan lebih baik.
+          </p>
+          <br />
         </div>
-        <ul role="list" className="space-y-5 my-7">
-          <li className="flex items-center">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              2 team members
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              20GB Cloud storage
-            </span>
-          </li>
-          <li className="flex">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              Integration help
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Sketch Files
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              API Access
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              Complete documentation
-            </span>
-          </li>
-          <li className="flex line-through decoration-gray-500">
-            <svg
-              className="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-            </svg>
-            <span className="text-base font-normal leading-tight text-gray-500 ms-3">
-              24×7 phone & email support
-            </span>
-          </li>
-        </ul>
-        <button
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+        <Link
+          to="#"
+          className="inline-flex justify-center w-full text-center text-blue-gsm-100 font-bold"
         >
-          Choose plan
-        </button>
+          {" "}
+          Lihat Selengkapnya{" "}
+          <div className="ml-2">
+            <i className="text-1xl fa-solid fa-arrow-right"></i>
+          </div>
+        </Link>
+        <div className="flex justify-center items-center mt-5">
+          <img src="/images/bisnisImg.png" alt="Image Bisnis" />
+        </div>
       </div>
     </div>
   );
