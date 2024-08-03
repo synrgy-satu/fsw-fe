@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiCreditCard, FiChevronDown } from "react-icons/fi";
 import { GrTransaction } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
+import { useAuth } from "../../context/authContext";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);
   const [isPengaturanOpen, setPengaturanOpen] = useState(false);
+  const { userInfo } = useAuth();
 
   const location = useLocation(); // Get the current location
 
@@ -31,7 +33,7 @@ const Sidebar = () => {
           <img src="/images/logo-user-portal.png" alt="Logo" />
           <div className="mt-12">
             <p className="text-xs font-semibold">Selamat Datang</p>
-            <p className="text-base font-bold">[User Name]</p>
+            <p className="text-base font-bold">{userInfo?.username}</p>
             <p className="text-center text-xs font-normal text-[#C6C8EC]">
               Terakhir Login: Jumat, 26 Juli 2024 16:34 WIB
             </p>

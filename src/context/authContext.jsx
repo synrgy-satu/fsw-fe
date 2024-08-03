@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   const [error, setError] = useState(null);
   const [isResetPassword, setIsResetPassword] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   const login = async (emailAddress, password) => {
     try {
@@ -66,10 +67,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchUserInfo = async () => {
+    try {
+      const { accessToken } = authState;
+      if (!accessToken) return;
+
+      const response = await axios.get("https://satu.cekrek.shop/api/v1/auth", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === 200) {
+        setUserInfo(response.data.data);
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(
+        "Failed to fetch user info",
+        error.response?.data || error.message
+      );
+      setUserInfo(null);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("authState");
     setAuthState(null);
+    setUserInfo(null);
   };
+
+  useEffect(() => {
+    if (authState && authState.accessToken) {
+      fetchUserInfo(); // Fetch user info on login
+    }
+  }, [authState]);
 
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
@@ -96,6 +127,7 @@ export const AuthProvider = ({ children }) => {
         isResetPassword,
         setIsResetPassword,
         forgotPassword,
+        userInfo,
       }}
     >
       {children}

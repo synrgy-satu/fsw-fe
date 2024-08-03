@@ -8,7 +8,6 @@ import RegisterPIN from "./pages/authentication/register/RegisterPIN";
 import RegisterSuccess from "./pages/authentication/register/RegisterSuccess";
 import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumberCardPage";
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
-import { NavigationProvider } from "./context/NavigationContext";
 import UserPortal from "./pages/userPortalPages/UserPortal";
 import Login from "./pages/authentication/Login";
 import { AuthProvider } from "./context/authContext";
@@ -43,9 +42,7 @@ function App() {
               path="/portal/*"
               element={
                 <ProtectedRoute>
-                  <NavigationProvider>
-                    <UserPortal />
-                  </NavigationProvider>
+                  <UserPortal />
                 </ProtectedRoute>
               }
             />
