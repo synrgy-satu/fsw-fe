@@ -4,7 +4,7 @@ import LoginForm from "../../components/authentication/login/LoginForm";
 
 export default function Login() {
   return (
-    <>
+    <div className="max-w-[1440px] mx-auto">
       <Navbar />
       <div className="custom-radial-gradient">
         <div className="grid grid-cols-2 gap-2 pb-44">
@@ -12,6 +12,6 @@ export default function Login() {
           <LoginForm />
         </div>
       </div>
-    </>
+    </div>
   );
 }

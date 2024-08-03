@@ -5,13 +5,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(() => {
-    // Get token from localStorage on initialization
     const storedState = localStorage.getItem("authState");
     return storedState ? JSON.parse(storedState) : null;
   });
 
   const [error, setError] = useState(null);
-  const [isResetPassword, setIsResetPassword] = useState(false); // New state for form toggle
+  const [isResetPassword, setIsResetPassword] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   const login = async (emailAddress, password) => {
     try {
@@ -32,10 +32,9 @@ export const AuthProvider = ({ children }) => {
           user: { emailAddress },
         };
 
-        // Save tokens and auth data in localStorage
         localStorage.setItem("authState", JSON.stringify(authData));
         setAuthState(authData);
-        console.log("Login success", authData);
+        setError(null); // Clear any previous errors
       } else {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
@@ -68,21 +67,48 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
+  const fetchUserInfo = async () => {
+    try {
+      const { accessToken } = authState;
+      if (!accessToken) return;
+
+      const response = await axios.get("https://satu.cekrek.shop/api/v1/auth", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === 200) {
+        setUserInfo(response.data.data);
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error(
+        "Failed to fetch user info",
+        error.response?.data || error.message
+      );
+      setUserInfo(null);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("authState");
     setAuthState(null);
+    setUserInfo(null);
   };
 
-  // Handle token expiration and user session
+  useEffect(() => {
+    if (authState && authState.accessToken) {
+      fetchUserInfo(); // Fetch user info on login
+    }
+  }, [authState]);
+
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
 
-    const expirationTime = authState.expiresIn * 1000; // Convert to milliseconds
+    const expirationTime = authState.expiresIn * 1000;
     const expirationTimestamp = Date.now() + expirationTime;
 
     const timer = setTimeout(() => {
-      // Notify user or redirect to login page when the token expires
       console.warn("Session expired. Please log in again.");
       logout();
       window.location.href = "/login";
@@ -101,6 +127,7 @@ export const AuthProvider = ({ children }) => {
         isResetPassword,
         setIsResetPassword,
         forgotPassword,
+        userInfo,
       }}
     >
       {children}

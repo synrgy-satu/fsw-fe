@@ -5,7 +5,7 @@ export default function LoginHero() {
         className="absolute top-0 right-[58px]"
         src="/images/hero-login2.png"
         alt="Hero Image"
-        style={{ width: "98%" }}
+        style={{ width: "90%" }}
       />
       <div className="mt-[527px]">
         <div className="font-extrabold text-[56px] text-white line-height leading-[56px]">
