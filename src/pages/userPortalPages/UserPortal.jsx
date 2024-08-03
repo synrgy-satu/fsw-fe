@@ -16,10 +16,7 @@ const UserPortal = () => {
             </>
           }
         />
-        <Route
-          path="mutasi-rekening"
-          element={<Mutation />}
-        />
+        <Route path="mutasi-rekening" element={<Mutation />} />
       </Routes>
     </DefaultLayout>
   );

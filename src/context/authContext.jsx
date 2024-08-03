@@ -5,13 +5,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(() => {
-    // Get token from localStorage on initialization
     const storedState = localStorage.getItem("authState");
     return storedState ? JSON.parse(storedState) : null;
   });
 
   const [error, setError] = useState(null);
-  const [isResetPassword, setIsResetPassword] = useState(false); // New state for form toggle
+  const [isResetPassword, setIsResetPassword] = useState(false);
 
   const login = async (emailAddress, password) => {
     try {
@@ -32,10 +31,9 @@ export const AuthProvider = ({ children }) => {
           user: { emailAddress },
         };
 
-        // Save tokens and auth data in localStorage
         localStorage.setItem("authState", JSON.stringify(authData));
         setAuthState(authData);
-        console.log("Login success", authData);
+        setError(null); // Clear any previous errors
       } else {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
@@ -68,21 +66,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
   const logout = () => {
     localStorage.removeItem("authState");
     setAuthState(null);
   };
 
-  // Handle token expiration and user session
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
 
-    const expirationTime = authState.expiresIn * 1000; // Convert to milliseconds
+    const expirationTime = authState.expiresIn * 1000;
     const expirationTimestamp = Date.now() + expirationTime;
 
     const timer = setTimeout(() => {
-      // Notify user or redirect to login page when the token expires
       console.warn("Session expired. Please log in again.");
       logout();
       window.location.href = "/login";

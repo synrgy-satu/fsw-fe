@@ -23,13 +23,12 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     const { email, password } = data;
-    console.log(email, password);
     try {
       await login(email, password);
       console.log("Login Success");
+      navigate("/portal");
     } catch (error) {
       console.error("Login failed:", error);
-      // Optionally, set some form-level error state here
     }
   };
 
