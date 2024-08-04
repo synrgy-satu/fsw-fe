@@ -11,11 +11,11 @@ function Footer() {
           <h3 className="text-6xl font-bold text-blue-gsm-100 max-sm:text-3xl">
             #SemuaPakaiSATU
           </h3>
-          <p className="text-4xl font-bold text-blue-gsm-100 max-sm:text-3xl">
+          <p className="text-4xl font-bold text-blue-gsm-100 max-sm:text-2xl">
             Aplikasi Perbankan dengan Fitur Aksesibel <br /> Pertama di
             Indonesia!
           </p>
-          <p className="text-2xl font-normal text-gray-800 max-sm:text-3xl">
+          <p className="text-2xl font-normal text-gray-800 max-sm:text-xl">
             Tunggu apalagi? Yuk, pakai SATU sekarang!
           </p>
         </div>
