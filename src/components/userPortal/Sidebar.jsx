@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  FiHome,
-  FiStar,
-  FiCreditCard,
-  FiSettings,
-  FiChevronDown,
-} from "react-icons/fi";
+import { FiCreditCard, FiChevronDown } from "react-icons/fi";
+import { GrTransaction } from "react-icons/gr";
+import { GoHome } from "react-icons/go";
+import { MdFavoriteBorder } from "react-icons/md";
+import { RiSettings4Line } from "react-icons/ri";
+import { useAuth } from "../../context/authContext";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);
   const [isPengaturanOpen, setPengaturanOpen] = useState(false);
+  const { userInfo } = useAuth();
 
   const location = useLocation(); // Get the current location
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
           <img src="/images/logo-user-portal.png" alt="Logo" />
           <div className="mt-12">
             <p className="text-xs font-semibold">Selamat Datang</p>
-            <p className="text-base font-bold">[User Name]</p>
+            <p className="text-base font-bold">{userInfo?.username}</p>
             <p className="text-center text-xs font-normal text-[#C6C8EC]">
               Terakhir Login: Jumat, 26 Juli 2024 16:34 WIB
             </p>
@@ -50,7 +50,7 @@ const Sidebar = () => {
             "/portal"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
-          <FiHome className="mr-4 text-lg" /> Beranda
+          <GoHome className="mr-4 text-2xl" /> Beranda
         </Link>
         <Link
           to="/portal/favorites"
@@ -58,7 +58,7 @@ const Sidebar = () => {
             "/portal/favorites"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
-          <FiStar className="mr-4 text-lg" /> Favorit
+          <MdFavoriteBorder className="mr-4 text-2xl" /> Favorit
         </Link>
         <Link
           to="/portal/savings"
@@ -66,7 +66,7 @@ const Sidebar = () => {
             "/portal/savings"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
-          <FiCreditCard className="mr-4 text-lg" /> Tabungan
+          <FiCreditCard className="mr-4 text-2xl" /> Tabungan
         </Link>
         <div className="relative">
           <button
@@ -79,7 +79,7 @@ const Sidebar = () => {
             } hover:font-bold hover:bg-[#272D87] focus:font-bold`}
           >
             <div className="flex items-center">
-              <FiCreditCard className="mr-4 text-lg" /> Transaksi
+              <GrTransaction className="mr-4 text-2xl" /> Transaksi
             </div>
             <FiChevronDown
               className={`transition-transform ${
@@ -134,7 +134,7 @@ const Sidebar = () => {
             } hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
           >
             <div className="flex items-center">
-              <FiSettings className="mr-4 text-lg" /> Pengaturan
+              <RiSettings4Line className="mr-4 text-2xl" /> Pengaturan
             </div>
             <FiChevronDown
               className={`transition-transform ${

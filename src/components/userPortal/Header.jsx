@@ -1,8 +1,15 @@
 import React from "react";
 import { FiSearch, FiHeadphones, FiMail, FiLogOut } from "react-icons/fi";
 import { BsFlag } from "react-icons/bs";
+import { useAuth } from "../../context/authContext"; // Adjust the import path as needed
 
 const Header = () => {
+  const { logout } = useAuth(); // Destructure the logout function from useAuth
+
+  const handleLogout = () => {
+    logout(); // Call the logout function
+  };
+
   return (
     <header className="h-16 bg-white text-white flex items-center justify-between px-4">
       {/* Search Bar */}
@@ -29,7 +36,10 @@ const Header = () => {
             <BsFlag className="text-xl" />
           </div>
         </button>
-        <button className="p-3 rounded-2xl bg-[#333999] focus:outline-none">
+        <button
+          onClick={handleLogout}
+          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
+        >
           <FiLogOut className="text-xl" />
         </button>
       </div>
