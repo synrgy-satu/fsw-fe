@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 export default function LoginForm() {
-  const { login, error, isResetPassword, setIsResetPassword } = useAuth();
+  const { login, error, isResetPassword, setIsResetPassword, authState } = useAuth();
   const {
     control,
     handleSubmit,
@@ -36,6 +36,10 @@ export default function LoginForm() {
       setLoading(false); // Reset loading state
     }
   };
+
+  if(authState) {
+    return navigate("/portal");
+  }
 
   return (
     <div className="flex justify-end pt-32 pe-6">

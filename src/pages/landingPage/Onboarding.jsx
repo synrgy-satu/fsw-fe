@@ -11,7 +11,7 @@ import Footer from "../../components/home/Footer";
 
 const Onboarding = () => {
   return (
-    <div className=" max-w-[1440px] container mx-auto">
+    <div className="max-w-[1440px] container mx-auto">
       {/* first section */}
       <Navbar />
       <div className="h-[680px] flex">
