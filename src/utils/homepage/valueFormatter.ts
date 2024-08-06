@@ -14,7 +14,3 @@ export const valueFormatter = function (number, convert = 1, locale = "id") {
   // }).format(number / convert);
   }).format(+number / convert).toString();
 };
-
-// export default valueFormatter;
-
-// export default percentageFormatter;
