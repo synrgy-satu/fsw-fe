@@ -1,11 +1,86 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiArrowRightCircle } from "react-icons/fi";
+import { useAuth } from "../../context/authContext";
+import axios from "axios";
 
 const TransferSatu = () => {
-  const handleSubmit = async (event) => {
-    event.preventDefault;
+  const [data, setData] = useState("");
+  const { accessToken } = useAuth().authState;
+  const [selectedAccount, setSelectedAccount] = useState("");
+  const [selectedBalance, setselectedBalance] = useState("");
+  const [getDataAccount, setGetDataAccount] = useState("");
+  const [destinationAccount, setDestinationAccount] = useState("");
+  const [selectedDestinationAccount, setSelectedDestinationAccount] = useState("");
+  const [amount, setAmount] = useState("");
+  const [note, setNote] = useState("");
+  const [typeAccount, setTypeAccount] = useState("");
+  const [typeTransaction, setTypeTransaction] = useState("");
+  const navigate = useNavigate();
+
+  const handleCard = async () => {
+    try {
+      const response = await axios.get(
+        "https://satu.cekrek.shop/api/v1/action/checkbalance",
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      setData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
   };
+
+  const handleCheckCard = async () => {
+    try {
+      const response = await axios.get("https://satu.cekrek.shop/api/v1/card", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      setGetDataAccount(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+
+  const handleChange = (event) => {
+    // compare selected Card
+    const selectId = event.target.value;
+    const getBalance = data.find((item) => item.rekeningNumber == selectId);
+    setSelectedAccount(selectId);
+    // get Balance
+    setselectedBalance(getBalance);
+    setTypeAccount(getBalance);
+  };
+
+  const handleCheckDestinationCard = (event) => {
+    // compare destination card
+    const getInputDestinationCard = event.target.value;
+    setDestinationAccount(getInputDestinationCard);
+    const getDestinationCard = getDataAccount.find(
+      (item) => item.rekeningNumber == getInputDestinationCard
+    );
+    // console.log(getDestinationCard)
+    setSelectedDestinationAccount(getDestinationCard)
+  };
+
+  const handleSubmit = async (e) => {
+    navigate("./detail-tf", {
+      state: {
+        selectedAccount: selectedAccount,
+        destinationAccount: destinationAccount,
+        amount: amount,
+        note: note,
+        typeTransaction: typeTransaction,
+        typeAccount: typeAccount.jenisRekening,
+      },
+    });
+  };
+
+  useEffect(() => {
+    handleCard();
+    handleCheckCard();
+  }, []);
 
   const styleOption = {
     padding: "28px",
@@ -14,20 +89,20 @@ const TransferSatu = () => {
   };
   return (
     <>
-      <div class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-          <li class="inline-flex items-center">
+      <div className="flex" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+          <li className="inline-flex items-center">
             <a
               href="#"
-              class="inline-flex items-center text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               Transaksi
             </a>
           </li>
           <li>
-            <div class="flex items-center">
+            <div className="flex items-center">
               <svg
-                class="rtl:rotate-180 w-3 h-3 text-[#1A1A1A] mx-1"
+                className="rtl:rotate-180 w-3 h-3 text-[#1A1A1A] mx-1"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -43,7 +118,7 @@ const TransferSatu = () => {
               </svg>
               <a
                 href="#"
-                class="ms-1 font-bold text-[#333999] hover:text-blue-600 md:ms-2"
+                className="ms-1 font-bold text-[#333999] hover:text-blue-600 md:ms-2"
               >
                 Transfer
               </a>
@@ -60,7 +135,7 @@ const TransferSatu = () => {
           Pilih salah satu kategori di bawah ini untuk melanjutkan transaksi
           Anda.
         </p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
               <label
@@ -72,17 +147,44 @@ const TransferSatu = () => {
               <p>Pilih sumber rekening untuk transaksi ini</p>
             </div>
             <div className="col-span-1">
-              <select
-                id="sumber-rekening"
-                class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option>Pilih nomor rekening</option>
-                {/* Tambahkan opsi lain di sini */}
-              </select>
+              {data.length > 0 ? (
+                <select
+                  id="sumber-rekening"
+                  className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                  value={selectedAccount}
+                  onChange={handleChange}
+                >
+                  <option value="">Pilih nomor rekening</option>
+                  {data.map((item, index) => (
+                    <option key={index} value={item.rekeningNumber}>
+                      {item.rekeningNumber}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <select
+                  id="sumber-rekening"
+                  className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                  value={selectedAccount}
+                  onChange={handleChange}
+                >
+                  <option>Loading ...</option>
+                </select>
+              )}
             </div>
             <p className="text-lg font-bold">
-              IDR 4.123.123,00 <br />{" "}
-              <span className="text-base font-normal">Saldo Tersedia</span>
+              {selectedAccount && (
+                <div>
+                  <p>
+                    IDR{" "}
+                    {new Intl.NumberFormat("id").format(
+                      selectedBalance.balance
+                    )}
+                    ,00
+                  </p>
+                  <span className="text-base font-normal">Saldo Tersedia</span>
+                </div>
+              )}
             </p>
           </div>
 
@@ -99,10 +201,25 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <input
                 id="tujuan-rekening"
-                class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan Nomor Rekening"
-              ></input>
+                value={destinationAccount}
+                // onChange={(e) => setDestinationAccount(e.target.value)}
+                onChange={handleCheckDestinationCard}
+                required
+                type="text"
+                maxLength="10"
+              />
             </div>
+            <p className="text-base font-normal">
+              {selectedDestinationAccount && (
+                <div>
+                  <p>
+                    Nama | {selectedDestinationAccount.jenisRekening}
+                  </p>
+                </div>
+              )}
+            </p>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mb-6">
@@ -110,14 +227,17 @@ const TransferSatu = () => {
               <label for="nominal-tf" className="block font-bold text-lg mb-1">
                 Nominal Transfer
               </label>
-              <p>Masukkan nominal transfer untuk transaksi </p>
+              <p>Masukkan nominal transfer </p>
             </div>
             <div className="col-span-1">
               <input
                 id="nominal-tf"
-                class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="IDR"
-              ></input>
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
             </div>
           </div>
 
@@ -131,9 +251,12 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <input
                 id="catatan"
-                class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan Catatan"
-              ></input>
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                required
+              />
             </div>
           </div>
 
@@ -150,29 +273,25 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <select
                 id="jenis-transaksi"
-                class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
               >
                 <option style={styleOption}>Pilih Waktu Transfer</option>
-                <option value="semua">Semua</option>
-                <option value="transaksi-keluar">Transaksi keluar</option>
-                <option value="transaksi-masuk">Transaksi masuk</option>
-                {/* Tambahkan opsi lain di sini */}
+                <option value="sekarang">Sekarang</option>
+                <option value="atur-tanggal">Atur Tanggal</option>
               </select>
             </div>
           </div>
 
           <div className="flex flex-row-reverse">
-            <Link to="./detail-tf">
-              <button
-                type="submit"
-                className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
-              >
-                <div className="flex items-center space-x-3">
-                  <p>Verifikasi Detail Transfer</p>
-                  <FiArrowRightCircle className="text-2xl" />
-                </div>
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
+            >
+              <div className="flex items-center space-x-3">
+                <p>Verifikasi Detail Transfer</p>
+                <FiArrowRightCircle className="text-2xl" />
+              </div>
+            </button>
           </div>
         </form>
       </div>
