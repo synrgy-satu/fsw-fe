@@ -8,7 +8,7 @@ const DetailTransfer = () => {
   const location = useLocation();
   const { accessToken } = useAuth().authState;
   const navigate = useNavigate();
-  const { selectedAccount, destinationAccount, amount, note, typeAccount } =
+  const { selectedAccount, destinationAccount, amount, note, typeAccount, cardName } =
     location.state || {};
   const biayaAdmin = 0;
 
@@ -55,6 +55,7 @@ const DetailTransfer = () => {
         .then((res) => {
           console.log(res.data.data);
           const referenceNumber = res.data.data.referenceNumber;
+          const dateTransaction = res.data.data.created_date;
           // alert("Berhasil Transfer")
           navigate("./status-tf", {
             state: {
@@ -64,7 +65,8 @@ const DetailTransfer = () => {
               note: note,
               referenceNumber: referenceNumber,
               biayaAdmin: biayaAdmin,
-              dateTransaction: Date(),
+              cardName: cardName,
+              dateTransaction: dateTransaction,
             },
           });
         });
@@ -139,7 +141,7 @@ const DetailTransfer = () => {
             <tbody className="text-left">
               <tr>
                 <th>{typeAccount}+</th>
-                <th>Denny Sumargo</th>
+                <th className="uppercase">{cardName}</th>
                 <th>IDR {new Intl.NumberFormat("id").format(amount)},00</th>
               </tr>
               <tr>

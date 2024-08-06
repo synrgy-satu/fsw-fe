@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiHome } from "react-icons/fi";
 import { useAuth } from "../../context/authContext";
-// import ReactToPrint from "react-to-print";
+import moment from 'moment';
 import html2pdf from "html2pdf.js";
+// import ReactToPrint from "react-to-print";
 // import { PDFDownloadLink } from "@react-pdf/renderer";
 // import MyDocument from "../mutation/MutationDocument";
 
@@ -20,6 +21,7 @@ const StatusTransfer = () => {
     referenceNumber,
     biayaAdmin,
     dateTransaction,
+    cardName
   } = location.state || {};
 
   const handleStars = (number) => {
@@ -34,7 +36,7 @@ const StatusTransfer = () => {
     const element = componentRef.current;
     const opt = {
       margin: 0,
-      filename: "bukti_transfer.pdf",
+      filename: `bukti_transfer_ke_${cardName}.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -42,6 +44,9 @@ const StatusTransfer = () => {
 
     html2pdf().from(element).set(opt).save();
   };
+
+  const isoString = dateTransaction;
+  const formatedDate = moment(isoString).format('DD MMMM YYYY, HH:mm:ss');
 
   useEffect(() => {
     if (!selectedAccount) {
@@ -107,7 +112,7 @@ const StatusTransfer = () => {
             </thead>
             <tbody className="text-left">
               <tr>
-                <th>Denny Sumargo</th>
+                <th className="uppercase">{cardName}</th>
                 <th>IDR {new Intl.NumberFormat("id").format(amount)},00</th>
               </tr>
               <tr>
@@ -149,7 +154,7 @@ const StatusTransfer = () => {
             <tbody className="text-left">
               <tr>
                 <td>Waktu Transaksi</td>
-                <th>: {dateTransaction}</th>
+                <th>: {formatedDate}</th>
                 <td colSpan={2} className="w-40"></td>
               </tr>
               <tr>
@@ -246,7 +251,7 @@ const StatusTransfer = () => {
                     Waktu Transaksi
                   </th>
                   <td className="px-6 py-4 font-medium text-base text-gray-900">
-                    : {dateTransaction}
+                    : {formatedDate}
                   </td>
                 </tr>
                 <tr className="bg-gray-50 border-b">
@@ -298,8 +303,8 @@ const StatusTransfer = () => {
                   >
                     <p className="ml-5">Nama Penerima</p>
                   </th>
-                  <td className="px-6 py-4 font-medium text-base text-gray-900">
-                    : Dummy
+                  <td className="uppercase px-6 py-4 font-medium text-base text-gray-900">
+                    : {cardName}
                   </td>
                 </tr>
                 <tr className="bg-gray-50 border-">
