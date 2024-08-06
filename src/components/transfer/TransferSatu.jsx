@@ -9,9 +9,10 @@ const TransferSatu = () => {
   const { accessToken } = useAuth().authState;
   const [selectedAccount, setSelectedAccount] = useState("");
   const [selectedBalance, setselectedBalance] = useState("");
-  const [getDataAccount, setGetDataAccount] = useState("");
+  const [DestinationNotFound, setDestinationNotFound] = useState("");
   const [destinationAccount, setDestinationAccount] = useState("");
-  const [selectedDestinationAccount, setSelectedDestinationAccount] = useState("");
+  const [selectedDestinationAccount, setSelectedDestinationAccount] =
+    useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [typeAccount, setTypeAccount] = useState("");
@@ -32,17 +33,6 @@ const TransferSatu = () => {
     }
   };
 
-  const handleCheckCard = async () => {
-    try {
-      const response = await axios.get("https://satu.cekrek.shop/api/v1/card", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      setGetDataAccount(response.data.data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-
   const handleChange = (event) => {
     // compare selected Card
     const selectId = event.target.value;
@@ -53,15 +43,30 @@ const TransferSatu = () => {
     setTypeAccount(getBalance);
   };
 
-  const handleCheckDestinationCard = (event) => {
+  const handleCheckDestinationCard = async (event) => {
     // compare destination card
     const getInputDestinationCard = event.target.value;
     setDestinationAccount(getInputDestinationCard);
-    const getDestinationCard = getDataAccount.find(
-      (item) => item.rekeningNumber == getInputDestinationCard
-    );
-    // console.log(getDestinationCard)
-    setSelectedDestinationAccount(getDestinationCard)
+
+    try {
+      const response = await axios.get(
+        `https://satu.cekrek.shop/api/v1/card/${getInputDestinationCard}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      if (response.data) {
+        setSelectedDestinationAccount(response.data);
+        setDestinationNotFound("");
+      } else {
+        setSelectedDestinationAccount(null);
+        setDestinationNotFound("Rekening Tidak Ada");
+      }
+    } catch (error) {
+      // console.error("Error fetching data: ", error);
+      setSelectedDestinationAccount(null);
+      setDestinationNotFound("Not found");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -73,13 +78,14 @@ const TransferSatu = () => {
         note: note,
         typeTransaction: typeTransaction,
         typeAccount: typeAccount.jenisRekening,
+        cardName : selectedDestinationAccount.data.name
       },
     });
   };
 
   useEffect(() => {
     handleCard();
-    handleCheckCard();
+    // handleCheckCard();
   }, []);
 
   const styleOption = {
@@ -212,12 +218,13 @@ const TransferSatu = () => {
               />
             </div>
             <p className="text-base font-normal">
-              {selectedDestinationAccount && (
+              {selectedDestinationAccount ? (
                 <div>
-                  <p>
-                    Nama | {selectedDestinationAccount.jenisRekening}
-                  </p>
+                  <p className="text-lg font-bold">{typeAccount.jenisRekening}</p>
+                  <p>Nama Rekening : <strong className="uppercase">{selectedDestinationAccount.data.name}</strong></p>
                 </div>
+              ) : (
+                <p>{DestinationNotFound}</p>
               )}
             </p>
           </div>
