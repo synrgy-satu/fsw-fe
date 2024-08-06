@@ -73,6 +73,10 @@ const Sidebar = () => {
             onClick={toggleTransaksiDropdown}
             className={`flex items-center justify-between w-full py-3 px-6 text-base font-normal rounded-lg ${
               isActive("/portal/transfer") ||
+              isActive("/portal/transfer/tf-one") ||
+              isActive("/portal/transfer/tf-one/satu") ||
+              isActive("/portal/transfer/tf-one/satu/detail-tf") ||
+              isActive("/portal/transfer/tf-all") ||
               isActive("/portal/bills") ||
               isActive("/portal/purchases") ||
               isActive("/portal/mutasi-rekening")
@@ -91,9 +95,13 @@ const Sidebar = () => {
             <div className="ml-8 mt-1">
               <Link
                 to="/portal/transfer"
-                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
-                  "/portal/transfer"
-                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${
+                  isActive("/portal/transfer") ||
+                  isActive("/portal/transfer/tf-one") ||
+                  isActive("/portal/transfer/tf-all") ||
+                  isActive("/portal/transfer/tf-one/satu") ||
+                  isActive("/portal/transfer/tf-one/satu/detail-tf")
+                } hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
               >
                 Transfer
               </Link>

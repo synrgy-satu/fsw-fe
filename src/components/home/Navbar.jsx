@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/authContext";
 import { Link } from "react-router-dom";
 import logo from "/images/lgtagline.svg";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { authState } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -12,23 +14,37 @@ function Navbar() {
   return (
     <nav className="bg-white border-gray-200 shadow-lg">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
-        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse z-20">
+        <Link
+          to="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse z-20"
+        >
           <img src={logo} className="h-8" alt="Logo" />
-        </a>
+        </Link>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse z-20">
           <div className="max-md:hidden">
-            <Link
-              to="/login"
-              className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
-            >
-              Masuk
-            </Link>
-            <Link
-              to="/register"
-              className="px-4 py-2 text-base outline outline-2 outline-blue-gsm-100 text-blue-gsm-100 font-bold rounded-md"
-            >
-              Mendaftar
-            </Link>
+            {authState ? (
+              <Link
+                to="/portal"
+                className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <div className="flex items-center justify-center">
+                <Link
+                  to="/login"
+                  className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
+                >
+                  Masuk
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 text-base outline outline-2 outline-blue-gsm-100 text-blue-gsm-100 font-bold rounded-md"
+                >
+                  Mendaftar
+                </Link>
+              </div>
+            )}
           </div>
           <button
             onClick={toggleMenu}
@@ -136,20 +152,32 @@ function Navbar() {
                 Tentang Kami
               </a>
             </li>
-            <li className="sm:hidden flex items-center justify-center">
-              <Link
-                to="/login"
-                className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
-              >
-                Masuk
-              </Link>
-              <Link
-                to="/register"
-                className="px-4 py-2 text-base outline outline-2 outline-blue-gsm-100 text-blue-gsm-100 font-bold rounded-md"
-              >
-                Mendaftar
-              </Link>
-            </li>
+
+            {authState ? (
+              <li className="sm:hidden flex items-center justify-center">
+                <Link
+                  to="/portal"
+                  className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            ) : (
+              <li className="sm:hidden flex items-center justify-center">
+                <Link
+                  to="/login"
+                  className="px-4 mr-4 py-2 text-base font-bold bg-blue-gsm-100 text-white rounded-md"
+                >
+                  Masuk
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 text-base outline outline-2 outline-blue-gsm-100 text-blue-gsm-100 font-bold rounded-md"
+                >
+                  Mendaftar
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

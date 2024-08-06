@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Sidebar from "../components/userPortal/Sidebar";
 import Header from "../components/userPortal/Header";
-import HeaderMutation from "../components/userPortal/HeaderMutation";
+import HeaderMutation from "../components/mutation/HeaderMutation";
 
 const DefaultLayout = ({ children }) => {
   const location = useLocation();
@@ -11,6 +11,11 @@ const DefaultLayout = ({ children }) => {
   const renderHeader = () => {
     switch (location.pathname) {
       case "/portal/mutasi-rekening":
+      case "/portal/transfer":
+      case "/portal/transfer/tf-one":
+      case "/portal/transfer/tf-one/satu":
+      case "/portal/transfer/tf-one/satu/detail-tf":
+      case "/portal/transfer/tf-one/satu/detail-tf/status-tf":
         return <HeaderMutation />;
       default:
         return <Header />;
