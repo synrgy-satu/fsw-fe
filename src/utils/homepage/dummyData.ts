@@ -54,7 +54,7 @@ const handleMissingData = (data: periodiclyTransaction[]) => {
   }));
 }
 
-export class DummyData {
+class DummyData {
   private static dataDummy: dailyTransaction[] = NEW_DUMMY;
 
   private static getAggregateTransactionPeriodly = (

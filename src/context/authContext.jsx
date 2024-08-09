@@ -82,6 +82,10 @@ export const AuthProvider = ({ children }) => {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.removeItem("authState");
+        window.location.href = "/login";
+      }
       console.error(
         "Failed to fetch user info",
         error.response?.data || error.message
@@ -111,6 +115,7 @@ export const AuthProvider = ({ children }) => {
     const timer = setTimeout(() => {
       console.warn("Session expired. Please log in again.");
       logout();
+      localStorage.removeItem("authState");
       window.location.href = "/login";
     }, expirationTimestamp - Date.now());
 

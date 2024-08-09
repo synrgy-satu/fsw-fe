@@ -7,7 +7,6 @@ import {
 
 import { DonutChart } from "@tremor/react";
 import { useEffect, useRef, useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import {
@@ -188,6 +187,7 @@ export default function Homepage() {
                       <span className="me-3">
                         {currency[activeCurrency]?.symbol}
                       </span>
+                      {/* {new Intl.NumberFormat("id").format(data[0].balance)},00 */}
                       {valueFormatter(
                         totalBalance,
                         currency[activeCurrency]?.convert,
