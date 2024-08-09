@@ -1,4 +1,4 @@
-import { valueFormatter } from "../../../utils/homepage/valueFormatter";
+import { valueFormatter } from "../../../utils/homepage/homepageUtils";
 import {
   LineChart,
   Line,
@@ -11,7 +11,13 @@ import {
 // const aggregateData = (data, key) =>
 //   data.reduce((acc, curr) => acc + curr[key], 0);
 
-const AssetCard = ({ asset, currency, activeCurrency, data, aggregateData }) => {
+const AssetCard = ({
+  asset,
+  currency,
+  activeCurrency,
+  data,
+  aggregateData,
+}) => {
   return (
     <div className="col-span-4 bg-white rounded-[20px] p-4">
       <div className="mb-4">
