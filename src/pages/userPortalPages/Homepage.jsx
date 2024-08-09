@@ -7,7 +7,6 @@ import {
 
 import { DonutChart } from "@tremor/react";
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 
 import {
@@ -18,6 +17,7 @@ import {
 import AssetCard from "../../components/userPortal/homepage/AssetCard";
 import HomeLineChart from "../../components/userPortal/homepage/HomeLineChart";
 import HomeNotification from "../../components/userPortal/homepage/HomeNotification";
+import { useCard } from "../../context/cardContext";
 
 export const DUMMY_DATA = [
   { month: "Jan", debit: 5000000, deposit: 7000000, invest: 3000000 },
@@ -78,9 +78,11 @@ export default function Homepage() {
   const [currency, setCurrency] = useState([]);
   const [activeCurrency, setActiveCurrency] = useState(0);
   const [notification, setNotification] = useState(true);
+  const { data, handleCard } = useCard();
 
   useEffect(() => {
     setCurrency(CURRENCIES);
+    handleCard();
   }, []);
 
   const handleActive = (position) => {
@@ -156,11 +158,12 @@ export default function Homepage() {
                       <span className="me-3">
                         {currency[activeCurrency]?.symbol}
                       </span>
-                      {valueFormatter(
+                      {new Intl.NumberFormat("id").format(data[0].balance)},00
+                      {/* {valueFormatter(
                         totalBalance,
                         currency[activeCurrency]?.convert,
                         currency[activeCurrency]?.locale
-                      )}
+                      )} */}
                     </p>
                   </div>
                   <div>
