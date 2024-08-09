@@ -78,7 +78,7 @@ const TransferSatu = () => {
         note: note,
         typeTransaction: typeTransaction,
         typeAccount: typeAccount.jenisRekening,
-        cardName : selectedDestinationAccount.data.name
+        cardName: selectedDestinationAccount.data.name,
       },
     });
   };
@@ -101,6 +101,7 @@ const TransferSatu = () => {
             <a
               href="#"
               className="inline-flex items-center text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              aria-label="Go to Transaksi"
             >
               Transaksi
             </a>
@@ -116,15 +117,16 @@ const TransferSatu = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 9 4-4-4-4"
                 />
               </svg>
               <a
                 href="#"
                 className="ms-1 font-bold text-[#333999] hover:text-blue-600 md:ms-2"
+                aria-label="Go to Transfer"
               >
                 Transfer
               </a>
@@ -133,7 +135,7 @@ const TransferSatu = () => {
         </ol>
       </div>
 
-      <div className="border mt-4 border-[#8C91D9]"></div>
+      <div className="border mt-4 border-[#8C91D9]" aria-hidden="true"></div>
 
       <div className="bg-white p-10 rounded-xl shadow-md  mx-auto mt-10">
         <h2 className="text-2xl font-bold mb-4">Transfer</h2>
@@ -145,7 +147,7 @@ const TransferSatu = () => {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
               <label
-                for="sumber-rekening"
+                htmlFor="sumber-rekening"
                 className="block font-bold text-lg mb-1"
               >
                 Sumber Rekening
@@ -159,6 +161,7 @@ const TransferSatu = () => {
                   className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                   value={selectedAccount}
                   onChange={handleChange}
+                  aria-required="true"
                 >
                   <option value="">Pilih nomor rekening</option>
                   {data.map((item, index) => (
@@ -171,8 +174,7 @@ const TransferSatu = () => {
                 <select
                   id="sumber-rekening"
                   className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
-                  value={selectedAccount}
-                  onChange={handleChange}
+                  aria-required="true"
                 >
                   <option>Loading ...</option>
                 </select>
@@ -180,7 +182,7 @@ const TransferSatu = () => {
             </div>
             <p className="text-lg font-bold">
               {selectedAccount && (
-                <div>
+                <div aria-live="polite">
                   <p>
                     IDR{" "}
                     {new Intl.NumberFormat("id").format(
@@ -197,7 +199,7 @@ const TransferSatu = () => {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
               <label
-                for="tujuan-rekening"
+                htmlFor="tujuan-rekening"
                 className="block font-bold text-lg mb-1"
               >
                 Rekening Tujuan
@@ -210,28 +212,45 @@ const TransferSatu = () => {
                 className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan Nomor Rekening"
                 value={destinationAccount}
-                // onChange={(e) => setDestinationAccount(e.target.value)}
                 onChange={handleCheckDestinationCard}
                 required
                 type="text"
                 maxLength="10"
+                aria-required="true"
+                aria-describedby="tujuan-rekening-help"
               />
+              <small
+                id="tujuan-rekening-help"
+                className="text-xs text-gray-500"
+              >
+                Maksimal 10 karakter
+              </small>
             </div>
             <p className="text-base font-normal">
               {selectedDestinationAccount ? (
-                <div>
-                  <p className="text-lg font-bold">{typeAccount.jenisRekening}</p>
-                  <p>Nama Rekening : <strong className="uppercase">{selectedDestinationAccount.data.name}</strong></p>
+                <div aria-live="polite">
+                  <p className="text-lg font-bold">
+                    {typeAccount.jenisRekening}
+                  </p>
+                  <p>
+                    Nama Rekening :{" "}
+                    <strong className="uppercase">
+                      {selectedDestinationAccount.data.name}
+                    </strong>
+                  </p>
                 </div>
               ) : (
-                <p>{DestinationNotFound}</p>
+                <p aria-live="assertive">{DestinationNotFound}</p>
               )}
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
-              <label for="nominal-tf" className="block font-bold text-lg mb-1">
+              <label
+                htmlFor="nominal-tf"
+                className="block font-bold text-lg mb-1"
+              >
                 Nominal Transfer
               </label>
               <p>Masukkan nominal transfer </p>
@@ -244,13 +263,14 @@ const TransferSatu = () => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
+                aria-required="true"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
-              <label for="catatan" className="block font-bold text-lg mb-1">
+              <label htmlFor="catatan" className="block font-bold text-lg mb-1">
                 Catatan
               </label>
               <p>(Opsional)</p>
@@ -262,7 +282,6 @@ const TransferSatu = () => {
                 placeholder="Masukkan Catatan"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                required
               />
             </div>
           </div>
@@ -270,17 +289,18 @@ const TransferSatu = () => {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="col-span-1">
               <label
-                for="jenis-transaksi"
+                htmlFor="jenis-transaksi"
                 className="block font-bold text-lg mb-1"
               >
                 Waktu Transfer
               </label>
-              <p>Pilih waktu transaksi yang di inginkan</p>
+              <p>Pilih waktu transaksi yang diinginkan</p>
             </div>
             <div className="col-span-1">
               <select
                 id="jenis-transaksi"
                 className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                aria-required="true"
               >
                 <option style={styleOption}>Pilih Waktu Transfer</option>
                 <option value="sekarang">Sekarang</option>
@@ -293,6 +313,7 @@ const TransferSatu = () => {
             <button
               type="submit"
               className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
+              aria-label="Verifikasi Detail Transfer"
             >
               <div className="flex items-center space-x-3">
                 <p>Verifikasi Detail Transfer</p>

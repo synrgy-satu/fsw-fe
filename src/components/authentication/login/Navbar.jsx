@@ -10,10 +10,14 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-gray-200 shadow-lg">
+    <nav className="bg-white border-gray-200 shadow-lg" aria-label="Main Navigation">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse z-20">
-          <img src={logo} className="h-8" alt="Logo" />
+        <Link 
+          to="/" 
+          className="flex items-center space-x-3 rtl:space-x-reverse z-20"
+          aria-label="Homepage"
+        >
+          <img src={logo} className="h-8" alt="Company logo" />
         </Link>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse z-20">
           <button
@@ -22,8 +26,9 @@ function Navbar() {
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="navbar-cta"
             aria-expanded={isOpen}
+            aria-label={isOpen ? "Close main menu" : "Open main menu"}
           >
-            <span className="sr-only">Open main menu</span>
+            <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
             {isOpen ? (
               <svg
                 className="w-5 h-5"
@@ -64,11 +69,13 @@ function Navbar() {
             isOpen ? "translate-x-0" : "-translate-x-full"
           } md:relative md:translate-x-0 md:bg-transparent md:w-auto md:h-auto md:flex md:items-center md:order-1`}
           id="navbar-cta"
+          role="menu"
         >
           <div className="flex justify-end p-4 md:hidden">
             <button
               onClick={toggleMenu}
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              aria-label="Close menu"
             >
               <span className="sr-only">Close menu</span>
               <svg
@@ -94,6 +101,7 @@ function Navbar() {
                 href="#"
                 className="block py-2 px-3 md:p-0 text-blue-gsm-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-gsm-100"
                 aria-current="page"
+                aria-label="Individu section"
               >
                 Individu
               </a>
@@ -102,6 +110,7 @@ function Navbar() {
               <a
                 href="#"
                 className="block py-2 px-3 md:p-0 text-blue-gsm-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-gsm-100"
+                aria-label="Bisnis section"
               >
                 Bisnis
               </a>
@@ -110,6 +119,7 @@ function Navbar() {
               <a
                 href="#"
                 className="block py-2 px-3 md:p-0 text-blue-gsm-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-gsm-100"
+                aria-label="Prioritas section"
               >
                 Prioritas
               </a>
@@ -118,6 +128,7 @@ function Navbar() {
               <a
                 href="#"
                 className="block py-2 px-3 md:p-0 text-blue-gsm-100 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-gsm-100"
+                aria-label="Tentang Kami section"
               >
                 Tentang Kami
               </a>

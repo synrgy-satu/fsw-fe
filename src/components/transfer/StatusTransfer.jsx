@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiHome } from "react-icons/fi";
 import { useAuth } from "../../context/authContext";
-import moment from 'moment';
+import moment from "moment";
 import html2pdf from "html2pdf.js";
 // import ReactToPrint from "react-to-print";
 // import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -21,7 +21,7 @@ const StatusTransfer = () => {
     referenceNumber,
     biayaAdmin,
     dateTransaction,
-    cardName
+    cardName,
   } = location.state || {};
 
   const handleStars = (number) => {
@@ -46,7 +46,7 @@ const StatusTransfer = () => {
   };
 
   const isoString = dateTransaction;
-  const formatedDate = moment(isoString).format('DD MMMM YYYY, HH:mm:ss');
+  const formatedDate = moment(isoString).format("DD MMMM YYYY, HH:mm:ss");
 
   useEffect(() => {
     if (!selectedAccount) {
@@ -61,6 +61,7 @@ const StatusTransfer = () => {
             <a
               href="#"
               className="inline-flex items-center text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              aria-label="Transaksi Page"
             >
               Transaksi
             </a>
@@ -76,15 +77,16 @@ const StatusTransfer = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 9 4-4-4-4"
                 />
               </svg>
               <a
                 href="#"
                 className="ms-1 font-bold text-[#333999] hover:text-blue-600 md:ms-2"
+                aria-label="Transfer Page"
               >
                 Transfer
               </a>
@@ -93,122 +95,109 @@ const StatusTransfer = () => {
         </ol>
       </div>
 
-      <div className="border mt-4 border-[#8C91D9]"></div>
+      <div className="border mt-4 border-[#8C91D9]" aria-hidden="true"></div>
 
       <div className="bg-white p-10 rounded-xl shadow-md mx-auto mt-10 leading-8">
         <img src="/images/satu.png" alt="Logo Satu Bank" />
         <div className="flex mt-2">
-          <img src="/images/bxs_badge-check.svg" alt="badge check" />
+          <img src="/images/bxs_badge-check.svg" alt="Badge check icon" />
           <h2 className="ml-2 text-2xl font-bold">Transfer Berhasil</h2>
         </div>
         <p>Simpan bukti transfer sebagai referensi Anda.</p>
         <div className="mt-3">
-          <table className="relative overflow-x-auto table-auto w-[100%]">
-            <thead>
-              <tr>
-                <td>Rekening Tujuan</td>
-                <td>Nominal Transfer</td>
+          <table
+            className="relative overflow-x-auto table-auto w-[100%]"
+            role="table"
+          >
+            <thead className="text-left" role="rowgroup">
+              <tr role="row">
+                <th role="columnheader">Rekening Tujuan</th>
+                <th role="columnheader">Nominal Transfer</th>
               </tr>
             </thead>
-            <tbody className="text-left">
-              <tr>
-                <th className="uppercase">{cardName}</th>
-                <th>IDR {new Intl.NumberFormat("id").format(amount)},00</th>
+            <tbody className="text-left" role="rowgroup">
+              <tr role="row">
+                <td role="cell" className="uppercase">
+                  {cardName}
+                </td>
+                <td role="cell">
+                  IDR {new Intl.NumberFormat("id").format(amount)},00
+                </td>
               </tr>
-              <tr>
-                <th>Bank SATU {destinationAccount}</th>
-                <th>
-                  <span className="text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-blue-900">
+              <tr role="row">
+                <td role="cell">Bank SATU {destinationAccount}</td>
+                <td role="cell">
+                  <span
+                    className="text-white text-xs font-medium me-2 px-2.5 py-0.5 rounded bg-blue-900"
+                    aria-live="polite"
+                    role="alert"
+                  >
                     + Biaya Admin
                   </span>
                   IDR 0
-                </th>
+                </td>
               </tr>
-              <tr>
-                <td className="border-t-4">TOTAL</td>
-                <th className="border-t-4">
+              <tr role="row">
+                <td role="cell" className="border-t-4">
+                  TOTAL
+                </td>
+                <td role="cell" className="border-t-4">
                   IDR{" "}
                   {new Intl.NumberFormat("id").format(
                     Number(amount) + biayaAdmin
                   )}
                   ,00
-                </th>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div className="mt-5">
-          <p className="bg-blue-800 text-lg font-bold text-white p-3 rounded-md">
+          <p
+            className="bg-blue-800 text-lg font-bold text-white p-3 rounded-md"
+            role="alert"
+            aria-live="polite"
+          >
             Informasi Transaksi
           </p>
-          <table className="relative overflow-x-auto table-auto w-[100%]">
-            <thead className="text-left">
-              <tr>
-                <td>Dari Rekening</td>
-                <th>
+          <table
+            className="relative overflow-x-auto table-auto w-[100%]"
+            role="table"
+          >
+            <thead className="text-left" role="rowgroup">
+              <tr role="row">
+                <td role="cell">Dari Rekening</td>
+                <th role="columnheader">
                   : {handleStars(selectedAccount)} ({userInfo?.username})
                 </th>
-                <td colSpan={2} className="w-40"></td>
+                <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
             </thead>
-            <tbody className="text-left">
-              <tr>
-                <td>Waktu Transaksi</td>
-                <th>: {formatedDate}</th>
-                <td colSpan={2} className="w-40"></td>
+            <tbody className="text-left" role="rowgroup">
+              <tr role="row">
+                <td role="cell">Waktu Transaksi</td>
+                <th role="columnheader">: {formatedDate}</th>
+                <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
-              <tr>
-                <td>Catatan</td>
-                <th>: {note}</th>
-                <td colSpan={2} className="w-40"></td>
+              <tr role="row">
+                <td role="cell">Catatan</td>
+                <th role="columnheader">: {note}</th>
+                <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
-              <tr>
-                <td>Nomor Referensi</td>
-                <th>: {referenceNumber}</th>
-                <td colSpan={2} className="w-40"></td>
+              <tr role="row">
+                <td role="cell">Nomor Referensi</td>
+                <th role="columnheader">: {referenceNumber}</th>
+                <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
             </tbody>
           </table>
-        </div>{" "}
-        <br />
+        </div>
+
         <div className="flex flex-row-reverse">
-          {/* <ReactToPrint
-            trigger={() => (
-              <button
-                type="submit"
-                className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
-              >
-                <div className="flex items-center space-x-3">
-                  <p>Unduh Bukti Transfer</p>
-                  <FiDownload className="text-2xl" />
-                </div>
-              </button>
-            )}
-            content={() => componentRef.current}
-          /> */}
-
-          {/* <PDFDownloadLink
-            document={
-              <MyDocument
-                dateTransaction={dateTransaction}
-                referenceNumber={referenceNumber}
-                selectedAccount={selectedAccount}
-                userInfo={userInfo}
-                destinationAccount={destinationAccount}
-                amount={amount}
-                biayaAdmin={biayaAdmin}
-              />
-            }
-            fileName="bukti_transfer_online.pdf"
-          >
-            {({ loading }) =>
-              loading ? "Loading document..." : "Download PDF"
-            }
-          </PDFDownloadLink> */}
-
           <button
             onClick={handleDownloadPdf}
             className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
+            aria-label="Download proof of transfer"
           >
             <div className="flex items-center space-x-3">
               <p>Unduh Bukti Transfer</p>
@@ -220,6 +209,7 @@ const StatusTransfer = () => {
             <button
               type="submit"
               className="text-lg font-semibold text-blue-gsm-100 py-3 px-4 rounded-2xl outline"
+              aria-label="Return to home"
             >
               <div className="flex items-center space-x-3">
                 <p>Beranda</p>
