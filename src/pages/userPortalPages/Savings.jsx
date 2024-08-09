@@ -12,6 +12,8 @@ import { DUMMY_DATA } from "./Homepage";
 import InfoItem from "../../components/userPortal/savings/InfoItem";
 import ToggleTransaction from "../../components/userPortal/savings/ToggleTransaction";
 import TransactionLimiter from "../../components/userPortal/savings/TransactionLimiter";
+import { useCard } from "../../context/cardContext";
+import { useAuth } from "../../context/authContext";
 
 const aggregateData = (data, key) =>
   data.reduce((acc, curr) => acc + curr[key], 0);
@@ -32,6 +34,9 @@ export default function Savings() {
   const [antarBank, setAntarBank] = useState(10000);
   const [isCheckedDomestic, setIsCheckedDomestic] = useState(false);
   const [isCheckedMBanking, setIsCheckedMBanking] = useState(false);
+  const { data, handleCard } = useCard();
+  const { authState } = useAuth(); // Akses authState
+
 
   const handleToggleDomestic = () => {
     setIsCheckedDomestic(!isCheckedDomestic);
@@ -57,8 +62,12 @@ export default function Savings() {
     setAntarBank(e.target.value);
   };
 
-  useEffect(() => {}, []);
-
+  useEffect(() => {
+    if (authState?.accessToken) {
+      handleCard();
+    }
+  }, [authState, handleCard]);
+  
   return (
     <div className="box-border p-2">
       <div className="flex" aria-label="Breadcrumb">
@@ -105,7 +114,7 @@ export default function Savings() {
               <p className="flex items-start py-1">
                 IDR{" "}
                 <span className="ps-2 font-extrabold text-3xl">
-                  3.253.117,00
+                  {new Intl.NumberFormat("id").format(data[0].balance)},00
                 </span>
               </p>
             </div>
