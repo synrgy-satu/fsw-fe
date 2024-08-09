@@ -158,12 +158,12 @@ export default function Homepage() {
                       <span className="me-3">
                         {currency[activeCurrency]?.symbol}
                       </span>
-                      {new Intl.NumberFormat("id").format(data[0].balance)},00
-                      {/* {valueFormatter(
+                      {/* {new Intl.NumberFormat("id").format(data[0].balance)},00 */}
+                      {valueFormatter(
                         totalBalance,
                         currency[activeCurrency]?.convert,
                         currency[activeCurrency]?.locale
-                      )} */}
+                      )}
                     </p>
                   </div>
                   <div>
