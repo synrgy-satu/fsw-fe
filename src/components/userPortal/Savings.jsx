@@ -5,7 +5,7 @@ import {
 } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-import { valueFormatter } from "../../utils/homepage/valueFormatter";
+import { valueFormatter } from "../../utils/homepage/homepageUtils";
 import { useState, useEffect, useRef } from "react";
 import HomeLineChart from "./homepage/HomeLineChart";
 import InfoItem from "./savings/InfoItem";
@@ -14,8 +14,13 @@ import TransactionLimiter from "./savings/TransactionLimiter";
 import SavingsList from "./savings/SavingsList";
 import { useAuth } from "../../context/authContext";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
-import { aggregateData } from "../../utils/homepage/aggregateData";
-import { DUMMY_DATA } from "../../utils/homepage/dummyData";
+import { aggregateData } from "../../utils/homepage/homepageUtils";
+import DummyData from "../../utils/homepage/dummyData";
+import { DUMMY_DATA } from "../../utils/homepage/dummies";
+
+// import { filterLastMonths } from "../../utils/homepage/homepageUtils";
+// import getDummyData from "../../utils/homepage/getDummyData";
+// import DummyData from "../../utils/homepage/DummyData";
 
 export default function Savings() {
   const [tunai, setTunai] = useState(10000);
@@ -31,6 +36,29 @@ export default function Savings() {
   const [accounts, setAccounts] = useState([]);
   const { userInfo } = useAuth();
   const [selectOption, setSelectOption] = useState(false);
+  const [monthsFilter, setMonthsFilter] = useState(0);
+  const [graphData, setGraphData] = useState([])
+  const [totalDebit, setTotalDebit] = useState()
+  const [totalCredit, setTotalCredit] = useState()
+
+  useEffect(() => { 
+    const graphData = DummyData.getPeriodiclyTransaction((selectOption === false) ? 0 : selectOption)
+    setGraphData(graphData);
+
+    const totalDebit = graphData.reduce((prev, curr) => { 
+      prev += curr.debit;
+      return prev; 
+    }, 0)
+
+    const totalCredit = graphData.reduce((prev, curr) => { 
+      prev += curr.kredit;
+      return prev; 
+    }, 0)
+
+    setTotalDebit(totalDebit);
+    setTotalCredit(totalCredit);
+
+  }, [selectOption])
 
   useEffect(() => {
     if (userInfo) {
@@ -92,7 +120,6 @@ export default function Savings() {
   };
 
   const handleTunai = (e) => {
-    console.log(tunai);
     setTunai(e.target.value);
   };
 
@@ -143,7 +170,6 @@ export default function Savings() {
             handleSelected={handleSelectedSavings}
             isActive
           />
-          {console.log("leng: ", accounts.length)}
           {isClickedSavings && (
             <ul
               className={`absolute bg-white left-0 right-0 border border-primary rounded-lg
@@ -248,7 +274,8 @@ export default function Savings() {
                 </div>
                 <div className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))}
+                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
+                  {valueFormatter(totalDebit)}
                 </div>
               </div>
               <div className="mb-2">
@@ -258,15 +285,19 @@ export default function Savings() {
                 </div>
                 <p className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {valueFormatter(aggregateData(DUMMY_DATA, "debit"))}
+                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
+                  {valueFormatter(totalCredit)}
                 </p>
               </div>
             </div>
             <div className="-mb-3">
               <HomeLineChart
-                data={DUMMY_DATA}
-                xDataKey={"month"}
-                line1DataKey={"deposit"}
+                // data={filterLastMonths(DUMMY_DATA, monthsFilter)}
+                // data={getDummyData(selectOption)}
+                data={graphData}
+                // xDataKey={"month"}
+                xDataKey={"period"}
+                line1DataKey={"kredit"}
                 line2DataKey={"debit"}
                 height={200}
                 dot={false}

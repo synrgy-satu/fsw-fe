@@ -9,7 +9,6 @@ const TimeSelectOption = ({
   isClicked,
 }) => {
   // const [isClicked, setIsClicked] = useState(false);
-
   // const handleClick = (isClicked) => {
   //   setIsClicked(!isClicked);
   // };
@@ -19,7 +18,7 @@ const TimeSelectOption = ({
     <div className={`${className}`}>
       <div
         className="bg-primary text-white rounded-md cursor-pointer
-            hover:bg-indigo-950 relative"
+            relative group"
         onClick={() => {
           // handleClick(isClicked);
           handleClickWindow();
@@ -33,7 +32,7 @@ const TimeSelectOption = ({
               <p className="p-2">{times[selected] + " Terakhir"}</p>
             )}
           </div>
-          <div className="col-span-3 py-3 flex justify-center">
+          <div className="col-span-3 py-3 flex justify-center group-hover:rounded-md group-hover:bg-indigo-950">
             <FaAngleDown
               className={`text-xl ${
                 isClicked ? "rotate-180 duration-200 transform" : ""
