@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/home/Navbar";
 
-const Onboarding = () => {
+const NotFound = () => {
   return (
     <div className="max-w-[1440px] container mx-auto">
       {/* first section */}
@@ -26,4 +26,4 @@ const Onboarding = () => {
   );
 };
 
-export default Onboarding;
+export default NotFound;
