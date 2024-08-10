@@ -12,15 +12,14 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showWarningPopup, setShowWarningPopup] = useState(false);
 
   const login = async (emailAddress, password) => {
     try {
       const response = await axios.post(
         "https://satu.cekrek.shop/api/v1/auth/login",
-        {
-          emailAddress,
-          password,
-        }
+        { emailAddress, password }
       );
 
       if (response.status === 200) {
@@ -48,9 +47,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(
         "https://satu.cekrek.shop/api/v1/auth/password",
-        {
-          emailAddress,
-        }
+        { emailAddress }
       );
 
       if (response.status === 200) {
@@ -112,14 +109,23 @@ export const AuthProvider = ({ children }) => {
     const expirationTime = authState.expiresIn * 1000;
     const expirationTimestamp = Date.now() + expirationTime;
 
+    const warningTime = expirationTimestamp - Date.now() - 30000; // 30 seconds before expiration
+
     const timer = setTimeout(() => {
+      setShowWarningPopup(true); // Show warning popup 30 seconds before expiration
+    }, warningTime);
+
+    const expirationTimer = setTimeout(() => {
       console.warn("Session expired. Please log in again.");
       logout();
       localStorage.removeItem("authState");
       window.location.href = "/login";
     }, expirationTimestamp - Date.now());
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(expirationTimer);
+    };
   }, [authState]);
 
   return (
@@ -133,6 +139,10 @@ export const AuthProvider = ({ children }) => {
         setIsResetPassword,
         forgotPassword,
         userInfo,
+        showPopup,
+        setShowPopup,
+        showWarningPopup,
+        setShowWarningPopup,
       }}
     >
       {children}
