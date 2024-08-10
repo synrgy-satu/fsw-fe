@@ -1,7 +1,6 @@
 import React from "react";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import { Route, Routes } from "react-router-dom";
-import Homepage from "./Homepage";
 import Mutation from "../Mutation";
 import CategoryTransfer from "../../components/transfer/CategoryTransfer";
 import CategoryTransferOneBank from "../../components/transfer/CategoryTransferOneBank";
@@ -9,7 +8,8 @@ import TransferSatu from "../../components/transfer/TransferSatu";
 import DetailTransfer from "../../components/transfer/DetailTransfer";
 import StatusTransfer from "../../components/transfer/StatusTransfer";
 import NotFoundUserPortal from "./NotFoundUserPortal";
-import Savings from "./Savings";
+import Homepage from "../../components/userPortal/Homepage";
+import Savings from "../../components/userPortal/Savings";
 
 const UserPortal = () => (
   <DefaultLayout>
