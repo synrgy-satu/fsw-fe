@@ -8,36 +8,29 @@ import CategoryTransferOneBank from "../../components/transfer/CategoryTransferO
 import TransferSatu from "../../components/transfer/TransferSatu";
 import DetailTransfer from "../../components/transfer/DetailTransfer";
 import StatusTransfer from "../../components/transfer/StatusTransfer";
+import NotFoundUserPortal from "./NotFoundUserPortal";
 import Savings from "./Savings";
 
-const UserPortal = () => {
-  return (
-    <DefaultLayout>
-      <Routes>
-        <Route
-          index
-          element={
-            <>
-              <Homepage />
-            </>
-          }
-        />
-        <Route path="mutasi-rekening" element={<Mutation />} />
-        <Route path="transfer" element={<CategoryTransfer />} />
-        <Route path="savings" element={<Savings />} />
-        <Route path="transfer/tf-one" element={<CategoryTransferOneBank />} />
-        <Route path="transfer/tf-one/satu" element={<TransferSatu />} />
-        <Route
-          path="transfer/tf-one/satu/detail-tf"
-          element={<DetailTransfer />}
-        />
-        <Route
-          path="transfer/tf-one/satu/detail-tf/status-tf"
-          element={<StatusTransfer />}
-        />
-      </Routes>
-    </DefaultLayout>
-  );
-};
+const UserPortal = () => (
+  <DefaultLayout>
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      <Route path="mutasi-rekening" element={<Mutation />} />
+      <Route path="transfer" element={<CategoryTransfer />} />
+      <Route path="savings" element={<Savings />} />
+      <Route path="transfer/tf-one" element={<CategoryTransferOneBank />} />
+      <Route path="transfer/tf-one/satu" element={<TransferSatu />} />
+      <Route
+        path="transfer/tf-one/satu/detail-tf"
+        element={<DetailTransfer />}
+      />
+      <Route
+        path="transfer/tf-one/satu/detail-tf/status-tf"
+        element={<StatusTransfer />}
+      />
+      <Route path="*" element={<NotFoundUserPortal />} />
+    </Routes>
+  </DefaultLayout>
+);
 
 export default UserPortal;
