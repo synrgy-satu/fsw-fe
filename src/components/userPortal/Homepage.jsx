@@ -6,36 +6,22 @@ import {
 } from "react-icons/fa6";
 
 import { DonutChart } from "@tremor/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
   percentageFormatter,
   valueFormatter,
-} from "../../utils/homepage/valueFormatter";
+} from "../../utils/homepage/homepageUtils";
 
-import AssetCard from "../../components/userPortal/homepage/AssetCard";
-import HomeLineChart from "../../components/userPortal/homepage/HomeLineChart";
-import HomeNotification from "../../components/userPortal/homepage/HomeNotification";
-import { useCard } from "../../context/cardContext";
-
-export const DUMMY_DATA = [
-  { month: "Jan", debit: 5000000, deposit: 7000000, invest: 3000000 },
-  { month: "Feb", debit: 4000000, deposit: 8000000, invest: 3500000 },
-  { month: "Mar", debit: 6000000, deposit: 7500000, invest: 4000000 },
-  { month: "Apr", debit: 7000000, deposit: 9000000, invest: 4500000 },
-  { month: "May", debit: 6500000, deposit: 8500000, invest: 5000000 },
-  { month: "Jun", debit: 6000000, deposit: 9500000, invest: 5500000 },
-  { month: "Jul", debit: 7000000, deposit: 10000000, invest: 6000000 },
-  { month: "Aug", debit: 7500000, deposit: 10500000, invest: 6500000 },
-  { month: "Sep", debit: 8000000, deposit: 11000000, invest: 7000000 },
-  { month: "Oct", debit: 8500000, deposit: 11500000, invest: 7500000 },
-  { month: "Nov", debit: 9000000, deposit: 12000000, invest: 8000000 },
-  { month: "Dec", debit: 9500000, deposit: 12500000, invest: 8500000 },
-];
-
-const aggregateData = (data, key) =>
-  data.reduce((acc, curr) => acc + curr[key], 0);
+import AssetCard from "./homepage/AssetCard";
+import HomeLineChart from "./homepage/HomeLineChart";
+import HomeNotification from "./homepage/HomeNotification";
+import TimeSelectOption from "./homepage/TimeSelectOptions";
+import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
+import { aggregateData } from "../../utils/homepage/homepageUtils";
+import DummyData, { filterFewMonths } from "../../utils/homepage/dummyData";
+// import { filterLastMonths } from "../../utils/homepage/homepageUtils";
 
 const totalBalance =
   aggregateData(DUMMY_DATA, "debit") +
@@ -44,53 +30,99 @@ const totalBalance =
 
 const ASSETS = ["debit", "deposit", "invest"];
 
-const donut = [
-  {
-    name: "Debit",
-    value: aggregateData(DUMMY_DATA, "debit"),
-  },
-  {
-    name: "Deposito",
-    value: aggregateData(DUMMY_DATA, "deposit"),
-  },
-  {
-    name: "Investasi",
-    value: aggregateData(DUMMY_DATA, "invest"),
-  },
-];
-
-export const CURRENCIES = [
-  {
-    name: "IDR",
-    convert: 1,
-    symbol: "IDR",
-    locale: "id",
-  },
-  {
-    name: "USD",
-    convert: 16240,
-    symbol: "$",
-    locale: "us",
-  },
-];
-
 export default function Homepage() {
-  const [currency, setCurrency] = useState([]);
+  const [currency, setCurrency] = useState(CURRENCIES);
   const [activeCurrency, setActiveCurrency] = useState(0);
   const [notification, setNotification] = useState(true);
-  const { data, handleCard } = useCard();
+
+  const [monthsFilterBalance, setMonthsFilterBalance] = useState(0);
+  const [selectOptionBalance, setSelectOptionBalance] = useState(false);
+  const [isClickedTimeOptionBalance, setIsClickedTimeOptionBalance] =
+    useState(false);
+
+  // const [monthsFilterGraph, setMonthsFilterGraph] = useState(0);
+  const [selectOptionGraph, setSelectOptionGraph] = useState(false);
+  const [isClickedTimeOptionGraph, setIsClickedTimeOptionGraph] =
+    useState(false);
+
+  const balanceDropdownRef = useRef(null);
+  const graphDropdownRef = useRef(null);
+
+  const [graphData, setGraphData] = useState([])
+  const [totalDebit, setTotalDebit] = useState()
+  const [totalCredit, setTotalCredit] = useState()
+
+  useEffect(() => { 
+    const graphData = DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)
+    setGraphData(graphData);
+    // console.log(graphData);
+
+    const totalDebit = graphData.reduce((prev, curr) => { 
+      prev += curr.debit;
+      return prev; 
+    }, 0)
+
+    const totalCredit = graphData.reduce((prev, curr) => { 
+      prev += curr.kredit;
+      return prev; 
+    }, 0)
+
+    setTotalDebit(totalDebit);
+    setTotalCredit(totalCredit);
+
+  }, [selectOptionGraph])
 
   useEffect(() => {
-    setCurrency(CURRENCIES);
-    handleCard();
+    const isAlertClosed = localStorage.getItem("isAlertClosed");
+    if (isAlertClosed === "true") {
+      setNotification(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
+
+  const handleisClickedOptionBalance = () => {
+    setIsClickedTimeOptionBalance(!isClickedTimeOptionBalance);
+  };
+
+  const handleisClickedOptionGraph = () => {
+    setIsClickedTimeOptionGraph(!isClickedTimeOptionGraph);
+  };
+
+  const handleSelectOptionBalance = (option) => {
+    setSelectOptionBalance(option);
+  };
+
+  const handleSelectOptionGraph = (option) => {
+    setSelectOptionGraph(option);
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      balanceDropdownRef.current &&
+      !balanceDropdownRef.current.contains(event.target)
+    ) {
+      setIsClickedTimeOptionBalance(false);
+    }
+    if (
+      graphDropdownRef.current &&
+      !graphDropdownRef.current.contains(event.target)
+    ) {
+      setIsClickedTimeOptionGraph(false);
+    }
+  };
 
   const handleActive = (position) => {
     setActiveCurrency(position);
   };
 
-  const handleNotification = (isOpen) => {
-    setNotification(isOpen);
+  const handleCloseNotification = () => {
+    setNotification(false);
+    localStorage.setItem("isAlertClosed", "true");
   };
 
   return (
@@ -108,10 +140,7 @@ export default function Homepage() {
       <div className="border mt-4 border-primary mb-6"></div>
 
       {notification && (
-        <HomeNotification
-          handleNotification={handleNotification}
-          notification={notification}
-        />
+        <HomeNotification handleClick={handleCloseNotification} />
       )}
       <div className="bg-white rounded-xl mb-8 ps-3">
         <div className="p-5 grid grid-cols-12 gap-6">
@@ -122,7 +151,7 @@ export default function Homepage() {
               </p>
               <div
                 className="col-span-3 group flex text-primary border-primary border-2 rounded-lg 
-                p-2 items-center gap-2 cursor-pointer hover:bg-indigo-50"
+                py-2 items-center gap-2 cursor-pointer hover:bg-indigo-50 justify-center"
               >
                 <FaArrowsRotate className="group-hover:rotate-[360deg] transition-transform duration-500 ease-in" />
                 Refresh
@@ -151,8 +180,8 @@ export default function Homepage() {
             </div>
             <div className="bg-primary-background p-5 rounded-xl">
               <div className="">
-                <div className="py-1 flex content-between justify-between">
-                  <div>
+                <div className="py-1 grid grid-cols-12">
+                  <div className="col-span-7">
                     <p className="font-bold text-xl">Saldo Total</p>
                     <p className="text-2xl text-primary font-bold">
                       <span className="me-3">
@@ -166,21 +195,13 @@ export default function Homepage() {
                       )}
                     </p>
                   </div>
-                  <div>
-                    <select
-                      className="py-2 px-4 bg-primary text-white rounded-xl cursor-pointer
-                      hover:bg-indigo-950"
-                    >
-                      <option className="bg-white text-primary font-bold">
-                        1 Tahun Terakhir
-                      </option>
-                      <option className="bg-white text-primary font-bold">
-                        6 Bulan Terakhir
-                      </option>
-                      <option className="bg-white text-primary font-bold">
-                        3 Bulan Terakhir
-                      </option>
-                    </select>
+                  <div ref={balanceDropdownRef} className="col-span-5">
+                    <TimeSelectOption
+                      selected={selectOptionBalance}
+                      handleSelect={handleSelectOptionBalance}
+                      handleClickWindow={handleisClickedOptionBalance}
+                      isClicked={isClickedTimeOptionBalance}
+                    />
                   </div>
                 </div>
               </div>
@@ -191,7 +212,9 @@ export default function Homepage() {
                     key={asset}
                     currency={currency}
                     activeCurrency={activeCurrency}
-                    data={DUMMY_DATA}
+                    // data={filterLastMonths(DUMMY_DATA, monthsFilterBalance)}
+                    data={filterFewMonths(DUMMY_DATA, selectOptionBalance)}
+                    // data={DummyData.getPeriodiclyTransaction(monthsFilterBalance)}
                     aggregateData={aggregateData}
                   />
                 ))}
@@ -340,27 +363,25 @@ export default function Homepage() {
             <p className="col-span-8 font-extrabold text-2xl">
               Pemasukan dan Pengeluaran
             </p>
-            <select
-              className="col-span-4 py-2 px-3 bg-primary text-white rounded-xl cursor-pointer
-                      hover:bg-indigo-950"
-            >
-              <option className="bg-white text-primary font-bold">
-                1 Tahun Terakhir
-              </option>
-              <option className="bg-white text-primary font-bold">
-                6 Bulan Terakhir
-              </option>
-              <option className="bg-white text-primary font-bold">
-                3 Bulan Terakhir
-              </option>
-            </select>
+            <div ref={graphDropdownRef} className="col-span-4">
+              <TimeSelectOption
+                selected={selectOptionGraph}
+                handleSelect={handleSelectOptionGraph}
+                handleClickWindow={handleisClickedOptionGraph}
+                isClicked={isClickedTimeOptionGraph}
+              />
+            </div>
           </div>
           <HomeLineChart
-            data={DUMMY_DATA}
-            xDataKey={"month"}
-            line1DataKey={"deposit"}
-            line2DataKey={"debit"}
+            // data={filterLastMonths(DUMMY_DATA, monthsFilterGraph)}
+            // data={DummyData.getPeriodiclyTransaction(selectOptionGraph)}
+            // data={DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)}
+            data={graphData}
+            xDataKey={"period"}
+            line1DataKey={"debit"}
+            line2DataKey={"kredit"}
             height={175}
+            dot={false}
           />
         </div>
         <div className="col-span-4 bg-primary-background p-6 rounded-[30px] text-xl flex align-middle items-center">
@@ -372,7 +393,8 @@ export default function Homepage() {
               </div>
               <div className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
                 <span className="font-normal pe-6">IDR</span>
-                {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))}
+                {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
+                {valueFormatter(totalDebit)}
               </div>
             </div>
             <div className="mt-6">
@@ -382,7 +404,8 @@ export default function Homepage() {
               </div>
               <p className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
                 <span className="font-normal pe-6">IDR</span>
-                {valueFormatter(aggregateData(DUMMY_DATA, "debit"))}
+                {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
+                {valueFormatter(totalCredit)}
               </p>
             </div>
           </div>
