@@ -1,32 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navbar from "../components/home/Navbar";
 
-const NotFound = () => {
+const Onboarding = () => {
   return (
-    <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-      <div className="text-center">
-        <p className="text-base font-semibold text-indigo-600">404</p>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          Page not found
-        </h1>
-        <p className="mt-6 text-base leading-7 text-gray-600">
-          Sorry, we couldn’t find the page you’re looking for.
+    <div className="max-w-[1440px] container mx-auto">
+      {/* first section */}
+      <Navbar />
+      <div className="flex flex-col items-center justify-center h-screen">
+        <img src="/images/Ilustarsi 404.png" className="" alt="Ilustarsi 404" />
+        <h2 className="font-bold text-5xl text-center text-[#333999] mb-3">
+          Halaman Tidak Ditemukan!
+        </h2>
+        <p className="font-normal text-xl text-center text-[#1A1A1A] mb-10">
+          Halaman yang kamu cari saat ini tidak tersedia
         </p>
-        <div className="mt-10 flex items-center justify-center gap-x-6">
-          <Link
-            to="/"
-            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Go to Home
-          </Link>
-
-          <Link to="/" className="text-sm font-semibold text-gray-900">
-            Contact support
-          </Link>
-        </div>
+        <Link
+          to="/"
+          className="w-[329.63px] text-white bg-[#333999] hover:bg-[#272D87] font-bold text-base rounded-lg px-5 py-3 text-center"
+        >
+          Kembali ke Halaman Awal
+        </Link>
       </div>
-    </main>
+    </div>
   );
 };
 
-export default NotFound;
+export default Onboarding;
