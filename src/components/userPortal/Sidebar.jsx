@@ -5,10 +5,12 @@ import { GrTransaction } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
+import { PiNumberOneBold } from "react-icons/pi";
 import { useAuth } from "../../context/authContext";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);
+  const [isSatuPortalOpen, setSatuPortalOpen] = useState(false);
   const [isPengaturanOpen, setPengaturanOpen] = useState(false);
   const { userInfo } = useAuth();
 
@@ -16,6 +18,10 @@ const Sidebar = () => {
 
   const toggleTransaksiDropdown = () => {
     setTransaksiOpen(!isTransaksiOpen);
+  };
+
+  const toggleSatuPortalDropdown = () => {
+    setSatuPortalOpen(!isSatuPortalOpen);
   };
 
   const togglePengaturanDropdown = () => {
@@ -128,6 +134,54 @@ const Sidebar = () => {
                 )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
               >
                 Mutasi Rekening
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            onClick={toggleSatuPortalDropdown}
+            className={`flex items-center justify-between w-full py-3 px-6 mt-5 text-base font-normal rounded-lg ${
+              isActive("/portal/qris") ||
+              isActive("/portal/deposito") ||
+              isActive("/portal/investasi")
+            } hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+          >
+            <div className="flex items-center">
+              <PiNumberOneBold className="mr-4 text-2xl" /> Satu Portal
+            </div>
+            <FiChevronDown
+              className={`transition-transform ${
+                isSatuPortalOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          {isSatuPortalOpen && (
+            <div className="ml-8">
+              <Link
+                to="/portal/qris"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/qris"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                QRIS
+              </Link>
+              <Link
+                to="/portal/deposito"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/deposito"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                Deposito
+              </Link>
+              <Link
+                to="/portal/investasi"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/investasi"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                Investasi
               </Link>
             </div>
           )}
