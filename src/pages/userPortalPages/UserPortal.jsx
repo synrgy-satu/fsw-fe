@@ -10,6 +10,7 @@ import StatusTransfer from "../../components/transfer/StatusTransfer";
 import NotFoundUserPortal from "./NotFoundUserPortal";
 import Homepage from "../../components/userPortal/Homepage";
 import Savings from "../../components/userPortal/Savings";
+import Qris from "../../components/userPortal/Qris.jsx";
 
 const UserPortal = () => (
   <DefaultLayout>
@@ -28,6 +29,7 @@ const UserPortal = () => (
         path="transfer/tf-one/satu/detail-tf/status-tf"
         element={<StatusTransfer />}
       />
+      <Route path="qris" element={<Qris />} />
       <Route path="*" element={<NotFoundUserPortal />} />
     </Routes>
   </DefaultLayout>
