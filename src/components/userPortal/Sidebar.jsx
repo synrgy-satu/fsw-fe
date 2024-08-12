@@ -5,10 +5,12 @@ import { GrTransaction } from "react-icons/gr";
 import { GoHome } from "react-icons/go";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
+import { PiNumberOneBold } from "react-icons/pi";
 import { useAuth } from "../../context/authContext";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);
+  const [isSatuPortalOpen, setSatuPortalOpen] = useState(false);
   const [isPengaturanOpen, setPengaturanOpen] = useState(false);
   const { userInfo } = useAuth();
 
@@ -16,6 +18,10 @@ const Sidebar = () => {
 
   const toggleTransaksiDropdown = () => {
     setTransaksiOpen(!isTransaksiOpen);
+  };
+
+  const toggleSatuPortalDropdown = () => {
+    setSatuPortalOpen(!isSatuPortalOpen);
   };
 
   const togglePengaturanDropdown = () => {
@@ -46,7 +52,7 @@ const Sidebar = () => {
       <nav className="px-6">
         <Link
           to="/portal"
-          className={`flex items-center py-3 px-6 text-base font-normal rounded-lg ${isActive(
+          className={`flex items-center py-3 px-6 mb-5 text-base font-normal rounded-lg ${isActive(
             "/portal"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
@@ -54,7 +60,7 @@ const Sidebar = () => {
         </Link>
         <Link
           to="/portal/favorites"
-          className={`flex items-center py-3 px-6 text-base font-normal rounded-lg ${isActive(
+          className={`flex items-center py-3 px-6 my-5 text-base font-normal rounded-lg ${isActive(
             "/portal/favorites"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
@@ -62,7 +68,7 @@ const Sidebar = () => {
         </Link>
         <Link
           to="/portal/savings"
-          className={`flex items-center py-3 px-6 text-base font-normal rounded-lg ${isActive(
+          className={`flex items-center py-3 px-6 my-5 text-base font-normal rounded-lg ${isActive(
             "/portal/savings"
           )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
         >
@@ -71,7 +77,7 @@ const Sidebar = () => {
         <div className="relative">
           <button
             onClick={toggleTransaksiDropdown}
-            className={`flex items-center justify-between w-full py-3 px-6 text-base font-normal rounded-lg ${
+            className={`flex items-center justify-between w-full py-3 px-6 mt-5 text-base font-normal rounded-lg ${
               isActive("/portal/transfer") ||
               isActive("/portal/transfer/tf-one") ||
               isActive("/portal/transfer/tf-one/satu") ||
@@ -92,7 +98,7 @@ const Sidebar = () => {
             />
           </button>
           {isTransaksiOpen && (
-            <div className="ml-8 mt-1">
+            <div className="ml-8">
               <Link
                 to="/portal/transfer"
                 className={`block py-3 px-6 text-base font-normal rounded-lg ${
@@ -132,10 +138,58 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
+        <div className="relative">
+          <button
+            onClick={toggleSatuPortalDropdown}
+            className={`flex items-center justify-between w-full py-3 px-6 mt-5 text-base font-normal rounded-lg ${
+              isActive("/portal/qris") ||
+              isActive("/portal/deposito") ||
+              isActive("/portal/investasi")
+            } hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+          >
+            <div className="flex items-center">
+              <PiNumberOneBold className="mr-4 text-2xl" /> Satu Portal
+            </div>
+            <FiChevronDown
+              className={`transition-transform ${
+                isSatuPortalOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+          {isSatuPortalOpen && (
+            <div className="ml-8">
+              <Link
+                to="/portal/qris"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/qris"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                QRIS
+              </Link>
+              <Link
+                to="/portal/deposito"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/deposito"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                Deposito
+              </Link>
+              <Link
+                to="/portal/investasi"
+                className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(
+                  "/portal/investasi"
+                )} hover:font-bold hover:bg-[#272D87] focus:font-bold focus:bg-[#272D87]`}
+              >
+                Investasi
+              </Link>
+            </div>
+          )}
+        </div>
         <div className="relative">
           <button
             onClick={togglePengaturanDropdown}
-            className={`flex items-center justify-between w-full py-3 px-6 text-base font-normal rounded-lg ${
+            className={`flex items-center justify-between w-full py-3 px-6 mt-5 text-base font-normal rounded-lg ${
               isActive("/portal/account-privacy") ||
               isActive("/portal/help-center") ||
               isActive("/portal/about")
@@ -151,7 +205,7 @@ const Sidebar = () => {
             />
           </button>
           {isPengaturanOpen && (
-            <div className="ml-8 mt-1">
+            <div className="ml-8">
               <Link
                 to="/portal/account-privacy"
                 className={`block py-3 px-6 text-base font-normal rounded-lg ${isActive(

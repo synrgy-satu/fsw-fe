@@ -86,7 +86,7 @@ export default function ForgotPasswordForm() {
         </div>
         <button
           type="submit"
-          className="w-full text-white bg-[#333999] hover:bg-blue-800 font-bold text-base rounded-lg px-5 py-3 text-center"
+          className="w-full text-white bg-[#333999] hover:bg-[#272D87] font-bold text-base rounded-lg px-5 py-3 text-center"
         >
           Kirim
         </button>

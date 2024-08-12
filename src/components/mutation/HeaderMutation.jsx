@@ -2,9 +2,28 @@ import React from "react";
 import { FiArrowLeft, FiHeadphones, FiMail, FiLogOut } from "react-icons/fi";
 import { BsFlag } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
+import LogoutPopup from "../authentication/popup/LogoutPopup";
+import ExpiryWarningPopup from "../authentication/popup/ExpiryWarningPopup";
 
 const HeaderMutation = () => {
+  const {
+    logout,
+    showPopup,
+    setShowPopup,
+    showWarningPopup,
+    setShowWarningPopup,
+  } = useAuth();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setShowPopup(false);
+  };
+
+  const handleKeepSession = () => {
+    setShowWarningPopup(false); // Hide warning popup
+  };
 
   const handleBack = () => {
     navigate(-1);
@@ -39,10 +58,29 @@ const HeaderMutation = () => {
             <BsFlag className="text-xl" />
           </div>
         </button>
-        <button className="p-3 rounded-2xl bg-[#333999] focus:outline-none">
+        <button
+          onClick={() => setShowPopup(true)}
+          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
+        >
           <FiLogOut className="text-xl" />
         </button>
       </div>
+
+      {/* Logout Popup */}
+      {showPopup && (
+        <LogoutPopup
+          onClose={() => setShowPopup(false)}
+          onLogout={handleLogout}
+        />
+      )}
+
+      {/* Expiry Warning Popup */}
+      {showWarningPopup && (
+        <ExpiryWarningPopup
+          onClose={handleKeepSession}
+          onLogout={handleLogout}
+        />
+      )}
     </header>
   );
 };
