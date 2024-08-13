@@ -1,0 +1,42 @@
+.toggle-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 328px;
+  width: 100%;
+  padding: 6px;
+  height: 47px;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #e0e7ff;
+  position: relative;
+  overflow: hidden;
+  gap: 10px;
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.toggle-option {
+  text-align: center;
+  color: black;
+  z-index: 1;
+}
+
+.toggle-active {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 6px;
+  width: calc(50% - 12px);
+  background-color: #333999;
+  transition: left 300ms;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.option-1-active {
+  color: white;
+}
+
+.option-2-active {
+  color: white;
+}

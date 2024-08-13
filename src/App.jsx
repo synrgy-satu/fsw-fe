@@ -9,6 +9,7 @@ import RegisterSuccess from "./pages/authentication/register/RegisterSuccess";
 import VerifNumberCardPage from "./pages/authentication/register/verif/VerifNumberCardPage";
 import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVerifNumberCardPage";
 import UserPortal from "./pages/userPortalPages/UserPortal";
+import Notification from "./pages/notification/Notification";
 import Login from "./pages/authentication/Login";
 import { AuthProvider } from "./context/authContext";
 import { CardProvider } from "./context/cardContext";
@@ -49,6 +50,7 @@ function App() {
                 }
               />
               <Route path="/mutation" element={<Mutation />} />
+              <Route path="/notification" element={<Notification />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
