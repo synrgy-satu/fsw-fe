@@ -264,6 +264,7 @@ const TransferSatu = () => {
                 onChange={(e) => setAmount(e.target.value)}
                 required
                 aria-required="true"
+                maxLength={10}
               />
             </div>
           </div>
