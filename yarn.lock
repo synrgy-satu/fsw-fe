@@ -695,7 +695,7 @@
 
 "@react-pdf/renderer@^3.4.4":
   version "3.4.4"
-  resolved "https://registry.npmjs.org/@react-pdf/renderer/-/renderer-3.4.4.tgz"
+  resolved "https://registry.yarnpkg.com/@react-pdf/renderer/-/renderer-3.4.4.tgz#e086aeb4a52f6a779ff9470a7a81409c9d135f30"
   integrity sha512-j1TWMHHXDeHdoQE3xjhBh0MZ2rn7wHIlP/uglr/EJZXqnPbfg6bfLzRJCM6bs+XJV3d8+zLQjHf6sF/fWcBDfg==
   dependencies:
     "@babel/runtime" "^7.20.13"
