@@ -4,6 +4,7 @@ import { BsFlag } from "react-icons/bs";
 import { useAuth } from "../../context/authContext";
 import LogoutPopup from "../authentication/popup/LogoutPopup";
 import ExpiryWarningPopup from "../authentication/popup/ExpiryWarningPopup";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const {
@@ -52,12 +53,12 @@ const Header = () => {
         >
           <FiHeadphones className="text-xl" aria-hidden="true" />
         </button>
-        <button
+        <Link to="/portal/notification"
           className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
           aria-label="Pesan"
         >
           <FiMail className="text-xl" aria-hidden="true" />
-        </button>
+        </Link>
         <button
           className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
           aria-label="Ubah Bahasa"
