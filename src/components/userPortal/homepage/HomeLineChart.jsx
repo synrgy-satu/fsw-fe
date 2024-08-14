@@ -5,16 +5,23 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  CartesianGrid
+  CartesianGrid,
 } from "recharts";
 
-import { valueFormatter } from "../../../utils/homepage/valueFormatter";
+import { valueFormatter } from "../../../utils/homepage/homepageUtils";
 
 const tickFormatter = (label) => label / 1000;
 
-const HomeLineChart = ({ data, xDataKey, line1DataKey, line2DataKey, height = 175 }) => {
+const HomeLineChart = ({
+  data,
+  xDataKey,
+  line1DataKey,
+  line2DataKey,
+  height,
+  dot,
+}) => {
   return (
-    <ResponsiveContainer width="100%" height={height}>
+    <ResponsiveContainer width="100%" height={height ?? 175}>
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 5" />
         {/* <XAxis dataKey="month" /> */}
@@ -30,7 +37,8 @@ const HomeLineChart = ({ data, xDataKey, line1DataKey, line2DataKey, height = 17
           dataKey={line1DataKey}
           stroke="#8884d8"
           strokeWidth="2"
-          />
+          dot={dot ?? true}
+        />
         <Line
           type="linear"
           // dataKey="debit"
@@ -38,6 +46,8 @@ const HomeLineChart = ({ data, xDataKey, line1DataKey, line2DataKey, height = 17
           stroke="#a63030"
           strokeWidth="2"
           strokeDasharray="5 5"
+          activeDot={false}
+          dot={dot ?? true}
         />
       </LineChart>
     </ResponsiveContainer>

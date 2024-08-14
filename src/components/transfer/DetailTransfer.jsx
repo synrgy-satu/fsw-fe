@@ -7,7 +7,12 @@ import axios from "axios";
 const DetailTransfer = () => {
   const location = useLocation();
   const { accessToken } = useAuth().authState;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pin, setPin] = useState("");
+  const [pinCheck, setPinCheck] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
   const {
     selectedAccount,
     destinationAccount,
@@ -18,15 +23,13 @@ const DetailTransfer = () => {
   } = location.state || {};
   const biayaAdmin = 0;
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pin, setPin] = useState("");
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setPinCheck(false);
   };
 
   const handlePinChange = (event) => {
@@ -41,7 +44,7 @@ const DetailTransfer = () => {
 
   const handlePinSubmit = async (event) => {
     event.preventDefault();
-    // Tambahkan logika untuk memverifikasi PIN di sini
+    setIsLoading(true);
 
     try {
       await axios
@@ -75,12 +78,21 @@ const DetailTransfer = () => {
               dateTransaction: dateTransaction,
             },
           });
+        })
+        .catch((error) => {
+          // console.log(error.response.data);
+          console.clear();
+          setPinCheck("PIN Salah");
         });
     } catch (error) {
-      alert("Pin Salah");
-      console.log(error);
+      // setPinCheck("PIN Salah");
+      // console.log(pinCheck);
+      // console.log(error);
+      console.clear();
+    } finally {
+      setIsLoading(false);
     }
-    handleCloseModal();
+    // handleCloseModal();
   };
 
   return (
@@ -147,7 +159,7 @@ const DetailTransfer = () => {
             role="table"
           >
             <thead>
-              <tr role="row">
+              <tr role="row" className="text-left">
                 <th role="columnheader">Rekening Sumber</th>
                 <th role="columnheader">Rekening Tujuan</th>
                 <th role="columnheader">Nominal Transfer</th>
@@ -264,6 +276,9 @@ const DetailTransfer = () => {
               <div id="pin-help" className="text-sm text-gray-600">
                 Masukkan 6 digit PIN Anda untuk melanjutkan.
               </div>
+              {pinCheck && (
+                <p className="text-sm text-red-500 mt-2">{pinCheck}</p>
+              )}
               <div className="flex justify-end mt-4">
                 <button
                   type="button"
@@ -275,7 +290,12 @@ const DetailTransfer = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+                  className={`px-4 py-2 rounded-md text-white ${
+                    isLoading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue-500 hover:bg-blue-700"
+                  }`}
+                  disabled={isLoading}
                   aria-label="Submit PIN"
                 >
                   Submit

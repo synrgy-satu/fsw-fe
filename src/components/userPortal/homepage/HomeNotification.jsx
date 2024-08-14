@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-const HomeNotification = ({ handleNotification, notification }) => {
+const HomeNotification = ({ handleClick }) => {
   return (
     <div className="bg-white rounded-xl mb-8 ps-3 relative">
       <p
         className="cursor-pointer absolute top-7 right-9 text-2xl font-bold text-gray-600
       hover:font-extrabold hover:text-black"
         onClick={() => {
-          handleNotification(!notification);
+          handleClick();
         }}
       >
         ×

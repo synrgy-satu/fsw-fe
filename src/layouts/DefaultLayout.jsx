@@ -24,7 +24,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="flex h-screen bg-gray-100 dark:bg-boxdark-2 dark:text-bodydark">
+      <div className="flex h-screen">
         {/* Sidebar */}
         <Sidebar />
         {/* Content Area */}
@@ -33,7 +33,7 @@ const DefaultLayout = ({ children }) => {
           {renderHeader()}
 
           {/* Main Content */}
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 2xl:p-10 bg-indigo-100">
+          <main className="flex-1 overflow-y-auto p-6  bg-[#ecedf9]">
             <div className="mx-auto max-w-screen-2xl ">{children}</div>
           </main>
         </div>

@@ -12,7 +12,6 @@ import UserPortal from "./pages/userPortalPages/UserPortal";
 import Notification from "./pages/notification/Notification";
 import Login from "./pages/authentication/Login";
 import { AuthProvider } from "./context/authContext";
-import { CardProvider } from "./context/cardContext";
 import Mutation from "./pages/Mutation";
 import ProtectedRoute from "./components/protection/ProtectedRoute";
 import "./assets/css/style.css";
@@ -21,7 +20,6 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <CardProvider>
           <Router>
             <Routes>
               <Route path="/" element={<Onboarding />} />
@@ -54,7 +52,6 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
-        </CardProvider>
       </AuthProvider>
     </>
   );
