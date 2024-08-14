@@ -20,6 +20,8 @@ const FormNumberCard = ({ setLoading, setVerifNumber }) => {
   localStorage.removeItem("number");
   localStorage.removeItem("password");
   localStorage.removeItem("pin");
+  localStorage.removeItem("month");
+  localStorage.removeItem("year");
 
   // Validation Number Card Function
   useEffect(() => handleNumberCardValidation());
@@ -48,6 +50,8 @@ const FormNumberCard = ({ setLoading, setVerifNumber }) => {
           setVerifNumber(true);
           // Add Number Card to Local Storage
           localStorage.setItem("cardNumber", numberCard);
+          localStorage.setItem("month", month);
+          localStorage.setItem("year", year);
         });
     } catch (error) {
       setVerifNumber(false);
