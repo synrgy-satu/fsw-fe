@@ -117,9 +117,7 @@ const Notification = () => {
   return (
     <div className="max-w-[1440px] mx-auto">
       <div className="flex h-screen bg-gray-100 dark:bg-boxdark-2 dark:text-bodydark">
-        <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <Header />
           <main className="flex-1 overflow-y-auto p-4 md:p-6 2xl:p-10 bg-indigo-100">
             <a
               className="items-center text-gray-700"
@@ -127,7 +125,7 @@ const Notification = () => {
             >
               Notifikasi
             </a>
-            <div className="border border-[#8C91D9] border-[0.2px] mt-4"></div>
+            <div className=" border-[#8C91D9] border-[0.2px] mt-4"></div>
 
             <div className="bg-white p-10 rounded-xl shadow-md  mx-auto mt-10">
               <h2 className="text-2xl font-bold mb-4">Notifikasi</h2>

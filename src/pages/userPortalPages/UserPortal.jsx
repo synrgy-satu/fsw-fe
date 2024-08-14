@@ -12,6 +12,7 @@ import Homepage from "../../components/userPortal/Homepage";
 import Savings from "../../components/userPortal/Savings";
 import Qris from "../../components/userPortal/Qris.jsx";
 import AccountPrivacy from "../../components/userPortal/AccountPrivacy.jsx";
+import Notification from "../notification/Notification.jsx";
 
 const UserPortal = () => (
   <DefaultLayout>
@@ -30,6 +31,7 @@ const UserPortal = () => (
         path="transfer/tf-one/satu/detail-tf/status-tf"
         element={<StatusTransfer />}
       />
+      <Route path="notification" element={<Notification />} />
       <Route path="qris" element={<Qris />} />
       <Route path="account-privacy" element={<AccountPrivacy />} />
       <Route path="*" element={<NotFoundUserPortal />} />
