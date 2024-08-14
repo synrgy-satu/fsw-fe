@@ -121,7 +121,7 @@ const FormPassword = () => {
               onClick={handlePasswordToggle}
             >
               <Icon
-                class="absolute top-4 right-3 text-[#939393]"
+                class="absolute top-4 right-3 text-[#939393] cursor-pointer"
                 icon={icon}
                 size={25}
               />
@@ -165,7 +165,7 @@ const FormPassword = () => {
               onClick={handleConfPasswordToggle}
             >
               <Icon
-                class="absolute top-4 right-3 text-[#939393]"
+                class="absolute top-4 right-3 text-[#939393] cursor-pointer"
                 icon={confIcon}
                 size={25}
               />

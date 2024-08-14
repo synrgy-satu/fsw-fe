@@ -17,3 +17,9 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+select option {
+  padding: 28px; /* padding opsional */
+  color: #333; /* warna teks opsional */
+  background-color: white; /* warna background opsional */
+}

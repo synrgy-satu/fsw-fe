@@ -5,22 +5,21 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState(() => {
-    // Get token from localStorage on initialization
     const storedState = localStorage.getItem("authState");
     return storedState ? JSON.parse(storedState) : null;
   });
 
   const [error, setError] = useState(null);
-  const [isResetPassword, setIsResetPassword] = useState(false); // New state for form toggle
+  const [isResetPassword, setIsResetPassword] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showWarningPopup, setShowWarningPopup] = useState(false);
 
   const login = async (emailAddress, password) => {
     try {
       const response = await axios.post(
-        "http://34.126.91.181/api/v1/auth/login",
-        {
-          emailAddress,
-          password,
-        }
+        "https://satu.cekrek.shop/api/v1/auth/login",
+        { emailAddress, password }
       );
 
       if (response.status === 200) {
@@ -32,10 +31,9 @@ export const AuthProvider = ({ children }) => {
           user: { emailAddress },
         };
 
-        // Save tokens and auth data in localStorage
         localStorage.setItem("authState", JSON.stringify(authData));
         setAuthState(authData);
-        console.log("Login success", authData);
+        setError(null); // Clear any previous errors
       } else {
         throw new Error(`Unexpected response status: ${response.status}`);
       }
@@ -48,10 +46,8 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = async (emailAddress) => {
     try {
       const response = await axios.post(
-        "http://34.126.91.181/api/v1/auth/password",
-        {
-          emailAddress,
-        }
+        "https://satu.cekrek.shop/api/v1/auth/password",
+        { emailAddress }
       );
 
       if (response.status === 200) {
@@ -68,27 +64,68 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
+  const fetchUserInfo = async () => {
+    try {
+      const { accessToken } = authState;
+      if (!accessToken) return;
+
+      const response = await axios.get("https://satu.cekrek.shop/api/v1/auth", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      if (response.status === 200) {
+        setUserInfo(response.data.data);
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        localStorage.removeItem("authState");
+        window.location.href = "/login";
+      }
+      console.error(
+        "Failed to fetch user info",
+        error.response?.data || error.message
+      );
+      setUserInfo(null);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("authState");
     setAuthState(null);
+    setUserInfo(null);
   };
 
-  // Handle token expiration and user session
+  useEffect(() => {
+    if (authState && authState.accessToken) {
+      fetchUserInfo(); // Fetch user info on login
+    }
+  }, [authState]);
+
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
 
-    const expirationTime = authState.expiresIn * 1000; // Convert to milliseconds
+    const expirationTime = authState.expiresIn * 1000;
     const expirationTimestamp = Date.now() + expirationTime;
 
+    const warningTime = expirationTimestamp - Date.now() - 30000; // 30 seconds before expiration
+
     const timer = setTimeout(() => {
-      // Notify user or redirect to login page when the token expires
+      setShowWarningPopup(true); // Show warning popup 30 seconds before expiration
+    }, warningTime);
+
+    const expirationTimer = setTimeout(() => {
       console.warn("Session expired. Please log in again.");
       logout();
+      localStorage.removeItem("authState");
       window.location.href = "/login";
     }, expirationTimestamp - Date.now());
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(expirationTimer);
+    };
   }, [authState]);
 
   return (
@@ -101,6 +138,11 @@ export const AuthProvider = ({ children }) => {
         isResetPassword,
         setIsResetPassword,
         forgotPassword,
+        userInfo,
+        showPopup,
+        setShowPopup,
+        showWarningPopup,
+        setShowWarningPopup,
       }}
     >
       {children}

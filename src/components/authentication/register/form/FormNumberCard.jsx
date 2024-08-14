@@ -38,7 +38,7 @@ const FormNumberCard = ({ setLoading, setVerifNumber }) => {
 
     try {
       await axios
-        .post(`http://34.126.91.181/api/v1/card/check`, {
+        .post(`https://satu.cekrek.shop/api/v1/card/check`, {
           cardNumber: Number(numberCard),
           month: Number(month),
           year: Number(year),
