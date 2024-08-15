@@ -304,23 +304,37 @@ const TransferSatu = () => {
                 aria-required="true"
               >
                 <option style={styleOption}>Pilih Waktu Transfer</option>
-                <option value="sekarang">Sekarang</option>
+                <option value="sekarang" selected>Sekarang</option>
                 <option value="atur-tanggal">Atur Tanggal</option>
               </select>
             </div>
           </div>
 
           <div className="flex flex-row-reverse">
-            <button
-              type="submit"
-              className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
-              aria-label="Verifikasi Detail Transfer"
-            >
-              <div className="flex items-center space-x-3">
-                <p>Verifikasi Detail Transfer</p>
-                <FiArrowRightCircle className="text-2xl" />
-              </div>
-            </button>
+            {DestinationNotFound ? (
+              <button
+                type="submit"
+                className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl"
+                aria-label="Verifikasi Detail Transfer"
+                disabled
+              >
+                <div className="flex items-center space-x-3">
+                  <p>Verifikasi Detail Transfer</p>
+                  <FiArrowRightCircle className="text-2xl" />
+                </div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="text-lg font-semibold text-white py-3 px-4 rounded-2xl bg-[#333999]"
+                aria-label="Verifikasi Detail Transfer"
+              >
+                <div className="flex items-center space-x-3">
+                  <p>Verifikasi Detail Transfer</p>
+                  <FiArrowRightCircle className="text-2xl" />
+                </div>
+              </button>
+            )}
           </div>
         </form>
       </div>
