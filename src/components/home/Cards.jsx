@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Cards() {
   return (
-    <div className="bg-blue-50 flex max-sm:flex-col w-[100%] items-center justify-center">
+    <div className="bg-gradient-to-br from-blue-700/100 via-blue-700 to-blue-900  flex max-sm:flex-col w-[100%] items-center justify-center">
       <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
         <img src="/images/saver.png" alt="logo saver" className="mt-3" />
         <br />
