@@ -80,9 +80,13 @@ const DetailTransfer = () => {
           });
         })
         .catch((error) => {
-          // console.log(error.response.data);
-          console.clear();
-          setPinCheck("PIN Salah");
+          if (error.response.data.message == "Wrong Pin") {
+            setPinCheck("PIN Salah");
+          } else if (
+            error.response.data.message == "Not enough balance on card"
+          ) {
+            setPinCheck("Saldo Tidak Cukup");
+          }
         });
     } catch (error) {
       // setPinCheck("PIN Salah");
