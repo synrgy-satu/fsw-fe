@@ -31,12 +31,19 @@ const FormEmailNumber = ({ setLoading }) => {
   const handleValidationEmailNumber = () => {
     // for Email
     if (validator.isEmail(email)) {
-      setIsEmail(true);
+      if (email.match("@gmail.com")) {
+        setIsEmail(true);
+      }
     } else {
       setIsEmail(false);
     }
     // for Number
-    if (number[0] == "0" && number[1] == "8" && number.length == 13) {
+    if (
+      number[0] == "0" &&
+      number[1] == "8" &&
+      number.length <= 13 &&
+      number.length >= 11
+    ) {
       setIsNumber(true);
     } else {
       setIsNumber(false);

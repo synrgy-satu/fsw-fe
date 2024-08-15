@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 export default function LoginForm() {
-  const { login, error, isResetPassword, setIsResetPassword } = useAuth();
+  const { login, error, isResetPassword, setIsResetPassword, authState } =
+    useAuth();
   const {
     control,
     handleSubmit,
@@ -36,6 +37,10 @@ export default function LoginForm() {
       setLoading(false); // Reset loading state
     }
   };
+
+  if (authState) {
+    return navigate("/portal");
+  }
 
   return (
     <div className="flex justify-end pt-32 pe-6">
@@ -157,7 +162,7 @@ export default function LoginForm() {
 
               <button
                 type="submit"
-                className="w-full text-white bg-[#333999] hover:bg-blue-800 font-bold text-base rounded-lg px-5 py-3 text-center"
+                className="w-full text-white bg-[#333999] hover:bg-[#272D87] font-bold text-base rounded-lg px-5 py-3 text-center"
               >
                 <div className="flex justify-center">
                   <p className="mr-3">Masuk</p>

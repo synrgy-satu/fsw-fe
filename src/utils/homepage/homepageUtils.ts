@@ -12,9 +12,8 @@ export const valueFormatter = function (number, convert = 1, locale = "id") {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   // }).format(number / convert);
-  }).format(number / convert).toString();
+  }).format(+number / convert).toString();
 };
 
-// export default valueFormatter;
-
-// export default percentageFormatter;
+export const aggregateData = (data, key) =>
+  data.reduce((acc, curr) => acc + curr[key], 0);

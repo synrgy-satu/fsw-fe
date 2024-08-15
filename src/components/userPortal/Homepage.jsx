@@ -6,129 +6,123 @@ import {
 } from "react-icons/fa6";
 
 import { DonutChart } from "@tremor/react";
-import { useEffect, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
   percentageFormatter,
   valueFormatter,
-} from "../../utils/homepage/valueFormatter";
+} from "../../utils/homepage/homepageUtils";
 
-const DUMMY_DATA = [
-  { month: "Jan", debit: 5000000, deposit: 7000000, invest: 3000000 },
-  { month: "Feb", debit: 4000000, deposit: 8000000, invest: 3500000 },
-  { month: "Mar", debit: 6000000, deposit: 7500000, invest: 4000000 },
-  { month: "Apr", debit: 7000000, deposit: 9000000, invest: 4500000 },
-  { month: "May", debit: 6500000, deposit: 8500000, invest: 5000000 },
-  { month: "Jun", debit: 6000000, deposit: 9500000, invest: 5500000 },
-  { month: "Jul", debit: 7000000, deposit: 10000000, invest: 6000000 },
-  { month: "Aug", debit: 7500000, deposit: 10500000, invest: 6500000 },
-  { month: "Sep", debit: 8000000, deposit: 11000000, invest: 7000000 },
-  { month: "Oct", debit: 8500000, deposit: 11500000, invest: 7500000 },
-  { month: "Nov", debit: 9000000, deposit: 12000000, invest: 8000000 },
-  { month: "Dec", debit: 9500000, deposit: 12500000, invest: 8500000 },
-];
+import AssetCard from "./homepage/AssetCard";
+import HomeLineChart from "./homepage/HomeLineChart";
+import HomeNotification from "./homepage/HomeNotification";
+import TimeSelectOption from "./homepage/TimeSelectOptions";
+import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
+import { aggregateData } from "../../utils/homepage/homepageUtils";
+import DummyData, { filterFewMonths } from "../../utils/homepage/dummyData";
+// import { filterLastMonths } from "../../utils/homepage/homepageUtils";
 
-const aggregateData = (key) =>
-  DUMMY_DATA.reduce((acc, curr) => acc + curr[key], 0);
 const totalBalance =
-  aggregateData("debit") + aggregateData("deposit") + aggregateData("invest");
+  aggregateData(DUMMY_DATA, "debit") +
+  aggregateData(DUMMY_DATA, "deposit") +
+  aggregateData(DUMMY_DATA, "invest");
 
 const ASSETS = ["debit", "deposit", "invest"];
 
-const donut = [
-  {
-    name: "Debit",
-    value: aggregateData("debit"),
-  },
-  {
-    name: "Deposito",
-    value: aggregateData("deposit"),
-  },
-  {
-    name: "Investasi",
-    value: aggregateData("invest"),
-  },
-];
-
-const tickFormatter = (label) => label / 1000;
-
-const CURRENCIES = [
-  {
-    name: "IDR",
-    convert: 1,
-    symbol: "IDR",
-    locale: "id",
-  },
-  {
-    name: "USD",
-    convert: 16240,
-    symbol: "$",
-    locale: "us",
-  },
-];
-
-const AssetCard = ({ asset, currency, activeCurrency }) => {
-  return (
-    <div className="col-span-4 bg-white rounded-[20px] p-4">
-      <div className="mb-4">
-        <p className="font-extrabold">{asset.toUpperCase()}</p>
-        <p className="text-primary font-extrabold">
-          {currency[activeCurrency]?.locale === "us" && (
-            <span className="me-2">{currency[activeCurrency]?.symbol}</span>
-          )}
-          {valueFormatter(
-            aggregateData(asset),
-            currency[activeCurrency]?.convert,
-            currency[activeCurrency]?.locale
-          )}
-        </p>
-      </div>
-      <ResponsiveContainer width="150%" height={125} className="-ms-16">
-        <LineChart data={DUMMY_DATA}>
-          <XAxis tick={false} dataKey="month" stroke="#8884d8" />
-          <YAxis tick={false} stroke="#8884d8" />
-          <Tooltip
-            formatter={(value) => valueFormatter(value)}
-            contentStyle={{ zIndex: 1000 }}
-          />
-          <Line
-            dot={false}
-            type="linear"
-            dataKey={asset}
-            stroke="#8884d8"
-            strokeWidth="3"
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
-
 export default function Homepage() {
-  const [currency, setCurrency] = useState([]);
+  const [currency, setCurrency] = useState(CURRENCIES);
   const [activeCurrency, setActiveCurrency] = useState(0);
   const [notification, setNotification] = useState(true);
 
+  const [monthsFilterBalance, setMonthsFilterBalance] = useState(0);
+  const [selectOptionBalance, setSelectOptionBalance] = useState(false);
+  const [isClickedTimeOptionBalance, setIsClickedTimeOptionBalance] =
+    useState(false);
+
+  // const [monthsFilterGraph, setMonthsFilterGraph] = useState(0);
+  const [selectOptionGraph, setSelectOptionGraph] = useState(false);
+  const [isClickedTimeOptionGraph, setIsClickedTimeOptionGraph] =
+    useState(false);
+
+  const balanceDropdownRef = useRef(null);
+  const graphDropdownRef = useRef(null);
+
+  const [graphData, setGraphData] = useState([])
+  const [totalDebit, setTotalDebit] = useState()
+  const [totalCredit, setTotalCredit] = useState()
+
+  useEffect(() => { 
+    const graphData = DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)
+    setGraphData(graphData);
+    // console.log(graphData);
+
+    const totalDebit = graphData.reduce((prev, curr) => { 
+      prev += curr.debit;
+      return prev; 
+    }, 0)
+
+    const totalCredit = graphData.reduce((prev, curr) => { 
+      prev += curr.kredit;
+      return prev; 
+    }, 0)
+
+    setTotalDebit(totalDebit);
+    setTotalCredit(totalCredit);
+
+  }, [selectOptionGraph])
+
   useEffect(() => {
-    setCurrency(CURRENCIES);
+    const isAlertClosed = localStorage.getItem("isAlertClosed");
+    if (isAlertClosed === "true") {
+      setNotification(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
+
+  const handleisClickedOptionBalance = () => {
+    setIsClickedTimeOptionBalance(!isClickedTimeOptionBalance);
+  };
+
+  const handleisClickedOptionGraph = () => {
+    setIsClickedTimeOptionGraph(!isClickedTimeOptionGraph);
+  };
+
+  const handleSelectOptionBalance = (option) => {
+    setSelectOptionBalance(option);
+  };
+
+  const handleSelectOptionGraph = (option) => {
+    setSelectOptionGraph(option);
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      balanceDropdownRef.current &&
+      !balanceDropdownRef.current.contains(event.target)
+    ) {
+      setIsClickedTimeOptionBalance(false);
+    }
+    if (
+      graphDropdownRef.current &&
+      !graphDropdownRef.current.contains(event.target)
+    ) {
+      setIsClickedTimeOptionGraph(false);
+    }
+  };
 
   const handleActive = (position) => {
     setActiveCurrency(position);
   };
 
-  const handleNotification = (isOpen) => {
-    setNotification(isOpen);
+  const handleCloseNotification = () => {
+    setNotification(false);
+    localStorage.setItem("isAlertClosed", "true");
   };
 
   return (
@@ -146,42 +140,7 @@ export default function Homepage() {
       <div className="border mt-4 border-primary mb-6"></div>
 
       {notification && (
-        <div className="bg-white rounded-xl mb-8 ps-3 relative">
-          <p
-            className="cursor-pointer absolute top-7 right-9 text-2xl font-bold text-gray-600
-            hover:font-extrabold hover:text-black"
-            onClick={() => {
-              handleNotification(!notification);
-            }}
-          >
-            ×
-          </p>
-          <div className="p-5 grid grid-cols-12 gap-6">
-            <div className="col-span-8">
-              <p className="font-extrabold text-2xl">
-                Migrasi Layanan BCA Mobile ke SATU M-Banking
-              </p>
-              <p className="my-4">
-                Sehubungan dengan migrasi sistem perbankan BCA ke SATU, Maka
-                layanan BCA Mobile akan ditutup pada 10 Agustus 2024, 23.00 WIB
-                dan transaksi dalam aplikasi akan ditutup 5 jam sebelumnya
-              </p>
-              <Link
-                className="bg-primary inline-block text-white font-bold p-4 rounded-xl mb-4
-                hover:bg-indigo-950"
-              >
-                Baca Selengkapnya
-              </Link>
-            </div>
-            <div className="col-span-4 items-center flex justify-center">
-              <img
-                src="/images/homepage-sync.png"
-                alt="Sync Logo"
-                style={{ height: "200px" }}
-              />
-            </div>
-          </div>
-        </div>
+        <HomeNotification handleClick={handleCloseNotification} />
       )}
       <div className="bg-white rounded-xl mb-8 ps-3">
         <div className="p-5 grid grid-cols-12 gap-6">
@@ -192,7 +151,7 @@ export default function Homepage() {
               </p>
               <div
                 className="col-span-3 group flex text-primary border-primary border-2 rounded-lg 
-                p-2 items-center gap-2 cursor-pointer hover:bg-indigo-50"
+                py-2 items-center gap-2 cursor-pointer hover:bg-indigo-50 justify-center"
               >
                 <FaArrowsRotate className="group-hover:rotate-[360deg] transition-transform duration-500 ease-in" />
                 Refresh
@@ -221,13 +180,14 @@ export default function Homepage() {
             </div>
             <div className="bg-primary-background p-5 rounded-xl">
               <div className="">
-                <div className="py-1 flex content-between justify-between">
-                  <div>
+                <div className="py-1 grid grid-cols-12">
+                  <div className="col-span-7">
                     <p className="font-bold text-xl">Saldo Total</p>
                     <p className="text-2xl text-primary font-bold">
                       <span className="me-3">
                         {currency[activeCurrency]?.symbol}
                       </span>
+                      {/* {new Intl.NumberFormat("id").format(data[0].balance)},00 */}
                       {valueFormatter(
                         totalBalance,
                         currency[activeCurrency]?.convert,
@@ -235,21 +195,13 @@ export default function Homepage() {
                       )}
                     </p>
                   </div>
-                  <div>
-                    <select
-                      className="py-2 px-4 bg-primary text-white rounded-xl cursor-pointer
-                      hover:bg-indigo-950"
-                    >
-                      <option className="bg-white text-primary font-bold">
-                        1 Tahun Terakhir
-                      </option>
-                      <option className="bg-white text-primary font-bold">
-                        6 Bulan Terakhir
-                      </option>
-                      <option className="bg-white text-primary font-bold">
-                        3 Bulan Terakhir
-                      </option>
-                    </select>
+                  <div ref={balanceDropdownRef} className="col-span-5">
+                    <TimeSelectOption
+                      selected={selectOptionBalance}
+                      handleSelect={handleSelectOptionBalance}
+                      handleClickWindow={handleisClickedOptionBalance}
+                      isClicked={isClickedTimeOptionBalance}
+                    />
                   </div>
                 </div>
               </div>
@@ -260,6 +212,10 @@ export default function Homepage() {
                     key={asset}
                     currency={currency}
                     activeCurrency={activeCurrency}
+                    // data={filterLastMonths(DUMMY_DATA, monthsFilterBalance)}
+                    data={filterFewMonths(DUMMY_DATA, selectOptionBalance)}
+                    // data={DummyData.getPeriodiclyTransaction(monthsFilterBalance)}
+                    aggregateData={aggregateData}
                   />
                 ))}
               </div>
@@ -305,7 +261,9 @@ export default function Homepage() {
                               <p className="">Debit</p>
                               <p className="">
                                 {percentageFormatter(
-                                  (aggregateData("debit") / totalBalance) * 100
+                                  (aggregateData(DUMMY_DATA, "debit") /
+                                    totalBalance) *
+                                    100
                                 )}
                               </p>
                             </div>
@@ -316,7 +274,7 @@ export default function Homepage() {
                                 </span>
                               )}
                               {valueFormatter(
-                                aggregateData("debit"),
+                                aggregateData(DUMMY_DATA, "debit"),
                                 currency[activeCurrency]?.convert,
                                 currency[activeCurrency]?.locale
                               )}
@@ -332,7 +290,8 @@ export default function Homepage() {
                               <p className="">Deposit</p>
                               <p className="">
                                 {percentageFormatter(
-                                  (aggregateData("deposit") / totalBalance) *
+                                  (aggregateData(DUMMY_DATA, "deposit") /
+                                    totalBalance) *
                                     100
                                 )}
                               </p>
@@ -344,7 +303,7 @@ export default function Homepage() {
                                 </span>
                               )}
                               {valueFormatter(
-                                aggregateData("deposit"),
+                                aggregateData(DUMMY_DATA, "deposit"),
                                 currency[activeCurrency]?.convert,
                                 currency[activeCurrency]?.locale
                               )}
@@ -360,7 +319,9 @@ export default function Homepage() {
                               <p className="">Investasi</p>
                               <p className="">
                                 {percentageFormatter(
-                                  (aggregateData("invest") / totalBalance) * 100
+                                  (aggregateData(DUMMY_DATA, "invest") /
+                                    totalBalance) *
+                                    100
                                 )}
                               </p>
                             </div>
@@ -371,7 +332,7 @@ export default function Homepage() {
                                 </span>
                               )}
                               {valueFormatter(
-                                aggregateData("invest"),
+                                aggregateData(DUMMY_DATA, "invest"),
                                 currency[activeCurrency]?.convert,
                                 currency[activeCurrency]?.locale
                               )}
@@ -402,45 +363,26 @@ export default function Homepage() {
             <p className="col-span-8 font-extrabold text-2xl">
               Pemasukan dan Pengeluaran
             </p>
-            <select
-              className="col-span-4 py-2 px-3 bg-primary text-white rounded-xl cursor-pointer
-                      hover:bg-indigo-950"
-            >
-              <option className="bg-white text-primary font-bold">
-                1 Tahun Terakhir
-              </option>
-              <option className="bg-white text-primary font-bold">
-                6 Bulan Terakhir
-              </option>
-              <option className="bg-white text-primary font-bold">
-                3 Bulan Terakhir
-              </option>
-            </select>
+            <div ref={graphDropdownRef} className="col-span-4">
+              <TimeSelectOption
+                selected={selectOptionGraph}
+                handleSelect={handleSelectOptionGraph}
+                handleClickWindow={handleisClickedOptionGraph}
+                isClicked={isClickedTimeOptionGraph}
+              />
+            </div>
           </div>
-          <ResponsiveContainer width="100%" height={175}>
-            <LineChart data={DUMMY_DATA}>
-              <CartesianGrid strokeDasharray="3 5" />
-              <XAxis dataKey="month" />
-              <YAxis tickFormatter={tickFormatter} />
-              <Tooltip
-                formatter={(value) => valueFormatter(value)}
-                contentStyle={{ zIndex: 1000 }}
-              />
-              <Line
-                type="linear"
-                dataKey="deposit"
-                stroke="#8884d8"
-                strokeWidth="2"
-              />
-              <Line
-                type="linear"
-                dataKey="debit"
-                stroke="#a63030"
-                strokeWidth="2"
-                strokeDasharray="5 5"
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <HomeLineChart
+            // data={filterLastMonths(DUMMY_DATA, monthsFilterGraph)}
+            // data={DummyData.getPeriodiclyTransaction(selectOptionGraph)}
+            // data={DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)}
+            data={graphData}
+            xDataKey={"period"}
+            line1DataKey={"debit"}
+            line2DataKey={"kredit"}
+            height={175}
+            dot={false}
+          />
         </div>
         <div className="col-span-4 bg-primary-background p-6 rounded-[30px] text-xl flex align-middle items-center">
           <div className="">
@@ -451,7 +393,8 @@ export default function Homepage() {
               </div>
               <div className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
                 <span className="font-normal pe-6">IDR</span>
-                {valueFormatter(aggregateData("deposit"))}
+                {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
+                {valueFormatter(totalDebit)}
               </div>
             </div>
             <div className="mt-6">
@@ -461,7 +404,8 @@ export default function Homepage() {
               </div>
               <p className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
                 <span className="font-normal pe-6">IDR</span>
-                {valueFormatter(aggregateData("debit"))}
+                {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
+                {valueFormatter(totalCredit)}
               </p>
             </div>
           </div>
