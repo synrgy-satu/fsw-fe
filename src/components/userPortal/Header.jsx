@@ -35,7 +35,7 @@ const Header = () => {
           id="search-bar"
           type="text"
           placeholder="Pencarian"
-          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border focus:outline-none"
+          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border hover:bg-[#272D87]"
           aria-label="Search"
         />
         <FiSearch className="ml-2 text-xl text-[#C6C8EC]" aria-hidden="true" />
@@ -48,20 +48,21 @@ const Header = () => {
         aria-label="Navigasi utama"
       >
         <button
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
           aria-label="Dukungan pelanggan"
         >
           <FiHeadphones className="text-xl" aria-hidden="true" />
         </button>
-        <Link to="/portal/notification"
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
-          aria-label="Pesan"
+        <Link
+          to="/portal/notification"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="notifikasi"
         >
           <FiMail className="text-xl" aria-hidden="true" />
         </Link>
         <button
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
-          aria-label="Ubah Bahasa"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="Bahasa ID - Ubah Bahasa"
           aria-expanded="false"
         >
           <div className="flex items-center space-x-1">
@@ -71,8 +72,8 @@ const Header = () => {
         </button>
         <button
           onClick={() => setShowPopup(true)}
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
-          aria-label="Keluar"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="Log Out"
         >
           <FiLogOut className="text-xl" aria-hidden="true" />
         </button>
