@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "../../../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 export default function LoginForm() {
@@ -20,6 +21,7 @@ export default function LoginForm() {
   });
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegisterClick = () => {
     navigate("/register");
@@ -129,24 +131,37 @@ export default function LoginForm() {
                 >
                   Kata Sandi
                 </label>
-                <Controller
-                  name="password"
-                  control={control}
-                  rules={{ required: "*Password Wajib Diisi" }}
-                  render={({ field }) => (
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Masukkan Kata Sandi"
-                      {...field}
-                      className={`mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90 ${
-                        errors.password
-                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                          : "focus:ring-indigo-500 focus:border-indigo-500"
-                      }`}
-                    />
-                  )}
-                />
+                <div className="relative">
+                  <Controller
+                    name="password"
+                    control={control}
+                    rules={{ required: "*Password Wajib Diisi" }}
+                    render={({ field }) => (
+                      <input
+                        id="password"
+                        type={showPassword ? "text" : "password"} // Toggle between text and password
+                        placeholder="Masukkan Kata Sandi"
+                        {...field}
+                        className={`mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90 ${
+                          errors.password
+                            ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                            : "focus:ring-indigo-500 focus:border-indigo-500"
+                        }`}
+                      />
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#333999] hover:text-[#272D87]"
+                  >
+                    {showPassword ? (
+                      <i className="fa-solid fa-eye-slash"></i>
+                    ) : (
+                      <i className="fa-solid fa-eye"></i>
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="mt-2 text-[12px] font-normal text-[#CB3A31]">
                     {errors.password.message}
