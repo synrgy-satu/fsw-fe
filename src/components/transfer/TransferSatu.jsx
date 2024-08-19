@@ -158,22 +158,23 @@ const TransferSatu = () => {
               {data.length > 0 ? (
                 <select
                   id="sumber-rekening"
-                  className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full px-4 py-3 text-base border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                   value={selectedAccount}
                   onChange={handleChange}
                   aria-required="true"
+                  required
                 >
                   <option value="">Pilih nomor rekening</option>
                   {data.map((item, index) => (
-                    <option key={index} value={item.rekeningNumber}>
-                      {item.rekeningNumber}
+                    <option key={index} value={item.rekeningNumber} className="text-black">
+                      {item.rekeningNumber}  {item.jenisRekening} {item.name}
                     </option>
                   ))}
                 </select>
               ) : (
                 <select
                   id="sumber-rekening"
-                  className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                  className="block w-full px-4 py-3 text-base border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                   aria-required="true"
                 >
                   <option>Loading ...</option>
@@ -209,7 +210,7 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <input
                 id="tujuan-rekening"
-                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base  border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan Nomor Rekening"
                 value={destinationAccount}
                 onChange={handleCheckDestinationCard}
@@ -229,9 +230,6 @@ const TransferSatu = () => {
             <p className="text-base font-normal">
               {selectedDestinationAccount ? (
                 <div aria-live="polite">
-                  <p className="text-lg font-bold">
-                    {typeAccount.jenisRekening}
-                  </p>
                   <p>
                     Nama Rekening :{" "}
                     <strong className="uppercase">
@@ -258,7 +256,7 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <input
                 id="nominal-tf"
-                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base  border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="IDR"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -279,7 +277,7 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <input
                 id="catatan"
-                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base  border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Masukkan Catatan"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
@@ -300,7 +298,7 @@ const TransferSatu = () => {
             <div className="col-span-1">
               <select
                 id="jenis-transaksi"
-                className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full px-4 py-3 text-base  border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
                 aria-required="true"
               >
                 <option style={styleOption}>Pilih Waktu Transfer</option>
