@@ -4,9 +4,11 @@ import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
+import axios from "axios";
 
 const FormEmailNumber = ({ setLoading }) => {
   const [email, setEmail] = useState("");
+  const [emailUsed, setEmailUsed] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [number, setNumber] = useState("");
   const [isNumber, setIsNumber] = useState(false);
@@ -50,11 +52,33 @@ const FormEmailNumber = ({ setLoading }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let usedEmail;
+
     // Add Email & Number Telp to Local Storage
     localStorage.setItem("email", email);
     localStorage.setItem("number", number);
-    setLoading(true);
+    try {
+      await axios
+        .get(`https://satu.cekrek.shop/api/v1/auth/checkEmail/${email}`, {
+          cardNumber: Number(localStorage.getItem("cardNumber")),
+          month: Number(localStorage.getItem("month")),
+          year: Number(localStorage.getItem("year")),
+        })
+        .then((res) => {
+          // Add Number Card to Local Storage
+          usedEmail = res.data.data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+    if (usedEmail == "Email used") {
+      setEmailUsed(true);
+    } else {
+      setEmailUsed(false);
+      setLoading(true);
+    }
   };
 
   return (
@@ -90,6 +114,13 @@ const FormEmailNumber = ({ setLoading }) => {
               <p className="text-xs text-[#CB3A31] mt-1">
                 *Format email salah!
               </p>
+            )}
+            {emailUsed ? (
+              <p className="text-xs text-[#CB3A31] mt-1">
+                *Email Telah Digunakan!
+              </p>
+            ) : (
+              <></>
             )}
           </div>
           <div className="mt-5 w-[85%]">
