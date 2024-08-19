@@ -37,28 +37,29 @@ export default function Savings() {
   const { userInfo } = useAuth();
   const [selectOption, setSelectOption] = useState(false);
   const [monthsFilter, setMonthsFilter] = useState(0);
-  const [graphData, setGraphData] = useState([])
-  const [totalDebit, setTotalDebit] = useState()
-  const [totalCredit, setTotalCredit] = useState()
+  const [graphData, setGraphData] = useState([]);
+  const [totalDebit, setTotalDebit] = useState();
+  const [totalCredit, setTotalCredit] = useState();
 
-  useEffect(() => { 
-    const graphData = DummyData.getPeriodiclyTransaction((selectOption === false) ? 0 : selectOption)
+  useEffect(() => {
+    const graphData = DummyData.getPeriodiclyTransaction(
+      selectOption === false ? 0 : selectOption
+    );
     setGraphData(graphData);
 
-    const totalDebit = graphData.reduce((prev, curr) => { 
+    const totalDebit = graphData.reduce((prev, curr) => {
       prev += curr.debit;
-      return prev; 
-    }, 0)
+      return prev;
+    }, 0);
 
-    const totalCredit = graphData.reduce((prev, curr) => { 
+    const totalCredit = graphData.reduce((prev, curr) => {
       prev += curr.kredit;
-      return prev; 
-    }, 0)
+      return prev;
+    }, 0);
 
     setTotalDebit(totalDebit);
     setTotalCredit(totalCredit);
-
-  }, [selectOption])
+  }, [selectOption]);
 
   useEffect(() => {
     if (userInfo) {
@@ -72,15 +73,21 @@ export default function Savings() {
             expiredDateMonth,
             expiredDateYear,
             balance,
+            name
           },
         ],
       } = userInfo;
+
+      const formatCardNumberToString = cardNumber.toString();
+      const replaceCardNumber = formatCardNumberToString.replace(/(.{4})/g, "$1 ");
 
       const newRekening = {
         accountType: jenisRekening.toLowerCase(),
         userName,
         balance,
+        replaceCardNumber,
         cardNumber,
+        name,
         accountNumber: rekeningNumber,
         expirationDate: `${expiredDateMonth}/${expiredDateYear}`,
         status: true,
@@ -195,12 +202,20 @@ export default function Savings() {
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-4 rounded-xl">
           <div className="grid gap-6">
-            <img
-              src={`/images/${selectedSavings["accountType"]}-card.png`}
-              // src={`/images/${selectedSavings["accountType"].toLowerCase()}-card.png`}
-              alt="Savings Card"
-              className="object-contain"
-            />
+            <div className="w-full">
+              <p className="relative top-[62%] left-10 text-xl text-white">
+                {selectedSavings.replaceCardNumber}
+              </p>
+              <p className="relative top-[73%] left-10 text-xl text-white ">
+                {selectedSavings.name}
+              </p>
+              <img
+                src={`/images/${selectedSavings["accountType"]}-card.png`}
+                // src={`/images/${selectedSavings["accountType"].toLowerCase()}-card.png`}
+                alt="Savings Card"
+                className="object-contain"
+              />
+            </div>
             <div className="bg-white rounded-xl p-5 font-bold">
               <p className="py-3">Saldo Akhir</p>
               <p className="flex items-start py-1">

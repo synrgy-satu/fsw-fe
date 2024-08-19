@@ -39,7 +39,7 @@ const Sidebar = () => {
           <img src="/images/logo-user-portal.png" alt="Logo" />
           <div className="mt-12">
             <p className="text-xs font-semibold">Selamat Datang</p>
-            <p className="text-base font-bold">{userInfo?.username}</p>
+            <p className="text-base font-bold">{userInfo?.fullName}</p>
             <p className="text-center text-xs font-normal text-[#C6C8EC]">
               Terakhir Login: Jumat, 26 Juli 2024 16:34 WIB
             </p>
