@@ -14,7 +14,7 @@ const Onboarding = () => {
       {/* first section */}
       <Navbar />
       <main className="h-[680px] flex" role="main">
-        <section className="mt-[126px] ml-20 max-sm:ml-4 max-sm:mt-80">
+        <section className="mt-[140px] ml-20 max-sm:ml-4 max-sm:mt-80">
           <img 
             className="mb-6 max-md:w-36" 
             src={satuDigibank} 
@@ -23,7 +23,7 @@ const Onboarding = () => {
           <h1 
             className="w-[610px] font-[800] text-[56px] max-md:mt-4 max-md:w-auto max-md:text-2xl leading-[56px] text-blue-900"
           >
-            <span className="text-[36px] max-md:text-2xl">Lebih Mudah</span> <br /> Akses Satu
+            <span className="text-[36px]">Lebih Mudah</span> <br /> Akses Satu
             Digibank Tanpa Harus ke Bank
           </h1>
           <p 
@@ -47,7 +47,7 @@ const Onboarding = () => {
         <img 
           src="/images/imgHeader.png" 
           alt="Gambar header bank Satu" 
-          className="max-md:h-96 max-md:absolute max-md:right-0" 
+          className="max-md:h-96 absolute right-0" 
         />
       </main>
 
@@ -56,7 +56,7 @@ const Onboarding = () => {
         <img 
           src="/images/imgFooter.png" 
           alt="Gambar footer bank Satu" 
-          className="max-md:mt-64 max-md:h-96 max-md:absolute max-md:right-72"
+          className="max-md:mt-64 max-md:h-96 max-md:absolute max-md:right-72 w-[601px]"
         />
         <section className="mt-[90px] mr-20 max-md:mr-4 max-md:mt-0">
           <div className="flex justify-end">

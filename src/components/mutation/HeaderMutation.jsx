@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import LogoutPopup from "../authentication/popup/LogoutPopup";
 import ExpiryWarningPopup from "../authentication/popup/ExpiryWarningPopup";
+import { Link } from "react-router-dom";
 
 const HeaderMutation = () => {
   const {
@@ -34,52 +35,82 @@ const HeaderMutation = () => {
       {/* Back button */}
       <div className="flex-1 flex items-center mx-4">
         <button
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
           onClick={handleBack}
+          aria-label="Kembali ke halaman sebelumnya"
         >
           <div className="flex items-center space-x-3">
-            <FiArrowLeft className="text-xl" />
+            <FiArrowLeft className="text-xl" aria-hidden="true" />
             <p>Kembali</p>
           </div>
         </button>
       </div>
 
       {/* Button Group */}
-      <div className="flex items-center space-x-4">
-        <button className="p-3 rounded-2xl bg-[#333999] focus:outline-none">
-          <FiHeadphones className="text-xl" />
+      <div
+        className="flex items-center space-x-4"
+        role="group"
+        aria-label="Navigasi utama"
+      >
+        <button
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="Dukungan pelanggan"
+        >
+          <FiHeadphones className="text-xl" aria-hidden="true" />
         </button>
-        <button className="p-3 rounded-2xl bg-[#333999] focus:outline-none">
-          <FiMail className="text-xl" />
-        </button>
-        <button className="p-3 rounded-2xl bg-[#333999] focus:outline-none">
+        <Link
+          to="/portal/notification"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="notifikasi"
+        >
+          <FiMail className="text-xl" aria-hidden="true" />
+        </Link>
+        <button
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="Bahasa ID - Ubah Bahasa"
+          aria-expanded="false"
+        >
           <div className="flex items-center space-x-1">
             <span>ID</span>
-            <BsFlag className="text-xl" />
+            <BsFlag className="text-xl" aria-hidden="true" />
           </div>
         </button>
         <button
           onClick={() => setShowPopup(true)}
-          className="p-3 rounded-2xl bg-[#333999] focus:outline-none"
+          className="p-3 rounded-2xl bg-[#333999] hover:bg-[#272D87]"
+          aria-label="Log Out"
         >
-          <FiLogOut className="text-xl" />
+          <FiLogOut className="text-xl" aria-hidden="true" />
         </button>
       </div>
 
       {/* Logout Popup */}
       {showPopup && (
-        <LogoutPopup
-          onClose={() => setShowPopup(false)}
-          onLogout={handleLogout}
-        />
+        <div
+          role="dialog"
+          aria-labelledby="logout-dialog-title"
+          aria-modal="true"
+        >
+          <LogoutPopup
+            onClose={() => setShowPopup(false)}
+            onLogout={handleLogout}
+          />
+        </div>
       )}
 
       {/* Expiry Warning Popup */}
       {showWarningPopup && (
-        <ExpiryWarningPopup
-          onClose={handleKeepSession}
-          onLogout={handleLogout}
-        />
+        <div
+          role="dialog"
+          aria-labelledby="expiry-warning-title"
+          aria-live="assertive"
+          aria-modal="true"
+        >
+          <ExpiryWarningPopup
+            onClose={handleKeepSession}
+            onLogout={handleLogout}
+          />
+        </div>
       )}
     </header>
   );

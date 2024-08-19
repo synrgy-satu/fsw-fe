@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { FiArrowRightCircle } from "react-icons/fi";
 
-const FormMutation = () => {
+const FormMutation = ({userInfo, onSubmit}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
@@ -71,9 +78,9 @@ const FormMutation = () => {
         Mohon lengkapi informasi yang dibutuhkan untuk melihat mutasi rekening.
       </p>
 
-      <form>
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="col-span-1">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid grid-cols-5 gap-6 mb-6">
+          <div className="col-span-2">
             <label
               for="sumber-rekening"
               className="block font-bold text-lg mb-1"
@@ -82,19 +89,29 @@ const FormMutation = () => {
             </label>
             <p>Pilih sumber rekening untuk melihat mutasi</p>
           </div>
-          <div className="col-span-1">
+          <div className="col-span-2">
             <select
               id="sumber-rekening"
-              class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              {...register("sumberRekening", { reqired: true })}
             >
               <option>Pilih nomor rekening</option>
-              {/* Tambahkan opsi lain di sini */}
+              {userInfo &&
+                userInfo.rekenings.map((rekening, index) => (
+                  <option key={index} value={rekening.cardNumber}>
+                    {rekening.cardNumber} {rekening.jenisRekening} -{" "}
+                    {userInfo.username}
+                  </option>
+                ))}
             </select>
+            {errors.sumberRekening && (
+              <span className="text-red-500">Sumber rekening diperlukan</span>
+            )}
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="col-span-1">
+        <div className="grid grid-cols-5 gap-6 mb-6">
+          <div className="col-span-2">
             <label
               for="periode-mutasi"
               className="block font-bold text-lg mb-1"
@@ -103,25 +120,29 @@ const FormMutation = () => {
             </label>
             <p>Pilih rekening tujuan untuk melihat mutasi</p>
           </div>
-          <div className="col-span-1">
+          <div className="col-span-2">
             <select
               id="periode-mutasi"
-              class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              {...register("periodeMutasi", { required: true })}
             >
               <option style={styleOption}>
                 Pilih rentang waktu (maks. 6 bulan)
               </option>
               {options.map((option, index) => (
-                <option key={index} value={option.value}>
+                <option key={index} value={option.label}>
                   {option.label}
                 </option>
               ))}
             </select>
+            {errors.periodeMutasi && (
+              <span className="text-red-500">Periode mutasi diperlukan</span>
+            )}
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="col-span-1">
+        <div className="grid grid-cols-5 gap-6 mb-6">
+          <div className="col-span-2">
             <label
               for="jenis-transaksi"
               className="block font-bold text-lg mb-1"
@@ -130,23 +151,26 @@ const FormMutation = () => {
             </label>
             <p>Pilih sumber rekening untuk transaksi ini</p>
           </div>
-          <div className="col-span-1">
+          <div className="col-span-2">
             <select
               id="jenis-transaksi"
-              class="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-4 py-3 text-base text-[#999999] border border-[#ECEDF9] rounded-md bg-[#ECEDF9] focus:ring-blue-500 focus:border-blue-500"
+              {...register("jenisTransaksi", { required: true })}
             >
               <option style={styleOption}>Pilih jenis transaksi</option>
-              <option value="semua">Semua</option>
-              <option value="transaksi-keluar">Transaksi keluar</option>
-              <option value="transaksi-masuk">Transaksi masuk</option>
-              {/* Tambahkan opsi lain di sini */}
+              <option value="SEMUA">Semua</option>
+              <option value="TRANSAKSI_KELUAR">Transaksi keluar</option>
+              <option value="TRANSAKSI_MASUK">Transaksi masuk</option>
             </select>
+            {errors.jenisTransaksi && (
+              <span className="text-red-500">Jenis transaksi diperlukan</span>
+            )}
           </div>
         </div>
 
         <div className="flex flex-row-reverse">
           <button
-            type="button"
+            type="submit"
             className="bg-[#B3B3B3] text-lg font-semibold text-white py-3 px-4 rounded-2xl hover:bg-[#333999]"
           >
             <div className="flex items-center space-x-3">
