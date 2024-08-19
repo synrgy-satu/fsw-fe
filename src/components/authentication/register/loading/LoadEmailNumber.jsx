@@ -7,7 +7,6 @@ const LoadEmailNumber = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // verifEmailNumber();
     const timeout = setTimeout(() => {
       navigate("/register/password");
     }, 6500);
@@ -15,22 +14,6 @@ const LoadEmailNumber = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const verifEmailNumber = async () => {
-    try {
-      await axios
-        .post(`https://satu.cekrek.shop/api/v1/card`, {
-          cardNumber: Number(localStorage.getItem("cardNumber")),
-          month: Number(localStorage.getItem("month")),
-          year: Number(localStorage.getItem("year")),
-        })
-        .then((res) => {
-          // Add Number Card to Local Storage
-          console.log(res);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className="flex flex-col py-4 justify-center items-center">
       <img src={loadEmailNumberIllustration} alt="" className="w-[245px]" />
