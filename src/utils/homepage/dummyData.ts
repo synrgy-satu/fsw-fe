@@ -1,17 +1,16 @@
-import { NEW_DUMMY } from "./dummy";
-
 interface dailyTransaction {
-  id_transaksi: number;
-  tanggal_transaksi: string;
-  tipe_transaksi: string;
-  nominal: number;
-  saldo_akhir: number;
+  referenceNumber: string;
+  jenisTransaksi: string;
+  createdDate: Date;
+  balance: number;
+  amount: number;
+  note: string;
 }
 
 interface periodiclyTransaction {
   period: string;
-  debit?: number;
-  kredit?: number;
+  Debit?: number;
+  Kredit?: number;
 }
 
 const monthNames = [
@@ -29,67 +28,100 @@ const monthNames = [
   "Dec",
 ];
 
+const handleMissingMonth = (
+  data: periodiclyTransaction[],
+  monthLength: number
+) => {
+  const iteration = monthLength - data?.length;
+
+  const month = data[0]?.period?.split(" ")[0];
+  let year = +data[0]?.period?.split(" ")[1];
+
+  const currentMonthIndex = monthNames.findIndex((e) => e === month);
+
+  if (iteration > 0) {
+    let index = currentMonthIndex - 1;
+    for (let i = 0; i < iteration; i++) {
+      const newData = {
+        period: `${monthNames[index]} ${year}`,
+        Kredit: 0,
+        Debit: 0,
+      };
+      data = [newData, ...data];
+      if (index === 0) {
+        index = 11;
+        year--;
+      } else index = index - 1;
+    }
+  }
+
+  return data;
+};
+
 export const filterFewMonths = (
   data: periodiclyTransaction[],
   period: number
 ) => {
-  return data.slice(-period);
+  return handleMissingMonth(data?.slice(-period), period);
 };
 
 const filterLastMonth = (data: dailyTransaction[]) => {
   const monthAgo = new Date();
   monthAgo.setMonth(monthAgo.getMonth() - 1);
 
-  return data.filter(transaction => {
-    const transactionDate = new Date(transaction.tanggal_transaksi);
-    return transactionDate >= monthAgo;
+  return data.filter((transaction) => {
+    return transaction.createdDate >= monthAgo;
   });
 };
 
 const handleMissingData = (data: periodiclyTransaction[]) => {
-  return data.map(entry => ({
+  return data.map((entry) => ({
     ...entry,
-    kredit: entry.kredit ?? 0,
-    debit: entry.debit ?? 0,
+    Kredit: entry.Kredit ?? 0,
+    Debit: entry.Debit ?? 0,
   }));
-}
+};
 
 class DummyData {
-  private static dataDummy: dailyTransaction[] = NEW_DUMMY;
-
   private static getAggregateTransactionPeriodly = (
     data: dailyTransaction[],
     periodType?: string
   ) => {
-    const newData = data.reduce(
-      (previousValue: periodiclyTransaction[], currentValue: dailyTransaction) => {
-        const date = new Date(currentValue.tanggal_transaksi);
+    const newData = data?.reduce(
+      (
+        previousValue: periodiclyTransaction[],
+        currentValue: dailyTransaction
+      ) => {
+        const date = currentValue.createdDate;
 
         let period: string;
         if (periodType === "month" || periodType === "monthly") {
           period = `${monthNames[date.getMonth()]} ${String(
             date.getFullYear()
-          ).slice(-2)}`;
-        } else { 
+          )?.slice(-2)}`;
+        } else {
           period = `${date.getDate()} ${monthNames[date.getMonth()]}`;
         }
 
-        const type = currentValue.tipe_transaksi.toLowerCase();
+        const type = currentValue.jenisTransaksi;
 
         if (!previousValue.find((value) => value["period"] === period)) {
           previousValue.push({ period });
           const index = previousValue.findIndex(
             (value) => value["period"] === period
           );
-          previousValue[index][type] = currentValue.nominal;
+
+          previousValue[index][type] = currentValue.amount;
         } else {
           const index = previousValue.findIndex(
             (value) => value["period"] === period
           );
           if (!previousValue[index][type]) {
-            previousValue[index][type] = currentValue.nominal;
+
+            previousValue[index][type] = currentValue.amount;
           } else {
-            previousValue[index][type] += currentValue.nominal;
+
+            previousValue[index][type] += currentValue.amount;
           }
         }
 
@@ -100,30 +132,38 @@ class DummyData {
     return newData;
   };
 
-  public static getPeriodiclyTransaction = (index: number) => {
+  public static getPeriodiclyTransaction = (
+    index: number,
+    dataDummy: dailyTransaction[]
+  ) => {
     switch (index) {
       case 0:
-        return DummyData.getAggregateTransactionPeriodly(DummyData.dataDummy, "month");
+        return filterFewMonths(
+          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          12
+        );
 
       case 1:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(DummyData.dataDummy, "month"),
+          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
           6
         );
 
       case 2:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(DummyData.dataDummy, "month"),
+          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
           3
         );
 
       case 3:
-        const dailyTransactions = filterLastMonth(DummyData.dataDummy);
-          const processedData = handleMissingData(DummyData.getAggregateTransactionPeriodly(dailyTransactions));
+        const dailyTransactions = filterLastMonth(dataDummy);
+        const processedData = handleMissingData(
+          DummyData.getAggregateTransactionPeriodly(dailyTransactions)
+        );
         return processedData;
 
       default:
-        return DummyData.getAggregateTransactionPeriodly(DummyData.dataDummy);
+        return DummyData.getAggregateTransactionPeriodly(dataDummy);
     }
   };
 }
