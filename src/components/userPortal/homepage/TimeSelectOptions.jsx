@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 
 const TimeSelectOption = ({
@@ -8,10 +7,6 @@ const TimeSelectOption = ({
   handleClickWindow,
   isClicked,
 }) => {
-  // const [isClicked, setIsClicked] = useState(false);
-  // const handleClick = (isClicked) => {
-  //   setIsClicked(!isClicked);
-  // };
   const times = ["1 Tahun", "6 Bulan", "3 Bulan", "1 Bulan"];
 
   return (
@@ -20,7 +15,6 @@ const TimeSelectOption = ({
         className="bg-primary text-white rounded-md cursor-pointer
             relative group"
         onClick={() => {
-          // handleClick(isClicked);
           handleClickWindow();
         }}
       >

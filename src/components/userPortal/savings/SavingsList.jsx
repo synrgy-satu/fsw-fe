@@ -9,15 +9,15 @@ const SavingsList = ({
 }) => {
   return (
     <div
-      className={`py-2 px-5 text-slate-500 rounded-lg border bg-white cursor-pointer 
+      className={`py-2 px-5 text-slate-500 rounded-lg border z-30 bg-white cursor-pointer 
       hover:bg-primary-background ${
         isActive ? "border-primary border-[2px]" : ""
-      }`}
+        }`}
     >
       <div
         className="grid grid-cols-12"
         onClick={() => {
-          handleClick(!isClicked);
+          handleClick();
           handleSelected(account);
         }}
       >
@@ -31,7 +31,6 @@ const SavingsList = ({
           <div>
             <img
               src={`/images/${account.accountType}.png`}
-              // src={`/images/${account.accountType.toLowerCase()}.png`}
               alt="Savings Icon"
               style={{ height: "18px" }}
               className="me-4 w-auto"

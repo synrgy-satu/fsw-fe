@@ -35,7 +35,7 @@ const Header = () => {
           id="search-bar"
           type="text"
           placeholder="Pencarian"
-          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border hover:bg-[#272D87]"
+          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border hover:text-white hover:bg-primary  hover:border-white"
           aria-label="Search"
         />
         <FiSearch className="ml-2 text-xl text-[#C6C8EC]" aria-hidden="true" />

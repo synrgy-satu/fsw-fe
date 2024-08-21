@@ -20,7 +20,7 @@ import HomeNotification from "./homepage/HomeNotification";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
 import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
 import { aggregateData } from "../../utils/homepage/homepageUtils";
-import DummyData, { filterFewMonths } from "../../utils/homepage/dummyData";
+import DummyData, { filterFewMonths } from "../../utils/homepage/aggregateData";
 import { useAuth } from "../../context/authContext";
 
 const totalBalance =
@@ -229,9 +229,7 @@ export default function Homepage() {
                     key={asset}
                     currency={currency}
                     activeCurrency={activeCurrency}
-                    // data={filterLastMonths(DUMMY_DATA, monthsFilterBalance)}
                     data={filterFewMonths(DUMMY_DATA, selectOptionBalance)}
-                    // data={DummyData.getPeriodiclyTransaction(monthsFilterBalance)}
                     aggregateData={aggregateData}
                   />
                 ))}
@@ -390,9 +388,6 @@ export default function Homepage() {
             </div>
           </div>
           <HomeLineChart
-            // data={filterLastMonths(DUMMY_DATA, monthsFilterGraph)}
-            // data={DummyData.getPeriodiclyTransaction(selectOptionGraph)}
-            // data={DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)}
             data={graphData}
             xDataKey={"period"}
             line1DataKey={"Debit"}

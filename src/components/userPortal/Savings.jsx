@@ -14,7 +14,7 @@ import TransactionLimiter from "./savings/TransactionLimiter";
 import SavingsList from "./savings/SavingsList";
 import { useAuth } from "../../context/authContext";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
-import DummyData from "../../utils/homepage/dummyData";
+import DummyData from "../../utils/homepage/aggregateData";
 
 export default function Savings() {
   const [tunai, setTunai] = useState(10000);
@@ -36,13 +36,12 @@ export default function Savings() {
   const [mutation, setMutation] = useState([]);
 
   useEffect(() => {
-    if (userMutation) { 
-      console.log(userMutation);
+    if (userMutation) {
       setMutation(userMutation);
     }
   }, [userMutation]);
 
-  useEffect(() => { 
+  useEffect(() => {
     const graphData = DummyData.getPeriodiclyTransaction(
       selectOption === false ? 0 : selectOption,
       mutation
@@ -111,6 +110,7 @@ export default function Savings() {
     }
   }, [userInfo]);
 
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -119,7 +119,7 @@ export default function Savings() {
     };
   }, []);
 
-  const handleisClickedSavings = () => {
+  const handleIsClickedSavings = () => {
     setIsClickedSavings(!isClickedSavings);
   };
 
@@ -157,7 +157,6 @@ export default function Savings() {
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsClickedSavings(false);
       setIsClickedTimeOption(false);
     }
   };
@@ -182,10 +181,12 @@ export default function Savings() {
 
       <div className="flex gap-6 items-center mb-6">
         <p className="font-extrabold">Tabungan</p>
-        <div className="relative select-none" ref={dropdownRef}>
+        <div
+          className="relative select-none z-50"
+        >
           <SavingsList
             account={selectedSavings}
-            handleClick={handleisClickedSavings}
+            handleClick={handleIsClickedSavings}
             isClicked={isClickedSavings}
             handleSelected={handleSelectedSavings}
             isActive
@@ -199,7 +200,7 @@ export default function Savings() {
                 return (
                   <li>
                     <SavingsList
-                      handleClick={handleisClickedSavings}
+                      handleClick={handleIsClickedSavings}
                       isClicked={isClickedSavings}
                       account={account}
                       handleSelected={handleSelectedSavings}
@@ -214,19 +215,22 @@ export default function Savings() {
 
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-4 rounded-xl">
-          <div className="grid gap-6 -mt-6">
+          <div className="grid gap-6">
             <div className="w-full">
-              <p className="relative top-[62%] left-10 text-xl text-white">
-                {selectedSavings.replaceCardNumber}
-              </p>
-              <p className="relative top-[73%] left-10 text-xl text-white ">
-                {selectedSavings.name}
-              </p>
-              <img
-                src={`/images/${selectedSavings["accountType"]}-card.png`}
-                alt="Savings Card"
-                className="object-contain"
-              />
+              <div className="relative">
+                <img
+                  src={`/images/${selectedSavings["accountType"]}-card.png`}
+                  draggable={false}
+                  alt="Savings Card"
+                  className="object-contain"
+                />
+                <p className="absolute top-[52%] left-8 text-xl text-white select-none tracking-[0.23rem] font-bold">
+                  {selectedSavings.replaceCardNumber}
+                </p>
+                <p className="absolute bottom-[6%] left-9 text-white select-none text-md">
+                  {selectedSavings.userName}
+                </p>
+              </div>
             </div>
             <div className="bg-white rounded-xl p-5 font-bold">
               <p className="py-3">Saldo Akhir</p>
@@ -289,7 +293,6 @@ export default function Savings() {
                   handleSelect={handleSelectOption}
                   handleClickWindow={handleisClickedTimeOption}
                   isClicked={isClickedTimeOption}
-                  // handleclick={handleisClickedTimeOption}
                 />
               </div>
             </div>
@@ -301,7 +304,6 @@ export default function Savings() {
                 </div>
                 <div className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
                   {valueFormatter(totalDebit)}
                 </div>
               </div>
@@ -312,17 +314,13 @@ export default function Savings() {
                 </div>
                 <p className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
                   {valueFormatter(totalCredit)}
                 </p>
               </div>
             </div>
             <div className="-mb-3">
               <HomeLineChart
-                // data={filterLastMonths(DUMMY_DATA, monthsFilter)}
-                // data={getDummyData(selectOption)}
                 data={graphData}
-                // xDataKey={"month"}
                 xDataKey={"period"}
                 line1DataKey={"Kredit"}
                 line2DataKey={"Debit"}
