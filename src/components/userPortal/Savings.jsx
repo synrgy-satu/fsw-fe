@@ -14,13 +14,7 @@ import TransactionLimiter from "./savings/TransactionLimiter";
 import SavingsList from "./savings/SavingsList";
 import { useAuth } from "../../context/authContext";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
-import { aggregateData } from "../../utils/homepage/homepageUtils";
-import DummyData from "../../utils/homepage/dummyData";
-import { DUMMY_DATA } from "../../utils/homepage/dummies";
-
-// import { filterLastMonths } from "../../utils/homepage/homepageUtils";
-// import getDummyData from "../../utils/homepage/getDummyData";
-// import DummyData from "../../utils/homepage/DummyData";
+import DummyData from "../../utils/homepage/aggregateData";
 
 export default function Savings() {
   const [tunai, setTunai] = useState(10000);
@@ -34,26 +28,41 @@ export default function Savings() {
   const dropdownRef = useRef(null);
   const [selectedSavings, setSelectedSavings] = useState({});
   const [accounts, setAccounts] = useState([]);
-  const { userInfo } = useAuth();
+  const { userInfo, userMutation } = useAuth();
   const [selectOption, setSelectOption] = useState(false);
-  const [monthsFilter, setMonthsFilter] = useState(0);
   const [graphData, setGraphData] = useState([]);
   const [totalDebit, setTotalDebit] = useState();
   const [totalCredit, setTotalCredit] = useState();
+  const [mutation, setMutation] = useState([]);
+
+  useEffect(() => {
+    if (userMutation) {
+      setMutation(userMutation);
+    }
+  }, [userMutation]);
 
   useEffect(() => {
     const graphData = DummyData.getPeriodiclyTransaction(
-      selectOption === false ? 0 : selectOption
+      selectOption === false ? 0 : selectOption,
+      mutation
+    );
+    setGraphData(graphData);
+  }, [mutation]);
+
+  useEffect(() => {
+    const graphData = DummyData.getPeriodiclyTransaction(
+      selectOption === false ? 0 : selectOption,
+      mutation
     );
     setGraphData(graphData);
 
     const totalDebit = graphData.reduce((prev, curr) => {
-      prev += curr.debit;
+      prev += curr.Debit;
       return prev;
     }, 0);
 
     const totalCredit = graphData.reduce((prev, curr) => {
-      prev += curr.kredit;
+      prev += curr.Kredit;
       return prev;
     }, 0);
 
@@ -73,13 +82,16 @@ export default function Savings() {
             expiredDateMonth,
             expiredDateYear,
             balance,
-            name
+            name,
           },
         ],
       } = userInfo;
 
       const formatCardNumberToString = cardNumber.toString();
-      const replaceCardNumber = formatCardNumberToString.replace(/(.{4})/g, "$1 ");
+      const replaceCardNumber = formatCardNumberToString.replace(
+        /(.{4})/g,
+        "$1 "
+      );
 
       const newRekening = {
         accountType: jenisRekening.toLowerCase(),
@@ -98,6 +110,7 @@ export default function Savings() {
     }
   }, [userInfo]);
 
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -106,7 +119,7 @@ export default function Savings() {
     };
   }, []);
 
-  const handleisClickedSavings = () => {
+  const handleIsClickedSavings = () => {
     setIsClickedSavings(!isClickedSavings);
   };
 
@@ -144,7 +157,6 @@ export default function Savings() {
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsClickedSavings(false);
       setIsClickedTimeOption(false);
     }
   };
@@ -169,10 +181,12 @@ export default function Savings() {
 
       <div className="flex gap-6 items-center mb-6">
         <p className="font-extrabold">Tabungan</p>
-        <div className="relative select-none" ref={dropdownRef}>
+        <div
+          className="relative select-none z-50"
+        >
           <SavingsList
             account={selectedSavings}
-            handleClick={handleisClickedSavings}
+            handleClick={handleIsClickedSavings}
             isClicked={isClickedSavings}
             handleSelected={handleSelectedSavings}
             isActive
@@ -186,7 +200,7 @@ export default function Savings() {
                 return (
                   <li>
                     <SavingsList
-                      handleClick={handleisClickedSavings}
+                      handleClick={handleIsClickedSavings}
                       isClicked={isClickedSavings}
                       account={account}
                       handleSelected={handleSelectedSavings}
@@ -203,18 +217,20 @@ export default function Savings() {
         <div className="col-span-4 rounded-xl">
           <div className="grid gap-6">
             <div className="w-full">
-              <p className="relative top-[62%] left-10 text-xl text-white">
-                {selectedSavings.replaceCardNumber}
-              </p>
-              <p className="relative top-[73%] left-10 text-xl text-white ">
-                {selectedSavings.name}
-              </p>
-              <img
-                src={`/images/${selectedSavings["accountType"]}-card.png`}
-                // src={`/images/${selectedSavings["accountType"].toLowerCase()}-card.png`}
-                alt="Savings Card"
-                className="object-contain"
-              />
+              <div className="relative">
+                <img
+                  src={`/images/${selectedSavings["accountType"]}-card.png`}
+                  draggable={false}
+                  alt="Savings Card"
+                  className="object-contain"
+                />
+                <p className="absolute top-[52%] left-8 text-xl text-white select-none tracking-[0.23rem] font-bold">
+                  {selectedSavings.replaceCardNumber}
+                </p>
+                <p className="absolute bottom-[6%] left-9 text-white select-none text-md">
+                  {selectedSavings.userName}
+                </p>
+              </div>
             </div>
             <div className="bg-white rounded-xl p-5 font-bold">
               <p className="py-3">Saldo Akhir</p>
@@ -277,7 +293,6 @@ export default function Savings() {
                   handleSelect={handleSelectOption}
                   handleClickWindow={handleisClickedTimeOption}
                   isClicked={isClickedTimeOption}
-                  // handleclick={handleisClickedTimeOption}
                 />
               </div>
             </div>
@@ -289,7 +304,6 @@ export default function Savings() {
                 </div>
                 <div className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
                   {valueFormatter(totalDebit)}
                 </div>
               </div>
@@ -300,20 +314,16 @@ export default function Savings() {
                 </div>
                 <p className="my-1 mx-4 py-1 px-6 rounded-md bg-primary-background text-blue-900 font-bold">
                   <span className="font-normal pe-6">IDR</span>
-                  {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
                   {valueFormatter(totalCredit)}
                 </p>
               </div>
             </div>
             <div className="-mb-3">
               <HomeLineChart
-                // data={filterLastMonths(DUMMY_DATA, monthsFilter)}
-                // data={getDummyData(selectOption)}
                 data={graphData}
-                // xDataKey={"month"}
                 xDataKey={"period"}
-                line1DataKey={"kredit"}
-                line2DataKey={"debit"}
+                line1DataKey={"Kredit"}
+                line2DataKey={"Debit"}
                 height={200}
                 dot={false}
               />

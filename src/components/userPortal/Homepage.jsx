@@ -20,8 +20,8 @@ import HomeNotification from "./homepage/HomeNotification";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
 import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
 import { aggregateData } from "../../utils/homepage/homepageUtils";
-import DummyData, { filterFewMonths } from "../../utils/homepage/dummyData";
-// import { filterLastMonths } from "../../utils/homepage/homepageUtils";
+import DummyData, { filterFewMonths } from "../../utils/homepage/aggregateData";
+import { useAuth } from "../../context/authContext";
 
 const totalBalance =
   aggregateData(DUMMY_DATA, "debit") +
@@ -35,12 +35,10 @@ export default function Homepage() {
   const [activeCurrency, setActiveCurrency] = useState(0);
   const [notification, setNotification] = useState(true);
 
-  const [monthsFilterBalance, setMonthsFilterBalance] = useState(0);
   const [selectOptionBalance, setSelectOptionBalance] = useState(false);
   const [isClickedTimeOptionBalance, setIsClickedTimeOptionBalance] =
     useState(false);
 
-  // const [monthsFilterGraph, setMonthsFilterGraph] = useState(0);
   const [selectOptionGraph, setSelectOptionGraph] = useState(false);
   const [isClickedTimeOptionGraph, setIsClickedTimeOptionGraph] =
     useState(false);
@@ -48,29 +46,48 @@ export default function Homepage() {
   const balanceDropdownRef = useRef(null);
   const graphDropdownRef = useRef(null);
 
-  const [graphData, setGraphData] = useState([])
-  const [totalDebit, setTotalDebit] = useState()
-  const [totalCredit, setTotalCredit] = useState()
+  const [graphData, setGraphData] = useState([]);
+  const [totalDebit, setTotalDebit] = useState();
+  const [totalCredit, setTotalCredit] = useState();
 
-  useEffect(() => { 
-    const graphData = DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)
+  const { userMutation } = useAuth();
+  const [mutation, setMutation] = useState([]);
+
+  useEffect(() => {
+    if (userMutation) {
+      console.log(userMutation);
+      setMutation(userMutation);
+    }
+  }, [userMutation]);
+
+  useEffect(() => {
+    const graphData = DummyData.getPeriodiclyTransaction(
+      selectOptionGraph === false ? 0 : selectOptionGraph,
+      mutation
+    );
     setGraphData(graphData);
-    // console.log(graphData);
 
-    const totalDebit = graphData.reduce((prev, curr) => { 
-      prev += curr.debit;
-      return prev; 
-    }, 0)
+    const totalDebit = graphData.reduce((prev, curr) => {
+      prev += curr.Debit;
+      return prev;
+    }, 0);
 
-    const totalCredit = graphData.reduce((prev, curr) => { 
-      prev += curr.kredit;
-      return prev; 
-    }, 0)
+    const totalCredit = graphData.reduce((prev, curr) => {
+      prev += curr.Kredit;
+      return prev;
+    }, 0);
 
     setTotalDebit(totalDebit);
     setTotalCredit(totalCredit);
+  }, [selectOptionGraph]);
 
-  }, [selectOptionGraph])
+  useEffect(() => { 
+    const graphData = DummyData.getPeriodiclyTransaction(
+      selectOptionGraph === false ? 0 : selectOptionGraph,
+      mutation
+    );
+    setGraphData(graphData);
+  }, [mutation]);
 
   useEffect(() => {
     const isAlertClosed = localStorage.getItem("isAlertClosed");
@@ -212,9 +229,7 @@ export default function Homepage() {
                     key={asset}
                     currency={currency}
                     activeCurrency={activeCurrency}
-                    // data={filterLastMonths(DUMMY_DATA, monthsFilterBalance)}
                     data={filterFewMonths(DUMMY_DATA, selectOptionBalance)}
-                    // data={DummyData.getPeriodiclyTransaction(monthsFilterBalance)}
                     aggregateData={aggregateData}
                   />
                 ))}
@@ -373,13 +388,10 @@ export default function Homepage() {
             </div>
           </div>
           <HomeLineChart
-            // data={filterLastMonths(DUMMY_DATA, monthsFilterGraph)}
-            // data={DummyData.getPeriodiclyTransaction(selectOptionGraph)}
-            // data={DummyData.getPeriodiclyTransaction((selectOptionGraph === false) ? 0 : selectOptionGraph)}
             data={graphData}
             xDataKey={"period"}
-            line1DataKey={"debit"}
-            line2DataKey={"kredit"}
+            line1DataKey={"Debit"}
+            line2DataKey={"Kredit"}
             height={175}
             dot={false}
           />
@@ -391,10 +403,12 @@ export default function Homepage() {
                 <FaMoneyCheckDollar />
                 <p className=" ">Pemasukan</p>
               </div>
-              <div className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
-                <span className="font-normal pe-6">IDR</span>
+              <div className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold block">
                 {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
-                {valueFormatter(totalDebit)}
+                <p className="block min-w-44">
+                  <span className="font-normal pe-6">IDR</span>
+                  {valueFormatter(totalDebit)}
+                </p>
               </div>
             </div>
             <div className="mt-6">
@@ -402,10 +416,13 @@ export default function Homepage() {
                 <FaMoneyBillTrendUp />
                 <p className=" ">Pengeluaran</p>
               </div>
-              <p className="my-3 me-2 py-1 ps-4 pe-10 rounded-md bg-white text-blue-900 font-bold">
-                <span className="font-normal pe-6">IDR</span>
+              <p className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold">
                 {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
-                {valueFormatter(totalCredit)}
+
+                <p className="block min-w-44">
+                  <span className="font-normal pe-6">IDR</span>
+                  {valueFormatter(totalCredit)}
+                </p>
               </p>
             </div>
           </div>
