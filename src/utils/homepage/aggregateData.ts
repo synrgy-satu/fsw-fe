@@ -129,41 +129,42 @@ class DummyData {
       },
       []
     );
-    return newData;
+    return handleMissingData(newData);
+    // return newData;
   };
 
   public static getPeriodiclyTransaction = (
     index: number,
-    dataDummy: dailyTransaction[]
+    transactionData: dailyTransaction[]
   ) => {
     switch (index) {
       case 0:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
           12
         );
 
       case 1:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
           6
         );
 
       case 2:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
           3
         );
 
       case 3:
-        const dailyTransactions = filterLastMonth(dataDummy);
+        const dailyTransactions = filterLastMonth(transactionData);
         const processedData = handleMissingData(
           DummyData.getAggregateTransactionPeriodly(dailyTransactions)
         );
         return processedData;
 
       default:
-        return DummyData.getAggregateTransactionPeriodly(dataDummy);
+        return DummyData.getAggregateTransactionPeriodly(transactionData);
     }
   };
 }

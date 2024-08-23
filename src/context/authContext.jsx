@@ -147,6 +147,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    fetchUserInfo();
+  }, [userInfo]);
+
+  useEffect(() => {
     if (authState && authState.accessToken) {
       fetchUserInfo(); // Fetch user info on login
     }

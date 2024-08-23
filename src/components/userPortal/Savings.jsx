@@ -73,7 +73,8 @@ export default function Savings() {
   useEffect(() => {
     if (userInfo) {
       const {
-        username: userName,
+        // username: userName,
+        fullName,
         rekenings: [
           {
             cardNumber,
@@ -95,7 +96,7 @@ export default function Savings() {
 
       const newRekening = {
         accountType: jenisRekening.toLowerCase(),
-        userName,
+        fullName,
         balance,
         replaceCardNumber,
         cardNumber,
@@ -109,7 +110,6 @@ export default function Savings() {
       setSelectedSavings(newRekening);
     }
   }, [userInfo]);
-
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -227,8 +227,9 @@ export default function Savings() {
                 <p className="absolute top-[52%] left-8 text-xl text-white select-none tracking-[0.23rem] font-bold">
                   {selectedSavings.replaceCardNumber}
                 </p>
-                <p className="absolute bottom-[6%] left-9 text-white select-none text-md">
-                  {selectedSavings.userName}
+                <p className="absolute bottom-[6%] left-9 text-white select-none text-sm">
+                  {/* {selectedSavings.userName} */}
+                  {selectedSavings.fullName}
                 </p>
               </div>
             </div>

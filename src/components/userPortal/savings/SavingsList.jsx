@@ -24,7 +24,8 @@ const SavingsList = ({
         <div className="col-span-8">
           <p className="px-2">
             {account.accountNumber}
-            <span className="ms-2 me-4">({account.userName})</span>
+            <span className="ms-2 me-4">({account.fullName})</span>
+            {/* <span className="ms-2 me-4">({account.userName})</span> */}
           </p>
         </div>
         <div className="col-span-4 flex items-center justify-end">
