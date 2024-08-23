@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import FormMutation from "../components/mutation/FormMutation";
 import MutationResult from "../components/mutation/MutationResult";
@@ -13,7 +13,9 @@ const Mutation = () => {
 
   // Function to find data by cardNumber
   const findDataByCardNumber = (cardNumber) => {
-    const result = userInfo.rekenings.find((item) => item.cardNumber == cardNumber);
+    const result = userInfo.rekenings.find(
+      (item) => item.cardNumber == cardNumber
+    );
     if (result) {
       const { balance, cardNumber, jenisRekening } = result;
       return { balance, cardNumber, jenisRekening };

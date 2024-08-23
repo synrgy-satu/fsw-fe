@@ -21,7 +21,7 @@ import TimeSelectOption from "./homepage/TimeSelectOptions";
 import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
 import { aggregateData } from "../../utils/homepage/homepageUtils";
 import DummyData, { filterFewMonths } from "../../utils/homepage/aggregateData";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 
 const totalBalance =
   aggregateData(DUMMY_DATA, "debit") +
@@ -81,7 +81,7 @@ export default function Homepage() {
     setTotalCredit(totalCredit);
   }, [selectOptionGraph]);
 
-  useEffect(() => { 
+  useEffect(() => {
     const graphData = DummyData.getPeriodiclyTransaction(
       selectOptionGraph === false ? 0 : selectOptionGraph,
       mutation
