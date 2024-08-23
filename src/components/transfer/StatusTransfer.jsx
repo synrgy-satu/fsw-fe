@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiHome } from "react-icons/fi";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import moment from "moment";
 import html2pdf from "html2pdf.js";
 // import ReactToPrint from "react-to-print";

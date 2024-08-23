@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import FormMutation from "../components/mutation/FormMutation";
 import MutationResult from "../components/mutation/MutationResult";
@@ -9,6 +9,20 @@ const Mutation = () => {
   const { userInfo } = useAuth();
 
   const [mutationData, setMutationData] = useState([]);
+  const [userData, setUserData] = useState();
+
+  // Function to find data by cardNumber
+  const findDataByCardNumber = (cardNumber) => {
+    const result = userInfo.rekenings.find(
+      (item) => item.cardNumber == cardNumber
+    );
+    if (result) {
+      const { balance, cardNumber, jenisRekening } = result;
+      return { balance, cardNumber, jenisRekening };
+    } else {
+      return "Data not found";
+    }
+  };
 
   useEffect(() => {
     // console.log(mutationData);
@@ -30,6 +44,12 @@ const Mutation = () => {
       });
 
       setMutationData(response.data.data);
+      const userData = findDataByCardNumber(sumberRekening);
+      userData.fullName = userInfo.fullName;
+      userData.periodeMutasi = periodeMutasi;
+
+      setUserData(userData);
+
       setJenisTransaksi(jenisTransaksi);
       setFormSubmitted(true);
     } catch (error) {
@@ -84,7 +104,11 @@ const Mutation = () => {
         {!formSubmitted ? (
           <FormMutation userInfo={userInfo} onSubmit={onSubmit} />
         ) : (
-          <MutationResult userInfo={userInfo} mutationData={mutationData} jenisTransaksi={jenisTransaksi} />
+          <MutationResult
+            userData={userData}
+            mutationData={mutationData}
+            jenisTransaksi={jenisTransaksi}
+          />
         )}
       </div>
     </>
