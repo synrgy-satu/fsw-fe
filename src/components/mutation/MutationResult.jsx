@@ -3,7 +3,7 @@ import { FiHome, FiDownload } from "react-icons/fi";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MutationDocument from "./MutationDocument";
 
-const MutationResult = ({ userInfo, mutationData, jenisTransaksi }) => {
+const MutationResult = ({ userData, mutationData, jenisTransaksi }) => {
   /**
    * Fungsi untuk mengonversi format tanggal dari "07-08-2024" menjadi "07 Agustus 2024"
    * @param {string}
@@ -46,7 +46,6 @@ const MutationResult = ({ userInfo, mutationData, jenisTransaksi }) => {
     return number;
   };
 
-  console.log(userInfo);
   console.log(mutationData);
 
   return (
@@ -54,25 +53,23 @@ const MutationResult = ({ userInfo, mutationData, jenisTransaksi }) => {
       <div className="space-y-5 my-6 text-lg">
         <div className="grid grid-cols-3">
           <div className="col-span-1">Nomor Rekening</div>
-          <div className="col-span-1">{mutationData[0].cardNumber}</div>
+          <div className="col-span-1">{userData.cardNumber}</div>
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1">Jenis Tabungan</div>
-          <div className="col-span-1">{mutationData[0].jenisRekening}</div>
+          <div className="col-span-1">{userData.jenisRekening}</div>
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1">Nama Rekening</div>
-          <div className="col-span-1">{userInfo.username}</div>
+          <div className="col-span-1">{userData.fullName}</div>
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1">Periode Mutasi</div>
-          <div className="col-span-1">{mutationData[0].periodeMutasi}</div>
+          <div className="col-span-1">{userData.periodeMutasi}</div>
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1">Jumlah Saldo Terakhir</div>
-          <div className="col-span-1">
-            IDR {formatNumber(mutationData[0].balance)}
-          </div>
+          <div className="col-span-1">IDR {formatNumber(userData.balance)}</div>
         </div>
       </div>
 
@@ -90,16 +87,32 @@ const MutationResult = ({ userInfo, mutationData, jenisTransaksi }) => {
             </tr>
           </thead>
           <tbody>
-            {mutationData.map((item, index) => (
-              <tr className="border-b border-[#999999]" key={index}>
-                <td className="py-2 px-4">{convertDate(item.createdDate)}</td>
-                <td className="py-2 px-4">{item.referenceNumber}</td>
-                <td className="py-2 px-4">{item.note}</td>
-                <td className="py-2 px-4 text-red-500">{item.jenisTransaksi === "TRANSAKSI_KELUAR" ? `-${formatNumber(item.amount)}` : "" }</td>
-                <td className="py-2 px-4 text-green-500">{item.jenisTransaksi === "TRANSAKSI_MASUK" ? `+${formatNumber(item.amount)}` : "" }</td>
-                <td className="py-2 px-4">{formatNumber(item.balance)}</td>
+            {mutationData && mutationData.length > 0 ? (
+              mutationData.map((item, index) => (
+                <tr className="border-b border-[#999999]" key={index}>
+                  <td className="py-2 px-4">{convertDate(item.createdDate)}</td>
+                  <td className="py-2 px-4">{item.referenceNumber}</td>
+                  <td className="py-2 px-4">{item.note}</td>
+                  <td className="py-2 px-4 text-red-500">
+                    {item.jenisTransaksi === "TRANSAKSI_KELUAR"
+                      ? `-${formatNumber(item.amount)}`
+                      : ""}
+                  </td>
+                  <td className="py-2 px-4 text-green-500">
+                    {item.jenisTransaksi === "TRANSAKSI_MASUK"
+                      ? `+${formatNumber(item.amount)}`
+                      : ""}
+                  </td>
+                  <td className="py-2 px-4">{formatNumber(item.balance)}</td>
+                </tr>
+              ))
+            ) : (
+              <tr className="border-b border-[#999999]">
+                <td className="py-2 px-4 text-center" colSpan="6">
+                  Tidak ada riwayat transaksi
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -117,7 +130,11 @@ const MutationResult = ({ userInfo, mutationData, jenisTransaksi }) => {
         </Link>
         <PDFDownloadLink
           document={
-            <MutationDocument formData={userInfo} mutationData={mutationData} jenisTransaksi={jenisTransaksi} />
+            <MutationDocument
+              formData={userData}
+              mutationData={mutationData}
+              jenisTransaksi={jenisTransaksi}
+            />
           }
           fileName="mutasi_rekening.pdf"
         >
