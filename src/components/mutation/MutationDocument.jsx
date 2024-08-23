@@ -200,13 +200,12 @@ const MutationDocument = ({ formData, mutationData, jenisTransaksi }) => {
                     <Text style={styles.text}>Jenis Transaksi</Text>
                   </View>
                   <View>
-                    <Text style={styles.textBold}>: {formData.username}</Text>
+                    <Text style={styles.textBold}>: {formData.fullName}</Text>
                     <Text style={styles.textBold}>
-                      : {mutationData[0].cardNumber} (
-                      {mutationData[0].jenisRekening})
+                      : {formData.cardNumber} ({formData.jenisRekening})
                     </Text>
                     <Text style={styles.textBold}>
-                      : {mutationData[0].periodeMutasi}
+                      : {formData.periodeMutasi}
                     </Text>
                     <Text style={styles.textBold}>: {jenisTransaksi}</Text>
                   </View>
@@ -241,26 +240,36 @@ const MutationDocument = ({ formData, mutationData, jenisTransaksi }) => {
                 <Text style={[styles.tableCell, { flex: 2 }]}>MASUK (IDR)</Text>
               </View>
               {/* Table Rows */}
-              {mutationData.map((item, index) => (
-                <View style={styles.tableRow} key={index}>
-                  <Text style={[styles.tableCell, { flex: 1.5 }]}>
-                    {convertDate(item.createdDate)}
-                  </Text>
-                  <Text style={[styles.tableCell, { flex: 2.5 }]}>
-                    {item.note}
-                  </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
-                    {item.jenisTransaksi === "TRANSAKSI_KELUAR"
-                      ? formatNumber(item.amount)
-                      : ""}
-                  </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
-                    {item.jenisTransaksi === "TRANSAKSI_MASUK"
-                      ? formatNumber(item.amount)
-                      : ""}
+              {mutationData && mutationData.length > 0 ? (
+                mutationData.map((item, index) => (
+                  <View style={styles.tableRow} key={index}>
+                    <Text style={[styles.tableCell, { flex: 1.5 }]}>
+                      {convertDate(item.createdDate)}
+                    </Text>
+                    <Text style={[styles.tableCell, { flex: 2.5 }]}>
+                      {item.note}
+                    </Text>
+                    <Text style={[styles.tableCell, { flex: 2 }]}>
+                      {item.jenisTransaksi === "TRANSAKSI_KELUAR"
+                        ? formatNumber(item.amount)
+                        : ""}
+                    </Text>
+                    <Text style={[styles.tableCell, { flex: 2 }]}>
+                      {item.jenisTransaksi === "TRANSAKSI_MASUK"
+                        ? formatNumber(item.amount)
+                        : ""}
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <View style={styles.tableRow}>
+                  <Text
+                    style={[styles.tableCell, { flex: 1, textAlign: "center" }]}
+                  >
+                    Tidak ada riwayat transaksi
                   </Text>
                 </View>
-              ))}
+              )}
             </View>
           </View>
         </View>
