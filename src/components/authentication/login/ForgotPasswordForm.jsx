@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import { useAuth } from "../../../context/authContext";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function ForgotPasswordForm() {
   const { forgotPassword } = useAuth();
@@ -17,7 +17,7 @@ export default function ForgotPasswordForm() {
     const { email } = data;
     console.log("email: ", email);
 
-    // use authContext.jsx to post email to forgot-password api to the server
+    // use AuthContext.jsx to post email to forgot-password api to the server
     try {
       await forgotPassword(email);
       console.log("Forgot password success");

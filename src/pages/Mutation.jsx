@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import FormMutation from "../components/mutation/FormMutation";
 import MutationResult from "../components/mutation/MutationResult";
@@ -84,7 +84,11 @@ const Mutation = () => {
         {!formSubmitted ? (
           <FormMutation userInfo={userInfo} onSubmit={onSubmit} />
         ) : (
-          <MutationResult userInfo={userInfo} mutationData={mutationData} jenisTransaksi={jenisTransaksi} />
+          <MutationResult
+            userInfo={userInfo}
+            mutationData={mutationData}
+            jenisTransaksi={jenisTransaksi}
+          />
         )}
       </div>
     </>

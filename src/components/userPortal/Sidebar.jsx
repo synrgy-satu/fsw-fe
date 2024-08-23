@@ -6,7 +6,7 @@ import { GoHome } from "react-icons/go";
 import { MdFavoriteBorder } from "react-icons/md";
 import { RiSettings4Line } from "react-icons/ri";
 import { PiNumberOneBold } from "react-icons/pi";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);

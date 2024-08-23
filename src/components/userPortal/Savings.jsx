@@ -12,7 +12,7 @@ import InfoItem from "./savings/InfoItem";
 import ToggleTransaction from "./savings/ToggleTransaction";
 import TransactionLimiter from "./savings/TransactionLimiter";
 import SavingsList from "./savings/SavingsList";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
 import DummyData from "../../utils/homepage/aggregateData";
 
@@ -110,7 +110,6 @@ export default function Savings() {
     }
   }, [userInfo]);
 
-
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -181,9 +180,7 @@ export default function Savings() {
 
       <div className="flex gap-6 items-center mb-6">
         <p className="font-extrabold">Tabungan</p>
-        <div
-          className="relative select-none z-50"
-        >
+        <div className="relative select-none z-50">
           <SavingsList
             account={selectedSavings}
             handleClick={handleIsClickedSavings}

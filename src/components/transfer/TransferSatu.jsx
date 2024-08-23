@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiArrowRightCircle } from "react-icons/fi";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 const TransferSatu = () => {
@@ -166,8 +166,12 @@ const TransferSatu = () => {
                 >
                   <option value="">Pilih nomor rekening</option>
                   {data.map((item, index) => (
-                    <option key={index} value={item.rekeningNumber} className="text-black">
-                      {item.rekeningNumber}  {item.jenisRekening} {item.name}
+                    <option
+                      key={index}
+                      value={item.rekeningNumber}
+                      className="text-black"
+                    >
+                      {item.rekeningNumber} {item.jenisRekening} {item.name}
                     </option>
                   ))}
                 </select>
@@ -302,7 +306,9 @@ const TransferSatu = () => {
                 aria-required="true"
               >
                 <option style={styleOption}>Pilih Waktu Transfer</option>
-                <option value="sekarang" selected>Sekarang</option>
+                <option value="sekarang" selected>
+                  Sekarang
+                </option>
                 <option value="atur-tanggal">Atur Tanggal</option>
               </select>
             </div>

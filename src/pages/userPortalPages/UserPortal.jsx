@@ -13,6 +13,7 @@ import Savings from "../../components/userPortal/Savings";
 import Qris from "../../components/userPortal/Qris.jsx";
 import AccountPrivacy from "../../components/userPortal/AccountPrivacy.jsx";
 import Notification from "../notification/Notification.jsx";
+import { QrisProvider } from "../../context/QrisContext";
 
 const UserPortal = () => (
   <DefaultLayout>
@@ -32,7 +33,14 @@ const UserPortal = () => (
         element={<StatusTransfer />}
       />
       <Route path="notification" element={<Notification />} />
-      <Route path="qris" element={<Qris />} />
+      <Route
+        path="qris"
+        element={
+          <QrisProvider>
+            <Qris />
+          </QrisProvider>
+        }
+      />
       <Route path="account-privacy" element={<AccountPrivacy />} />
       <Route path="*" element={<NotFoundUserPortal />} />
     </Routes>

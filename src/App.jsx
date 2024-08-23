@@ -11,7 +11,7 @@ import NotVerifNumberCardPage from "./pages/authentication/register/verif/NotVer
 import UserPortal from "./pages/userPortalPages/UserPortal";
 import Notification from "./pages/notification/Notification";
 import Login from "./pages/authentication/Login";
-import { AuthProvider } from "./context/authContext";
+import { AuthProvider } from "./context/AuthContext";
 import Mutation from "./pages/Mutation";
 import ProtectedRoute from "./components/protection/ProtectedRoute";
 import "./assets/css/style.css";
@@ -20,38 +20,38 @@ function App() {
   return (
     <>
       <AuthProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Onboarding />} />
-              <Route path="/login" element={<Login />} />
-              {/* Register Pages */}
-              <Route path="/register" element={<RegisterNumberCard />} />
-              <Route path="/register/email" element={<RegisterEmailNumber />} />
-              <Route path="/register/password" element={<RegisterPassword />} />
-              <Route path="/register/pin" element={<RegisterPIN />} />
-              <Route path="/register/success" element={<RegisterSuccess />} />
-              <Route
-                path="/register/verifnumber"
-                element={<VerifNumberCardPage />}
-              />
-              <Route
-                path="/register/notverifnumber"
-                element={<NotVerifNumberCardPage />}
-              />
-              {/* End Register Pages */}
-              <Route
-                path="/portal/*"
-                element={
-                  <ProtectedRoute>
-                    <UserPortal />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/mutation" element={<Mutation />} />
-              <Route path="/notification" element={<Notification />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Router>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Onboarding />} />
+            <Route path="/login" element={<Login />} />
+            {/* Register Pages */}
+            <Route path="/register" element={<RegisterNumberCard />} />
+            <Route path="/register/email" element={<RegisterEmailNumber />} />
+            <Route path="/register/password" element={<RegisterPassword />} />
+            <Route path="/register/pin" element={<RegisterPIN />} />
+            <Route path="/register/success" element={<RegisterSuccess />} />
+            <Route
+              path="/register/verifnumber"
+              element={<VerifNumberCardPage />}
+            />
+            <Route
+              path="/register/notverifnumber"
+              element={<NotVerifNumberCardPage />}
+            />
+            {/* End Register Pages */}
+            <Route
+              path="/portal/*"
+              element={
+                <ProtectedRoute>
+                  <UserPortal />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/mutation" element={<Mutation />} />
+            <Route path="/notification" element={<Notification />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
       </AuthProvider>
     </>
   );

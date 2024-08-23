@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import logo from "/images/lgtagline.svg";
 
@@ -12,7 +12,10 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-gray-200 shadow-lg" aria-label="Main Navigation">
+    <nav
+      className="bg-white border-gray-200 shadow-lg"
+      aria-label="Main Navigation"
+    >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
         <Link
           to="/"
@@ -58,7 +61,9 @@ function Navbar() {
             aria-expanded={isOpen}
             aria-label={isOpen ? "Close main menu" : "Open main menu"}
           >
-            <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
+            <span className="sr-only">
+              {isOpen ? "Close menu" : "Open menu"}
+            </span>
             {isOpen ? (
               <svg
                 className="w-5 h-5"
