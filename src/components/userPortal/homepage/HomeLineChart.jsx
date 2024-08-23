@@ -24,7 +24,6 @@ const HomeLineChart = ({
     <ResponsiveContainer width="100%" height={height ?? 175}>
       <LineChart data={data}>
         <CartesianGrid strokeDasharray="3 5" />
-        {/* <XAxis dataKey="month" /> */}
         <XAxis dataKey={xDataKey} />
         <YAxis tickFormatter={tickFormatter} />
         <Tooltip
@@ -33,7 +32,6 @@ const HomeLineChart = ({
         />
         <Line
           type="linear"
-          // dataKey="deposit"
           dataKey={line1DataKey}
           stroke="#8884d8"
           strokeWidth="2"
@@ -41,7 +39,6 @@ const HomeLineChart = ({
         />
         <Line
           type="linear"
-          // dataKey="debit"
           dataKey={line2DataKey}
           stroke="#a63030"
           strokeWidth="2"

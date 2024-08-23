@@ -1,7 +1,7 @@
 import React from "react";
 import { FiSearch, FiHeadphones, FiMail, FiLogOut } from "react-icons/fi";
 import { BsFlag } from "react-icons/bs";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import LogoutPopup from "../authentication/popup/LogoutPopup";
 import ExpiryWarningPopup from "../authentication/popup/ExpiryWarningPopup";
 import { Link } from "react-router-dom";
@@ -35,7 +35,7 @@ const Header = () => {
           id="search-bar"
           type="text"
           placeholder="Pencarian"
-          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border hover:bg-[#272D87]"
+          className="w-2/3 py-2 px-4 rounded-lg text-black border-[#E6E6E6] border hover:text-white hover:bg-primary  hover:border-white"
           aria-label="Search"
         />
         <FiSearch className="ml-2 text-xl text-[#C6C8EC]" aria-hidden="true" />

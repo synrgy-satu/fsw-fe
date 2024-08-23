@@ -2,7 +2,7 @@ import React from "react";
 import { FiArrowLeft, FiHeadphones, FiMail, FiLogOut } from "react-icons/fi";
 import { BsFlag } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import LogoutPopup from "../authentication/popup/LogoutPopup";
 import ExpiryWarningPopup from "../authentication/popup/ExpiryWarningPopup";
 import { Link } from "react-router-dom";

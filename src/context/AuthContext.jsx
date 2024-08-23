@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [userMutation, setUserMutation] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showWarningPopup, setShowWarningPopup] = useState(false);
 
@@ -91,10 +92,58 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchMutation = async () => {
+    try {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.toLocaleString("id", { month: "long" });
+      if (userInfo) {
+        const cardNumber = userInfo.rekenings[0].cardNumber;
+        const response = await axios.get(
+          `https://satu.cekrek.shop/api/v1/mutasi?cardNumber=${cardNumber}&periodeMutasi=${month}%20${year}&jenisTransaksi=SEMUA`,
+          {
+            headers: { Authorization: `Bearer ${authState.accessToken}` },
+          }
+        );
+
+        if (response.status === 200) {
+          const mutation = response.data.data;
+          const formattedMutation = mutation.map((transaction) => {
+            const [day, month, year] = transaction.createdDate.split("-");
+            const newDate = `${month}-${day}-${year}`;
+            return {
+              referenceNumber: transaction.referenceNumber,
+              jenisTransaksi:
+                transaction.jenisTransaksi === "TRANSAKSI_MASUK"
+                  ? "Debit"
+                  : "Kredit",
+              createdDate: new Date(newDate),
+              balance: transaction.balance,
+              amount: transaction.amount,
+              note: transaction.note,
+            };
+          });
+          const sortedByDateMutation = formattedMutation.sort(
+            (a, b) => a.createdDate - b.createdDate
+          );
+          setUserMutation(sortedByDateMutation);
+        } else {
+          throw new Error(`Unexpected response status: ${response.status}`);
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Failed to fetch mutation",
+        error.response?.data || error.message
+      );
+      setUserMutation(null);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("authState");
     setAuthState(null);
-    setUserInfo(null);
+    setUserMutation(null);
   };
 
   useEffect(() => {
@@ -102,6 +151,12 @@ export const AuthProvider = ({ children }) => {
       fetchUserInfo(); // Fetch user info on login
     }
   }, [authState]);
+
+  useEffect(() => {
+    if (userInfo) {
+      fetchMutation();
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
@@ -139,6 +194,7 @@ export const AuthProvider = ({ children }) => {
         setIsResetPassword,
         forgotPassword,
         userInfo,
+        userMutation,
         showPopup,
         setShowPopup,
         showWarningPopup,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiArrowRightCircle } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 const DetailTransfer = () => {
