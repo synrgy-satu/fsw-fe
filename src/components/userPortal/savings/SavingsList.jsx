@@ -12,7 +12,7 @@ const SavingsList = ({
       className={`py-2 px-5 text-slate-500 rounded-lg border z-30 bg-white cursor-pointer 
       hover:bg-primary-background ${
         isActive ? "border-primary border-[2px]" : ""
-        }`}
+      }`}
     >
       <div
         className="grid grid-cols-12"

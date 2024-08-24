@@ -28,7 +28,7 @@ export default function Savings() {
   const dropdownRef = useRef(null);
   const [selectedSavings, setSelectedSavings] = useState({});
   const [accounts, setAccounts] = useState([]);
-  const { userInfo, userMutation } = useAuth();
+  const { userInfo, userMutation, isLoadingChart } = useAuth();
   const [selectOption, setSelectOption] = useState(false);
   const [graphData, setGraphData] = useState([]);
   const [totalDebit, setTotalDebit] = useState();
@@ -321,10 +321,11 @@ export default function Savings() {
               <HomeLineChart
                 data={graphData}
                 xDataKey={"period"}
-                line1DataKey={"Kredit"}
-                line2DataKey={"Debit"}
+                line1DataKey={"Debit"}
+                line2DataKey={"Kredit"}
                 height={200}
                 dot={false}
+                isLoading={isLoadingChart}
               />
             </div>
           </div>

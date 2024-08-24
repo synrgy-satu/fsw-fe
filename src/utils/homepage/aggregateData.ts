@@ -96,11 +96,11 @@ class DummyData {
 
         let period: string;
         if (periodType === "month" || periodType === "monthly") {
-          period = `${monthNames[date.getMonth()]} ${String(
-            date.getFullYear()
+          period = `${monthNames[date?.getMonth()]} ${String(
+            date?.getFullYear()
           )?.slice(-2)}`;
         } else {
-          period = `${date.getDate()} ${monthNames[date.getMonth()]}`;
+          period = `${date?.getDate()} ${monthNames[date?.getMonth()]}`;
         }
 
         const type = currentValue.jenisTransaksi;

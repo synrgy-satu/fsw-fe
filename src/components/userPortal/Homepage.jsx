@@ -50,12 +50,11 @@ export default function Homepage() {
   const [totalDebit, setTotalDebit] = useState();
   const [totalCredit, setTotalCredit] = useState();
 
-  const { userMutation } = useAuth();
+  const { userMutation, isLoadingChart } = useAuth();
   const [mutation, setMutation] = useState([]);
 
   useEffect(() => {
     if (userMutation) {
-      console.log(userMutation);
       setMutation(userMutation);
     }
   }, [userMutation]);
@@ -204,7 +203,6 @@ export default function Homepage() {
                       <span className="me-3">
                         {currency[activeCurrency]?.symbol}
                       </span>
-                      {/* {new Intl.NumberFormat("id").format(data[0].balance)},00 */}
                       {valueFormatter(
                         totalBalance,
                         currency[activeCurrency]?.convert,
@@ -394,6 +392,7 @@ export default function Homepage() {
             line2DataKey={"Kredit"}
             height={175}
             dot={false}
+            isLoading={isLoadingChart}
           />
         </div>
         <div className="col-span-4 bg-primary-background p-6 rounded-[30px] text-xl flex align-middle items-center">
@@ -404,7 +403,6 @@ export default function Homepage() {
                 <p className=" ">Pemasukan</p>
               </div>
               <div className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold block">
-                {/* {valueFormatter(aggregateData(DUMMY_DATA, "deposit"))} */}
                 <p className="block min-w-44">
                   <span className="font-normal pe-6">IDR</span>
                   {valueFormatter(totalDebit)}
@@ -417,8 +415,6 @@ export default function Homepage() {
                 <p className=" ">Pengeluaran</p>
               </div>
               <p className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold">
-                {/* {valueFormatter(aggregateData(DUMMY_DATA, "debit"))} */}
-
                 <p className="block min-w-44">
                   <span className="font-normal pe-6">IDR</span>
                   {valueFormatter(totalCredit)}
