@@ -6,129 +6,61 @@ import {
 import { Link } from "react-router-dom";
 
 import { valueFormatter } from "../../utils/homepage/homepageUtils";
-import { useState, useEffect, useRef } from "react";
+import { useState, useContext } from "react";
 import HomeLineChart from "./homepage/HomeLineChart";
 import InfoItem from "./savings/InfoItem";
 import ToggleTransaction from "./savings/ToggleTransaction";
 import TransactionLimiter from "./savings/TransactionLimiter";
 import SavingsList from "./savings/SavingsList";
-import { useAuth } from "../../context/AuthContext";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
-import DummyData from "../../utils/homepage/aggregateData";
+import { HomePageContext } from "../../context/HomePageContext";
 
 export default function Savings() {
-  const [tunai, setTunai] = useState(10000);
-  const [debit, setDebit] = useState(10000);
-  const [antarRekening, setAntarRekening] = useState(10000);
-  const [antarBank, setAntarBank] = useState(10000);
-  const [isCheckedDomestic, setIsCheckedDomestic] = useState(false);
-  const [isCheckedMBanking, setIsCheckedMBanking] = useState(false);
-  const [isClickedSavings, setIsClickedSavings] = useState(false);
-  const [isClickedTimeOption, setIsClickedTimeOption] = useState(false);
-  const dropdownRef = useRef(null);
-  const [selectedSavings, setSelectedSavings] = useState({});
-  const [accounts, setAccounts] = useState([]);
-  const { userInfo, userMutation, isLoadingChart } = useAuth();
-  const [selectOption, setSelectOption] = useState(false);
-  const [graphData, setGraphData] = useState([]);
-  const [totalDebit, setTotalDebit] = useState();
-  const [totalCredit, setTotalCredit] = useState();
-  const [mutation, setMutation] = useState([]);
+  const homePageContext = useContext(HomePageContext);
 
-  useEffect(() => {
-    if (userMutation) {
-      setMutation(userMutation);
-    }
-  }, [userMutation]);
+  const {
+    tunai,
+    debit,
+    antarRekening,
+    antarBank,
+    isCheckedMBanking,
+    setIsCheckedMBanking,
+    isCheckedDomestic,
+    setIsCheckedDomestic,
+    isClickedSavings,
+    isClickedTimeOption,
+    selectedSavings,
+    accounts,
+    selectOption,
+    graphData,
+    totalDebit,
+    totalCredit,
+    setTunai,
+    setDebit,
+    setAntarRekening,
+    setAntarBank,
+    isLoadingChart,
+    handleIsClickedTimeOption,
+    handleSelectOption,
+    handleIsClickedSavings,
+    handleSelectedSavings,
+  } = homePageContext;
 
-  useEffect(() => {
-    const graphData = DummyData.getPeriodiclyTransaction(
-      selectOption === false ? 0 : selectOption,
-      mutation
-    );
-    setGraphData(graphData);
-  }, [mutation]);
 
-  useEffect(() => {
-    const graphData = DummyData.getPeriodiclyTransaction(
-      selectOption === false ? 0 : selectOption,
-      mutation
-    );
-    setGraphData(graphData);
-
-    const totalDebit = graphData.reduce((prev, curr) => {
-      prev += curr.Debit;
-      return prev;
-    }, 0);
-
-    const totalCredit = graphData.reduce((prev, curr) => {
-      prev += curr.Kredit;
-      return prev;
-    }, 0);
-
-    setTotalDebit(totalDebit);
-    setTotalCredit(totalCredit);
-  }, [selectOption]);
-
-  useEffect(() => {
-    if (userInfo) {
-      const {
-        // username: userName,
-        fullName,
-        rekenings: [
-          {
-            cardNumber,
-            rekeningNumber,
-            jenisRekening,
-            expiredDateMonth,
-            expiredDateYear,
-            balance,
-            name,
-          },
-        ],
-      } = userInfo;
-
-      const formatCardNumberToString = cardNumber.toString();
-      const replaceCardNumber = formatCardNumberToString.replace(
-        /(.{4})/g,
-        "$1 "
-      );
-
-      const newRekening = {
-        accountType: jenisRekening.toLowerCase(),
-        fullName,
-        balance,
-        replaceCardNumber,
-        cardNumber,
-        name,
-        accountNumber: rekeningNumber,
-        expirationDate: `${expiredDateMonth}/${expiredDateYear}`,
-        status: true,
-      };
-
-      setAccounts([newRekening]);
-      setSelectedSavings(newRekening);
-    }
-  }, [userInfo]);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleIsClickedSavings = () => {
-    setIsClickedSavings(!isClickedSavings);
+  const handleTunai = (value) => {
+    setTunai(value);
   };
 
-  const handleisClickedTimeOption = () => {
-    setIsClickedTimeOption(!isClickedTimeOption);
+  const handleDebit = (value) => {
+    setDebit(value);
   };
 
-  const handleSelectedSavings = (selectedSavings) => {
-    setSelectedSavings(selectedSavings);
+  const handleAntarRekening = (value) => {
+    setAntarRekening(value);
+  };
+
+  const handleAntarBank = (value) => {
+    setAntarBank(value);
   };
 
   const handleToggleDomestic = () => {
@@ -137,32 +69,6 @@ export default function Savings() {
 
   const handleToggleMBanking = () => {
     setIsCheckedMBanking(!isCheckedMBanking);
-  };
-
-  const handleTunai = (e) => {
-    setTunai(e.target.value);
-  };
-
-  const handleDebit = (e) => {
-    setDebit(e.target.value);
-  };
-
-  const handleAntarRekening = (e) => {
-    setAntarRekening(e.target.value);
-  };
-
-  const handleAntarBank = (e) => {
-    setAntarBank(e.target.value);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsClickedTimeOption(false);
-    }
-  };
-
-  const handleSelectOption = (option) => {
-    setSelectOption(option);
   };
 
   return (
@@ -226,7 +132,6 @@ export default function Savings() {
                   {selectedSavings.replaceCardNumber}
                 </p>
                 <p className="absolute bottom-[6%] left-9 text-white select-none text-sm">
-                  {/* {selectedSavings.userName} */}
                   {selectedSavings.fullName}
                 </p>
               </div>
@@ -286,11 +191,11 @@ export default function Savings() {
               <p className="col-span-7 font-bold text-xl">
                 Pemasukan dan Pengeluaran
               </p>
-              <div className="col-span-5" ref={dropdownRef}>
+              <div className="col-span-5">
                 <TimeSelectOption
                   selected={selectOption}
                   handleSelect={handleSelectOption}
-                  handleClickWindow={handleisClickedTimeOption}
+                  handleClickWindow={handleIsClickedTimeOption}
                   isClicked={isClickedTimeOption}
                 />
               </div>
@@ -337,12 +242,12 @@ export default function Savings() {
                 <TransactionLimiter
                   label="Tarikan Tunai"
                   handleChange={handleTunai}
-                  value={tunai}
+                  value={+tunai}
                 />
                 <TransactionLimiter
                   label="Transaksi Debit"
                   handleChange={handleDebit}
-                  value={debit}
+                  value={+debit}
                 />
                 <TransactionLimiter
                   label="Transaksi Antar Rekening SATU"

@@ -9,6 +9,7 @@ const TransactionLimiter = ({ label, value, handleChange }) => {
       "--range-value",
       `${((newValue - 10000) / (15000000 - 10000)) * 100}%`
     );
+    handleChange(newValue);
   }, [newValue]);
 
   if (!isFocus) {
@@ -18,6 +19,7 @@ const TransactionLimiter = ({ label, value, handleChange }) => {
 
   const handleNewValue = (event) => {
     setValue(Number(event.target.value));
+    handleChange(Number(event.target.value))
   };
 
   return (

@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [userMutation, setUserMutation] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showWarningPopup, setShowWarningPopup] = useState(false);
-  const [isLoadingChart, setIsLoadingChart] = useState(true);
+  // const [userMutation, setUserMutation] = useState(null);
+  // const [isLoadingChart, setIsLoadingChart] = useState(true);
   const location = useLocation();
 
   const login = async (emailAddress, password) => {
@@ -167,11 +167,11 @@ export const AuthProvider = ({ children }) => {
     }
   }, [authState]);
 
-  useEffect(() => {
-    if (userInfo) {
-      fetchMutation();
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     fetchMutation();
+  //   }
+  // }, [userInfo]);
 
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
@@ -206,11 +206,11 @@ export const AuthProvider = ({ children }) => {
         logout,
         error,
         isResetPassword,
-        isLoadingChart,
+        // isLoadingChart,
         setIsResetPassword,
         forgotPassword,
         userInfo,
-        userMutation,
+        // userMutation,
         showPopup,
         setShowPopup,
         showWarningPopup,

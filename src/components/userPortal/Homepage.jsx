@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa6";
 
 import { DonutChart } from "@tremor/react";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -20,8 +20,8 @@ import HomeNotification from "./homepage/HomeNotification";
 import TimeSelectOption from "./homepage/TimeSelectOptions";
 import { CURRENCIES, donut, DUMMY_DATA } from "../../utils/homepage/dummies";
 import { aggregateData } from "../../utils/homepage/homepageUtils";
-import DummyData, { filterFewMonths } from "../../utils/homepage/aggregateData";
-import { useAuth } from "../../context/AuthContext";
+import { filterFewMonths } from "../../utils/homepage/aggregateData";
+import { HomePageContext } from "../../context/HomePageContext";
 
 const totalBalance =
   aggregateData(DUMMY_DATA, "debit") +
@@ -31,114 +31,30 @@ const totalBalance =
 const ASSETS = ["debit", "deposit", "invest"];
 
 export default function Homepage() {
+  const homePageContext = useContext(HomePageContext);
+
+  const {
+    notification,
+    isClickedTimeOption,
+    isClickedTimeOptionBalance,
+    selectOption,
+    selectOptionBalance,
+    graphData,
+    totalDebit,
+    totalCredit,
+    isLoadingChart,
+    handleIsClickedTimeOption,
+    handleSelectOption,
+    handleIsClickedTimeOptionBalance,
+    handleSelectOptionBalance,
+    handleCloseNotification,
+  } = homePageContext;
+
   const [currency, setCurrency] = useState(CURRENCIES);
   const [activeCurrency, setActiveCurrency] = useState(0);
-  const [notification, setNotification] = useState(true);
-
-  const [selectOptionBalance, setSelectOptionBalance] = useState(false);
-  const [isClickedTimeOptionBalance, setIsClickedTimeOptionBalance] =
-    useState(false);
-
-  const [selectOptionGraph, setSelectOptionGraph] = useState(false);
-  const [isClickedTimeOptionGraph, setIsClickedTimeOptionGraph] =
-    useState(false);
-
-  const balanceDropdownRef = useRef(null);
-  const graphDropdownRef = useRef(null);
-
-  const [graphData, setGraphData] = useState([]);
-  const [totalDebit, setTotalDebit] = useState();
-  const [totalCredit, setTotalCredit] = useState();
-
-  const { userMutation, isLoadingChart } = useAuth();
-  const [mutation, setMutation] = useState([]);
-
-  useEffect(() => {
-    if (userMutation) {
-      setMutation(userMutation);
-    }
-  }, [userMutation]);
-
-  useEffect(() => {
-    const graphData = DummyData.getPeriodiclyTransaction(
-      selectOptionGraph === false ? 0 : selectOptionGraph,
-      mutation
-    );
-    setGraphData(graphData);
-
-    const totalDebit = graphData.reduce((prev, curr) => {
-      prev += curr.Debit;
-      return prev;
-    }, 0);
-
-    const totalCredit = graphData.reduce((prev, curr) => {
-      prev += curr.Kredit;
-      return prev;
-    }, 0);
-
-    setTotalDebit(totalDebit);
-    setTotalCredit(totalCredit);
-  }, [selectOptionGraph]);
-
-  useEffect(() => {
-    const graphData = DummyData.getPeriodiclyTransaction(
-      selectOptionGraph === false ? 0 : selectOptionGraph,
-      mutation
-    );
-    setGraphData(graphData);
-  }, [mutation]);
-
-  useEffect(() => {
-    const isAlertClosed = localStorage.getItem("isAlertClosed");
-    if (isAlertClosed === "true") {
-      setNotification(false);
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleisClickedOptionBalance = () => {
-    setIsClickedTimeOptionBalance(!isClickedTimeOptionBalance);
-  };
-
-  const handleisClickedOptionGraph = () => {
-    setIsClickedTimeOptionGraph(!isClickedTimeOptionGraph);
-  };
-
-  const handleSelectOptionBalance = (option) => {
-    setSelectOptionBalance(option);
-  };
-
-  const handleSelectOptionGraph = (option) => {
-    setSelectOptionGraph(option);
-  };
-
-  const handleClickOutside = (event) => {
-    if (
-      balanceDropdownRef.current &&
-      !balanceDropdownRef.current.contains(event.target)
-    ) {
-      setIsClickedTimeOptionBalance(false);
-    }
-    if (
-      graphDropdownRef.current &&
-      !graphDropdownRef.current.contains(event.target)
-    ) {
-      setIsClickedTimeOptionGraph(false);
-    }
-  };
 
   const handleActive = (position) => {
     setActiveCurrency(position);
-  };
-
-  const handleCloseNotification = () => {
-    setNotification(false);
-    localStorage.setItem("isAlertClosed", "true");
   };
 
   return (
@@ -177,11 +93,9 @@ export default function Homepage() {
               {currency.map((cur, index) => (
                 <span
                   className={`col-span-2 hover:cursor-pointer hover:bg-indigo-50 hover:rounded-xl border-primary 
-                              px-5 py-2 text-primary text-center ${
-                                activeCurrency === index
-                                  ? "font-bold border-b-[3px]"
-                                  : ""
-                              }`}
+                    px-5 py-2 text-primary text-center ${
+                      activeCurrency === index ? "font-bold border-b-[3px]" : ""
+                    }`}
                   onClick={() => handleActive(index)}
                 >
                   {cur?.name}
@@ -210,11 +124,11 @@ export default function Homepage() {
                       )}
                     </p>
                   </div>
-                  <div ref={balanceDropdownRef} className="col-span-5">
+                  <div className="col-span-5">
                     <TimeSelectOption
                       selected={selectOptionBalance}
                       handleSelect={handleSelectOptionBalance}
-                      handleClickWindow={handleisClickedOptionBalance}
+                      handleClickWindow={handleIsClickedTimeOptionBalance}
                       isClicked={isClickedTimeOptionBalance}
                     />
                   </div>
@@ -376,12 +290,12 @@ export default function Homepage() {
             <p className="col-span-8 font-extrabold text-2xl">
               Pemasukan dan Pengeluaran
             </p>
-            <div ref={graphDropdownRef} className="col-span-4">
+            <div className="col-span-4">
               <TimeSelectOption
-                selected={selectOptionGraph}
-                handleSelect={handleSelectOptionGraph}
-                handleClickWindow={handleisClickedOptionGraph}
-                isClicked={isClickedTimeOptionGraph}
+                selected={selectOption}
+                handleSelect={handleSelectOption}
+                handleClickWindow={handleIsClickedTimeOption}
+                isClicked={isClickedTimeOption}
               />
             </div>
           </div>

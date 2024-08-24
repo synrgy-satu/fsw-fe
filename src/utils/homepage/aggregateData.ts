@@ -82,7 +82,7 @@ const handleMissingData = (data: periodiclyTransaction[]) => {
   }));
 };
 
-class DummyData {
+class GraphData {
   private static getAggregateTransactionPeriodly = (
     data: dailyTransaction[],
     periodType?: string
@@ -140,33 +140,33 @@ class DummyData {
     switch (index) {
       case 0:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           12
         );
 
       case 1:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           6
         );
 
       case 2:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(transactionData, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           3
         );
 
       case 3:
         const dailyTransactions = filterLastMonth(transactionData);
         const processedData = handleMissingData(
-          DummyData.getAggregateTransactionPeriodly(dailyTransactions)
+          GraphData.getAggregateTransactionPeriodly(dailyTransactions)
         );
         return processedData;
 
       default:
-        return DummyData.getAggregateTransactionPeriodly(transactionData);
+        return GraphData.getAggregateTransactionPeriodly(transactionData);
     }
   };
 }
 
-export default DummyData;
+export default GraphData;
