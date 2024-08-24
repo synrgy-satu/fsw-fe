@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const HomeNotification = ({ handleClick }) => {
   return (
     <div className="bg-white rounded-xl mb-8 ps-3 relative">

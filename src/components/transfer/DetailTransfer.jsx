@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FiArrowRightCircle } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -88,6 +88,7 @@ const DetailTransfer = () => {
             setPinCheck("Saldo Tidak Cukup");
           }
         });
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       // setPinCheck("PIN Salah");
       // console.log(pinCheck);
@@ -225,7 +226,7 @@ const DetailTransfer = () => {
             <thead className="text-left">
               <tr role="row">
                 <td role="cell">Catatan</td>
-                <th role="columnheader">{note ? note : '-'}</th>
+                <th role="columnheader">{note ? note : "-"}</th>
                 <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
             </thead>

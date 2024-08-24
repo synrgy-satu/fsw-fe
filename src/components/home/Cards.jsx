@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function Cards() {
@@ -7,7 +6,7 @@ function Cards() {
       <div className="h-[603px] mt-20 mb-40 mr-5 w-full max-w-sm p-4 bg-white border  rounded-3xl shadow sm:p-8">
         <img src="/images/saver.png" alt="logo saver" className="mt-3" />
         <br />
-        <div div className="text-gray-900 h-[264px]">
+        <div className="text-gray-900 h-[264px]">
           <p>
             Sambut masa depan keuangan Anda dengan SATU SAVER+! Layanan tabungan
             hemat dari Bank SATU yang dirancang untuk proses menabung yang lebih

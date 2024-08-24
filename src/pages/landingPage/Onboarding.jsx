@@ -1,5 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import Navbar from "../../components/home/Navbar";
 import satuDigibank from "/images/satuDigibank.png";
 import satuMbanking from "/images/satuMbanking.png";

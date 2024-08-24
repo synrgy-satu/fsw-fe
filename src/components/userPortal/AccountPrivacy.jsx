@@ -1,4 +1,3 @@
-import DefaultLayout from "../../layouts/DefaultLayout";
 import { useState } from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { clsx } from "clsx";
@@ -250,6 +249,7 @@ const AccountPrivacy = () => {
   );
 };
 
+// eslint-disable-next-line react/prop-types
 const Switch = ({ className, ...props }) => (
   <SwitchPrimitives.Root
     className={cn(

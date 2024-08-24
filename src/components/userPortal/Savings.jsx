@@ -195,6 +195,7 @@ export default function Savings() {
             >
               {accounts.map((account) => {
                 return (
+                  // eslint-disable-next-line react/jsx-key
                   <li>
                     <SavingsList
                       handleClick={handleIsClickedSavings}
@@ -225,7 +226,7 @@ export default function Savings() {
                   {selectedSavings.replaceCardNumber}
                 </p>
                 <p className="absolute bottom-[6%] left-9 text-white select-none text-md">
-                  {selectedSavings.userName}
+                  {selectedSavings.name}
                 </p>
               </div>
             </div>

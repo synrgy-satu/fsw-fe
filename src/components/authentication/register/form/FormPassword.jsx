@@ -48,6 +48,7 @@ const FormPassword = () => {
         ) {
           navigate("/register/");
         }
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         return;
       }
@@ -117,7 +118,7 @@ const FormPassword = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <span
-              classname="flex justify-center items-center"
+              className="flex justify-center items-center"
               onClick={handlePasswordToggle}
             >
               <Icon
@@ -161,7 +162,7 @@ const FormPassword = () => {
               onChange={(e) => setConfPassword(e.target.value)}
             />
             <span
-              classname="flex justify-center items-center"
+              className="flex justify-center items-center"
               onClick={handleConfPasswordToggle}
             >
               <Icon
