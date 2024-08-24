@@ -195,6 +195,7 @@ export default function Savings() {
             >
               {accounts.map((account) => {
                 return (
+                  // eslint-disable-next-line react/jsx-key
                   <li>
                     <SavingsList
                       handleClick={handleIsClickedSavings}

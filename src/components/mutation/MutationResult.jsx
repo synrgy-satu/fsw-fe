@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { FiHome, FiDownload } from "react-icons/fi";
 import { PDFDownloadLink } from "@react-pdf/renderer";

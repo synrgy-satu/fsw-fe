@@ -1,6 +1,6 @@
-import React from "react";
 import "./UIToggle.css";
 
+// eslint-disable-next-line react/prop-types
 const UIToggle = ({ toggle, activeTab }) => {
   return (
     <div className="toggle-container" onClick={toggle}>

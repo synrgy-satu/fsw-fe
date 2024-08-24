@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const ToggleTransaction = ({ label, isChecked, handleToggle }) => {
   return (
     <div className="flex items-center space-x-2 justify-between">

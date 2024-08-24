@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   FaMoneyCheckDollar,
   FaMoneyBillTrendUp,
@@ -176,6 +177,7 @@ export default function Homepage() {
             </div>
             <div className="grid grid-cols-12 border-b-2 border-primary my-3">
               {currency.map((cur, index) => (
+                // eslint-disable-next-line react/jsx-key
                 <span
                   className={`col-span-2 hover:cursor-pointer hover:bg-indigo-50 hover:rounded-xl border-primary 
                               px-5 py-2 text-primary text-center ${

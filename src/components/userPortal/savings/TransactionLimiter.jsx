@@ -1,6 +1,8 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-const TransactionLimiter = ({ label, value, handleChange }) => {
+const TransactionLimiter = ({ label, value }) => {
   const [newValue, setValue] = useState(Number(value));
   const [isFocus, setIsFocus] = useState(false);
 
