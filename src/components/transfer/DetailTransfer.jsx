@@ -225,7 +225,7 @@ const DetailTransfer = () => {
             <thead className="text-left">
               <tr role="row">
                 <td role="cell">Catatan</td>
-                <th role="columnheader">{note}</th>
+                <th role="columnheader">{note ? note : '-'}</th>
                 <td role="cell" colSpan={2} className="w-40"></td>
               </tr>
             </thead>

@@ -267,6 +267,7 @@ const TransferSatu = () => {
                 required
                 aria-required="true"
                 maxLength={10}
+                minLength={5}
               />
             </div>
           </div>
