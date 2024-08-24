@@ -1,4 +1,3 @@
-import React from "react";
 import { FiSearch, FiHeadphones, FiMail, FiLogOut } from "react-icons/fi";
 import { BsFlag } from "react-icons/bs";
 import { useAuth } from "../../context/AuthContext";

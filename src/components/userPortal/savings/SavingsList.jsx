@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { FaAngleDown } from "react-icons/fa6";
 
 const SavingsList = ({

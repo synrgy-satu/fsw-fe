@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import axios from "axios";
 
+// eslint-disable-next-line react/prop-types
 const FormEmailNumber = ({ setLoading }) => {
   const [email, setEmail] = useState("");
   const [emailUsed, setEmailUsed] = useState(false);
@@ -20,6 +21,7 @@ const FormEmailNumber = ({ setLoading }) => {
         if (!localStorage.getItem("cardNumber")) {
           navigate("/register/");
         }
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         return;
       }

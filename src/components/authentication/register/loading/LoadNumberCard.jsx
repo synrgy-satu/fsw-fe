@@ -2,6 +2,7 @@ import loadNumberCardIllustration from "../../../../assets/images/6.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+// eslint-disable-next-line react/prop-types
 const LoadNumberCard = ({ verifNumber }) => {
   const navigate = useNavigate();
 

@@ -50,6 +50,7 @@ const FormPIN = () => {
         ) {
           navigate("/register/");
         }
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         return;
       }
@@ -131,7 +132,7 @@ const FormPIN = () => {
               onChange={(e) => setPIN(e.target.value)}
             />
             <span
-              classname="flex justify-center items-center"
+              className="flex justify-center items-center"
               onClick={handlePINToggle}
             >
               <Icon
@@ -168,7 +169,7 @@ const FormPIN = () => {
               onChange={(e) => setConfPIN(e.target.value)}
             />
             <span
-              classname="flex justify-center items-center"
+              className="flex justify-center items-center"
               onClick={handleConfPINToggle}
             >
               <Icon
