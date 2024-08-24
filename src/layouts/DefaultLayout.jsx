@@ -1,10 +1,10 @@
 // src/layouts/DefaultLayout.jsx
-import React from "react";
 import { useLocation } from "react-router-dom";
 import Sidebar from "../components/userPortal/Sidebar";
 import Header from "../components/userPortal/Header";
 import HeaderMutation from "../components/mutation/HeaderMutation";
 
+// eslint-disable-next-line react/prop-types
 const DefaultLayout = ({ children }) => {
   const location = useLocation();
 

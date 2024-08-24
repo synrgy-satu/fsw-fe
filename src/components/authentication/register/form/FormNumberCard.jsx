@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import arrow from "../../../../assets/images/arrow.png";
 import arrow1 from "../../../../assets/images/arrow1.png";
 import logoForm from "../../../../assets/images/logoForm.png";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const FormNumberCard = ({ setLoading, setVerifNumber }) => {
@@ -12,7 +14,7 @@ const FormNumberCard = ({ setLoading, setVerifNumber }) => {
   const [year, setYear] = useState("");
   const [policyPrivate, setPolicyPrivate] = useState(false);
   const [isNumberCard, setIsNumberCard] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Secure Local by Remove Item
   localStorage.removeItem("cardNumber");

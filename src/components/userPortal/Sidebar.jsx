@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiCreditCard, FiChevronDown } from "react-icons/fi";
 import { GrTransaction } from "react-icons/gr";

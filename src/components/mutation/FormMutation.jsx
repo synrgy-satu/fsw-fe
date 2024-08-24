@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiArrowRightCircle } from "react-icons/fi";
 
@@ -82,7 +83,7 @@ const FormMutation = ({userInfo, onSubmit}) => {
         <div className="grid grid-cols-5 gap-6 mb-6">
           <div className="col-span-2">
             <label
-              for="sumber-rekening"
+              htmlFor="sumber-rekening"
               className="block font-bold text-lg mb-1"
             >
               Sumber Rekening
@@ -113,7 +114,7 @@ const FormMutation = ({userInfo, onSubmit}) => {
         <div className="grid grid-cols-5 gap-6 mb-6">
           <div className="col-span-2">
             <label
-              for="periode-mutasi"
+              htmlFor="periode-mutasi"
               className="block font-bold text-lg mb-1"
             >
               Periode Mutasi
@@ -144,7 +145,7 @@ const FormMutation = ({userInfo, onSubmit}) => {
         <div className="grid grid-cols-5 gap-6 mb-6">
           <div className="col-span-2">
             <label
-              for="jenis-transaksi"
+              htmlFor="jenis-transaksi"
               className="block font-bold text-lg mb-1"
             >
               Jenis Transaksi

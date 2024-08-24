@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Sidebar from "../../components/userPortal/Sidebar";
-import Header from "../../components/userPortal/Header";
+import { useState } from "react";
 import Info from "../../assets/images/info.png";
 import TMasuk from "../../assets/images/transaksiMasuk.png";
 import TKeluar from "../../assets/images/transaksiKeluar.png";

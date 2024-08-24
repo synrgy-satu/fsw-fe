@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { valueFormatter } from "../../../utils/homepage/homepageUtils";
 import {
   LineChart,

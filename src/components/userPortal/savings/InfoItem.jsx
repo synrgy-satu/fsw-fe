@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const InfoItem = ({ label, value, isStatus, isSaving, savingType }) => {
   let value2;
   if (isStatus) {

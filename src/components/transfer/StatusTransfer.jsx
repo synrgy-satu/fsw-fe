@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiHome } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";

@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const QrisContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const QrisProvider = ({ children }) => {
   const [isTransaksiOpen, setIsTransaksiOpen] = useState(false);
   const [qrisList, setQrisList] = useState([]);

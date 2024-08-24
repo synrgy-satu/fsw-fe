@@ -68,6 +68,7 @@ const TimeSelectOption = ({
         {isClicked && (
           <ul className="absolute z-20 left-0 right-0 top-11 border border-primary rounded-md">
             {times.map((time, index) => (
+              // eslint-disable-next-line react/jsx-key
               <li
                 className="py-2 px-3 bg-white text-primary rounded-md cursor-pointer
             hover:bg-indigo-100 text-center border-slate-200 border"
