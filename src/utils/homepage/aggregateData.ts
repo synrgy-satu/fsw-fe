@@ -82,7 +82,7 @@ const handleMissingData = (data: periodiclyTransaction[]) => {
   }));
 };
 
-class DummyData {
+class GraphData {
   private static getAggregateTransactionPeriodly = (
     data: dailyTransaction[],
     periodType?: string
@@ -96,11 +96,11 @@ class DummyData {
 
         let period: string;
         if (periodType === "month" || periodType === "monthly") {
-          period = `${monthNames[date.getMonth()]} ${String(
-            date.getFullYear()
+          period = `${monthNames[date?.getMonth()]} ${String(
+            date?.getFullYear()
           )?.slice(-2)}`;
         } else {
-          period = `${date.getDate()} ${monthNames[date.getMonth()]}`;
+          period = `${date?.getDate()} ${monthNames[date?.getMonth()]}`;
         }
 
         const type = currentValue.jenisTransaksi;
@@ -129,43 +129,44 @@ class DummyData {
       },
       []
     );
-    return newData;
+    return handleMissingData(newData);
+    // return newData;
   };
 
   public static getPeriodiclyTransaction = (
     index: number,
-    dataDummy: dailyTransaction[]
+    transactionData: dailyTransaction[]
   ) => {
     switch (index) {
       case 0:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           12
         );
 
       case 1:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           6
         );
 
       case 2:
         return filterFewMonths(
-          DummyData.getAggregateTransactionPeriodly(dataDummy, "month"),
+          GraphData.getAggregateTransactionPeriodly(transactionData, "month"),
           3
         );
 
       case 3:
-        const dailyTransactions = filterLastMonth(dataDummy);
+        const dailyTransactions = filterLastMonth(transactionData);
         const processedData = handleMissingData(
-          DummyData.getAggregateTransactionPeriodly(dailyTransactions)
+          GraphData.getAggregateTransactionPeriodly(dailyTransactions)
         );
         return processedData;
 
       default:
-        return DummyData.getAggregateTransactionPeriodly(dataDummy);
+        return GraphData.getAggregateTransactionPeriodly(transactionData);
     }
   };
 }
 
-export default DummyData;
+export default GraphData;
