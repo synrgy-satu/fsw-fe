@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import { Link } from "react-router-dom";
 
 const CategoryTransferOneBank = () => {
@@ -64,6 +66,7 @@ const CategoryTransferOneBank = () => {
                 className="p-4 bg-[#ECEDF9] rounded-lg mb-4 flex flex-row w-96 justify-between"
                 role="button"
                 aria-labelledby="transfer-satu-heading"
+                
               >
                 <p
                   id="transfer-satu-heading"
