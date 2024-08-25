@@ -13,6 +13,11 @@ interface periodiclyTransaction {
   Kredit?: number;
 }
 
+interface dateOption {
+  day: string;
+  month: string;
+}
+
 const monthNames = [
   "Jan",
   "Feb",
@@ -57,6 +62,42 @@ const handleMissingMonth = (
 
   return data;
 };
+
+function handlemissingDates(transactions: periodiclyTransaction[]): periodiclyTransaction[] {
+  const parseDate = (str: string): Date => new Date(Date.parse(str + " 2023")); // Assuming year 2023 for parsing
+
+  const formatDate = (date: Date): string => {
+      const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short' };
+      return date.toLocaleDateString('en-GB', options);
+  };
+
+  transactions.sort((a, b) => parseDate(a.period).getTime() - parseDate(b.period).getTime());
+
+  const filledTransactions: periodiclyTransaction[] = [];
+  let currentDate = parseDate(transactions[0].period);
+  const endDate = parseDate(transactions[transactions.length - 1].period);
+
+  let i = 0;
+  while (currentDate <= endDate) {
+      const formattedDate = formatDate(currentDate);
+
+      if (transactions[i] && transactions[i].period === formattedDate) {
+          filledTransactions.push(transactions[i]);
+          i++;
+      } else {
+          filledTransactions.push({
+              period: formattedDate,
+              Debit: 0,
+              Kredit: 0,
+          });
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return filledTransactions;
+}
+
 
 export const filterFewMonths = (
   data: periodiclyTransaction[],
@@ -117,10 +158,8 @@ class GraphData {
             (value) => value["period"] === period
           );
           if (!previousValue[index][type]) {
-
             previousValue[index][type] = currentValue.amount;
           } else {
-
             previousValue[index][type] += currentValue.amount;
           }
         }
@@ -161,7 +200,7 @@ class GraphData {
         const processedData = handleMissingData(
           GraphData.getAggregateTransactionPeriodly(dailyTransactions)
         );
-        return processedData;
+        return handlemissingDates(processedData);
 
       default:
         return GraphData.getAggregateTransactionPeriodly(transactionData);
