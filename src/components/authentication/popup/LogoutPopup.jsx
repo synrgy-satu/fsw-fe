@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line react/prop-types
 const LogoutPopup = ({ onClose, onLogout }) => {
   return (
@@ -22,7 +21,11 @@ const LogoutPopup = ({ onClose, onLogout }) => {
             Batal
           </button>
           <button
-            onClick={onLogout}
+            // onClick={onLogout}
+            onClick={() => {
+              onClose();
+              onLogout();
+            }}
             className="w-[200px] text-white bg-[#333999] hover:bg-[#272D87] font-bold text-base rounded-lg px-5 py-3 text-center"
           >
             Keluar

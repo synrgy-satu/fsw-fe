@@ -40,7 +40,7 @@ export const HomePageProvider = ({ children }) => {
 
   const fetchMutation = async () => {
     let data = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 11; i >= 0; i--) {
       try {
         const now = new Date();
         const date = new Date(
@@ -56,9 +56,9 @@ export const HomePageProvider = ({ children }) => {
         });
 
         if (response.status === 200) {
-          const mutation = response.data.data;
-          if (mutation.length > 0) {
-            const formattedMutation = mutation.map((transaction) => {
+          const monthlyMutation = response.data.data;
+          if (monthlyMutation.length > 0) {
+            const formattedMutation = monthlyMutation.map((transaction) => {
               const [day, month, year] = transaction.createdDate.split("-");
               const newDate = `${month}-${day}-${year}`;
               return {
