@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import { Link } from "react-router-dom";
 
 const CategoryTransfer = () => {
@@ -61,6 +63,7 @@ const CategoryTransfer = () => {
             className="p-4 bg-[#ECEDF9] rounded-lg mb-4 flex flex-col w-96"
             role="button"
             aria-labelledby="transfer-one-heading"
+            data-testid="button-transfer-satu"
           >
             <h3
               id="transfer-one-heading"
@@ -79,6 +82,7 @@ const CategoryTransfer = () => {
             className="p-4 bg-[#ECEDF9] rounded-lg mb-4 flex flex-col w-96"
             role="button"
             aria-labelledby="mass-transfer-heading"
+            data-testid="button-transfer-mass"
           >
             <h3
               id="mass-transfer-heading"

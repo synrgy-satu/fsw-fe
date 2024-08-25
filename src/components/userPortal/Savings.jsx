@@ -6,7 +6,7 @@ import {
 import { Link } from "react-router-dom";
 
 import { valueFormatter } from "../../utils/homepage/homepageUtils";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import HomeLineChart from "./homepage/HomeLineChart";
 import InfoItem from "./savings/InfoItem";
 import ToggleTransaction from "./savings/ToggleTransaction";
@@ -102,6 +102,7 @@ export default function Savings() {
             >
               {accounts.map((account) => {
                 return (
+                  // eslint-disable-next-line react/jsx-key
                   <li>
                     <SavingsList
                       handleClick={handleIsClickedSavings}
