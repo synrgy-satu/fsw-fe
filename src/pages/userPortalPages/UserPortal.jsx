@@ -13,14 +13,29 @@ import Qris from "../../components/userPortal/Qris.jsx";
 import AccountPrivacy from "../../components/userPortal/AccountPrivacy.jsx";
 import Notification from "../notification/Notification.jsx";
 import { QrisProvider } from "../../context/QrisContext";
+import { HomePageProvider } from "../../context/HomePageContext.jsx";
 
 const UserPortal = () => (
   <DefaultLayout>
     <Routes>
-      <Route path="/" element={<Homepage />} />
+      <Route
+        path="/"
+        element={
+          <HomePageProvider>
+            <Homepage />
+          </HomePageProvider>
+        }
+      />
+      <Route
+        path="savings"
+        element={
+          <HomePageProvider>
+            <Savings />
+          </HomePageProvider>
+        }
+      />
       <Route path="mutasi-rekening" element={<Mutation />} />
       <Route path="transfer" element={<CategoryTransfer />} />
-      <Route path="savings" element={<Savings />} />
       <Route path="transfer/tf-one" element={<CategoryTransferOneBank />} />
       <Route path="transfer/tf-one/satu" element={<TransferSatu />} />
       <Route

@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -13,9 +14,11 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [userMutation, setUserMutation] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [showWarningPopup, setShowWarningPopup] = useState(false);
+  // const [userMutation, setUserMutation] = useState(null);
+  // const [isLoadingChart, setIsLoadingChart] = useState(true);
+  const location = useLocation();
 
   const login = async (emailAddress, password) => {
     try {
@@ -94,51 +97,55 @@ export const AuthProvider = ({ children }) => {
   };
 
   const fetchMutation = async () => {
-    try {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.toLocaleString("id", { month: "long" });
-      if (userInfo) {
-        const cardNumber = userInfo.rekenings[0].cardNumber;
-        const response = await axios.get(
-          `https://satu.cekrek.shop/api/v1/mutasi?cardNumber=${cardNumber}&periodeMutasi=${month}%20${year}&jenisTransaksi=SEMUA`,
-          {
-            headers: { Authorization: `Bearer ${authState.accessToken}` },
-          }
-        );
-
-        if (response.status === 200) {
-          const mutation = response.data.data;
-          const formattedMutation = mutation.map((transaction) => {
-            const [day, month, year] = transaction.createdDate.split("-");
-            const newDate = `${month}-${day}-${year}`;
-            return {
-              referenceNumber: transaction.referenceNumber,
-              jenisTransaksi:
-                transaction.jenisTransaksi === "TRANSAKSI_MASUK"
-                  ? "Debit"
-                  : "Kredit",
-              createdDate: new Date(newDate),
-              balance: transaction.balance,
-              amount: transaction.amount,
-              note: transaction.note,
-            };
-          });
-          const sortedByDateMutation = formattedMutation.sort(
-            (a, b) => a.createdDate - b.createdDate
+    let data = [];
+    for (let i = 0; i < 12; i++) {
+      try {
+        const now = new Date();
+        const date = new Date(now.getFullYear(), (now.getMonth() - i), 1).toLocaleString('id', { month: 'long', year: 'numeric' });
+        const [month, year] = date.split(" ");
+          const cardNumber = userInfo?.rekenings[0].cardNumber;
+          const mutationUrl = `https://satu.cekrek.shop/api/v1/mutasi?cardNumber=${cardNumber}&periodeMutasi=${month}%20${year}&jenisTransaksi=SEMUA`
+          const response = await axios.get(mutationUrl,
+            {
+              headers: { Authorization: `Bearer ${authState?.accessToken}` },
+            }
           );
-          setUserMutation(sortedByDateMutation);
-        } else {
-          throw new Error(`Unexpected response status: ${response.status}`);
-        }
+  
+          if (response.status === 200) {
+            const mutation = response.data.data;
+            if (mutation.length > 0) { 
+              const formattedMutation = mutation.map((transaction) => {
+                const [day, month, year] = transaction.createdDate.split("-");
+                const newDate = `${month}-${day}-${year}`;
+                return {
+                  referenceNumber: transaction.referenceNumber,
+                  jenisTransaksi:
+                    transaction.jenisTransaksi === "TRANSAKSI_MASUK"
+                      ? "Debit"
+                      : "Kredit",
+                  createdDate: new Date(newDate),
+                  balance: transaction.balance,
+                  amount: transaction.amount,
+                  note: transaction.note,
+                };
+              });
+              const sortedByDateMutation = formattedMutation.sort(
+                (a, b) => a.createdDate - b.createdDate
+              );
+              data = [...data, ...sortedByDateMutation]
+            }
+          } else {
+            throw new Error(`Unexpected response status: ${response.status}`);
+          }
+      } catch (error) {
+        console.error(
+          "Failed to fetch mutation",
+          error.response?.data || error.message
+        );
       }
-    } catch (error) {
-      console.error(
-        "Failed to fetch mutation",
-        error.response?.data || error.message
-      );
-      setUserMutation(null);
     }
+    setUserMutation(data);
+    setIsLoadingChart(false);
   };
 
   const logout = () => {
@@ -147,17 +154,25 @@ export const AuthProvider = ({ children }) => {
     setUserMutation(null);
   };
 
+  useEffect(() => { 
+    fetchUserInfo();
+  }, [location])
+
+  // useEffect(() => {
+  //     fetchUserInfo();
+  // }, [userInfo?.rekenings[0]?.balance]);
+
   useEffect(() => {
     if (authState && authState.accessToken) {
       fetchUserInfo(); // Fetch user info on login
     }
   }, [authState]);
 
-  useEffect(() => {
-    if (userInfo) {
-      fetchMutation();
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     fetchMutation();
+  //   }
+  // }, [userInfo]);
 
   useEffect(() => {
     if (!authState || !authState.expiresIn) return;
@@ -192,10 +207,11 @@ export const AuthProvider = ({ children }) => {
         logout,
         error,
         isResetPassword,
+        // isLoadingChart,
         setIsResetPassword,
         forgotPassword,
         userInfo,
-        userMutation,
+        // userMutation,
         showPopup,
         setShowPopup,
         showWarningPopup,

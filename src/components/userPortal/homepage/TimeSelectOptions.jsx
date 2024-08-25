@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import { useEffect, useRef } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 
 const TimeSelectOption = ({
@@ -7,16 +7,45 @@ const TimeSelectOption = ({
   handleSelect,
   handleClickWindow,
   isClicked,
-}) => {
+},
+) => {
+  const dropdownRef = useRef(null);
   const times = ["1 Tahun", "6 Bulan", "3 Bulan", "1 Bulan"];
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        handleClickWindow(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef, handleClickWindow]);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target))
+      handleClickWindow(false);
+  };
+
   return (
-    <div className={`${className}`}>
+    <div className={`${className}`} ref={dropdownRef}>
       <div
         className="bg-primary text-white rounded-md cursor-pointer
             relative group"
         onClick={() => {
-          handleClickWindow();
+          handleClickWindow(!isClicked);
         }}
       >
         <div className="grid grid-cols-12 items-center divide-x-2">

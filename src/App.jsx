@@ -19,8 +19,8 @@ import "./assets/css/style.css";
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Router>
+      <Router>
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Onboarding />} />
             <Route path="/login" element={<Login />} />
@@ -51,8 +51,8 @@ function App() {
             <Route path="/notification" element={<Notification />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
-      </AuthProvider>
+        </AuthProvider>
+      </Router>
     </>
   );
 }

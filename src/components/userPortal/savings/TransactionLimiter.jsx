@@ -1,8 +1,6 @@
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 
-const TransactionLimiter = ({ label, value }) => {
+const TransactionLimiter = ({ label, value, handleChange }) => {
   const [newValue, setValue] = useState(Number(value));
   const [isFocus, setIsFocus] = useState(false);
 
@@ -11,6 +9,7 @@ const TransactionLimiter = ({ label, value }) => {
       "--range-value",
       `${((newValue - 10000) / (15000000 - 10000)) * 100}%`
     );
+    handleChange(newValue);
   }, [newValue]);
 
   if (!isFocus) {
@@ -20,6 +19,7 @@ const TransactionLimiter = ({ label, value }) => {
 
   const handleNewValue = (event) => {
     setValue(Number(event.target.value));
+    handleChange(Number(event.target.value))
   };
 
   return (

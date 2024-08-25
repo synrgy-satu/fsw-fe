@@ -31,7 +31,7 @@ const AssetCard = ({
           )}
         </p>
       </div>
-      <ResponsiveContainer width="150%" height={125} className="-ms-16">
+      <ResponsiveContainer width="150%" height={125} className="-ms-16 -mb-6">
         <LineChart data={data}>
           <XAxis tick={false} dataKey="month" stroke="#8884d8" />
           <YAxis tick={false} stroke="#8884d8" />
