@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";

@@ -1,10 +1,11 @@
-import React, { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import GraphData from "../utils/homepage/aggregateData";
 
 export const HomePageContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const HomePageProvider = ({ children }) => {
   const [notification, setNotification] = useState(true);
   const [tunai, setTunai] = useState(localStorage.getItem("tunai") ?? 10000);
@@ -16,7 +17,7 @@ export const HomePageProvider = ({ children }) => {
     localStorage.getItem("antar-bank") ?? 10000
   );
   const [isCheckedDomestic, setIsCheckedDomestic] = useState(
-    localStorage.getItem("isCheckedDomestic") === "true" 
+    localStorage.getItem("isCheckedDomestic") === "true"
   );
   const [isCheckedMBanking, setIsCheckedMBanking] = useState(
     localStorage.getItem("isCheckedMBanking") === "true"
