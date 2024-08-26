@@ -28,9 +28,9 @@ import { HomePageContext } from "../../context/HomePageContext";
 const totalBalance =
   aggregateData(DUMMY_DATA, "debit") +
   aggregateData(DUMMY_DATA, "deposit") +
-  aggregateData(DUMMY_DATA, "invest");
+  aggregateData(DUMMY_DATA, "investasi");
 
-const ASSETS = ["debit", "deposit", "invest"];
+const ASSETS = ["debit", "deposit", "investasi"];
 
 export default function Homepage() {
   const homePageContext = useContext(HomePageContext);
@@ -249,7 +249,7 @@ export default function Homepage() {
                               <p className="">Investasi</p>
                               <p className="">
                                 {percentageFormatter(
-                                  (aggregateData(DUMMY_DATA, "invest") /
+                                  (aggregateData(DUMMY_DATA, "investasi") /
                                     totalBalance) *
                                     100
                                 )}
@@ -262,7 +262,7 @@ export default function Homepage() {
                                 </span>
                               )}
                               {valueFormatter(
-                                aggregateData(DUMMY_DATA, "invest"),
+                                aggregateData(DUMMY_DATA, "investasi"),
                                 currency[activeCurrency]?.convert,
                                 currency[activeCurrency]?.locale
                               )}
