@@ -179,20 +179,24 @@ const Qris = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between w-full">
-            <button
-              className="w-[260px] text-[#333999] bg-white hover:bg-[#272D87] hover:text-white border border-[#333999] font-bold text-base rounded-lg px-5 py-3 text-center"
-              onClick={handleActivateClick}
-            >
-              Aktifkan QRIS
-            </button>
-            <button
-              className="w-[260px] text-white bg-[#CB3A31] hover:bg-[#aa372f] font-bold text-base rounded-lg px-5 py-3 text-center"
-              onClick={handleDeleteClick}
-            >
-              Nonaktifkan QRIS
-            </button>
-          </div>
+          {selectedQris ? (
+            <div className="flex justify-between w-full">
+              <button
+                className="w-[260px] text-[#333999] bg-white hover:bg-[#272D87] hover:text-white border border-[#333999] font-bold text-base rounded-lg px-5 py-3 text-center"
+                onClick={handleActivateClick}
+              >
+                Aktifkan QRIS
+              </button>
+              <button
+                className="w-[260px] text-white bg-[#CB3A31] hover:bg-[#aa372f] font-bold text-base rounded-lg px-5 py-3 text-center"
+                onClick={handleDeleteClick}
+              >
+                Nonaktifkan QRISx
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-between w-full"></div>
+          )}
         </div>
       </div>
     </div>
