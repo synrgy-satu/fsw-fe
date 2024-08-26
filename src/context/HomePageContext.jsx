@@ -177,41 +177,41 @@ export const HomePageProvider = ({ children }) => {
 
   useEffect(() => {
     if (userInfo) {
-      const {
-        fullName,
-        rekenings: [
-          {
-            cardNumber,
-            rekeningNumber,
-            jenisRekening,
-            expiredDateMonth,
-            expiredDateYear,
-            balance,
-            name,
-          },
-        ],
-      } = userInfo;
+      const { fullName, rekenings } = userInfo;
 
-      const formatCardNumberToString = cardNumber.toString();
-      const replaceCardNumber = formatCardNumberToString.replace(
-        /(.{4})/g,
-        "$1 "
-      );
+      const newRekenings = rekenings.map((rekening) => {
+        const {
+          cardNumber,
+          rekeningNumber,
+          jenisRekening,
+          expiredDateMonth,
+          expiredDateYear,
+          balance,
+          name,
+        } = rekening;
 
-      const newRekening = {
-        accountType: jenisRekening.toLowerCase(),
-        fullName,
-        balance,
-        replaceCardNumber,
-        cardNumber,
-        name,
-        accountNumber: rekeningNumber,
-        expirationDate: `${expiredDateMonth}/${expiredDateYear}`,
-        status: true,
-      };
+        const formatCardNumberToString = cardNumber.toString();
+        const replaceCardNumber = formatCardNumberToString.replace(
+          /(.{4})/g,
+          "$1 "
+        );
 
-      setAccounts([newRekening]);
-      setSelectedSavings(newRekening);
+        return {
+          accountType: jenisRekening.toLowerCase(),
+          fullName,
+          balance,
+          replaceCardNumber,
+          cardNumber,
+          name,
+          accountNumber: rekeningNumber,
+          expirationDate: `${expiredDateMonth}/${expiredDateYear}`,
+          status: true,
+        };
+      });
+
+      setAccounts(newRekenings);
+      console.log(newRekenings);
+      setSelectedSavings(newRekenings[0]);
     }
   }, [userInfo]);
 
