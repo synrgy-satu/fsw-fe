@@ -1,18 +1,18 @@
 import { aggregateData } from "./homepageUtils";
 
 export const DUMMY_DATA = [
-  { month: "Jan", debit: 5000000, deposit: 7000000, invest: 3000000 },
-  { month: "Feb", debit: 4000000, deposit: 8000000, invest: 3500000 },
-  { month: "Mar", debit: 6000000, deposit: 7500000, invest: 4000000 },
-  { month: "Apr", debit: 7000000, deposit: 9000000, invest: 4500000 },
-  { month: "May", debit: 6500000, deposit: 8500000, invest: 5000000 },
-  { month: "Jun", debit: 6000000, deposit: 9500000, invest: 5500000 },
-  { month: "Jul", debit: 7000000, deposit: 10000000, invest: 6000000 },
-  { month: "Aug", debit: 7500000, deposit: 10500000, invest: 6500000 },
-  { month: "Sep", debit: 8000000, deposit: 11000000, invest: 7000000 },
-  { month: "Oct", debit: 8500000, deposit: 11500000, invest: 7500000 },
-  { month: "Nov", debit: 9000000, deposit: 12000000, invest: 8000000 },
-  { month: "Dec", debit: 9500000, deposit: 12500000, invest: 8500000 },
+  { month: "Jan", debit: 5000000, deposit: 7000000, investasi: 3000000 },
+  { month: "Feb", debit: 4000000, deposit: 8000000, investasi: 3500000 },
+  { month: "Mar", debit: 6000000, deposit: 7500000, investasi: 4000000 },
+  { month: "Apr", debit: 7000000, deposit: 9000000, investasi: 4500000 },
+  { month: "May", debit: 6500000, deposit: 8500000, investasi: 5000000 },
+  { month: "Jun", debit: 6000000, deposit: 9500000, investasi: 5500000 },
+  { month: "Jul", debit: 7000000, deposit: 10000000, investasi: 6000000 },
+  { month: "Aug", debit: 7500000, deposit: 10500000, investasi: 6500000 },
+  { month: "Sep", debit: 8000000, deposit: 11000000, investasi: 7000000 },
+  { month: "Oct", debit: 8500000, deposit: 11500000, investasi: 7500000 },
+  { month: "Nov", debit: 9000000, deposit: 12000000, investasi: 8000000 },
+  { month: "Dec", debit: 9500000, deposit: 12500000, investasi: 8500000 },
 ];
 
 export const dummyAccounts = [
@@ -59,7 +59,7 @@ export const donut = [
   },
   {
     name: "Investasi",
-    value: aggregateData(DUMMY_DATA, "invest"),
+    value: aggregateData(DUMMY_DATA, "investasi"),
   },
 ];
 
