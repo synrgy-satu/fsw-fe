@@ -303,7 +303,7 @@ const DetailTransfer = () => {
                   disabled={isLoading}
                   aria-label="Submit PIN"
                 >
-                  Submit
+                  Lanjutkan
                 </button>
               </div>
             </form>
