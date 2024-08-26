@@ -4,6 +4,7 @@ import {
   FaMoneyBillTrendUp,
   FaCircleInfo,
   FaArrowsRotate,
+  FaCircleNotch,
 } from "react-icons/fa6";
 
 import { DonutChart } from "@tremor/react";
@@ -286,59 +287,71 @@ export default function Homepage() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12 gap-10 p-4 bg-white rounded-xl">
-        <div className="col-span-8">
-          <div className="py-6 ms-4 grid grid-cols-12 mb-4">
-            <p className="col-span-8 font-extrabold text-2xl">
-              Pemasukan dan Pengeluaran
-            </p>
-            <div className="col-span-4">
-              <TimeSelectOption
-                selected={selectOption}
-                handleSelect={handleSelectOption}
-                handleClickWindow={handleIsClickedTimeOption}
-                isClicked={isClickedTimeOption}
+      <div className="relative">
+        <div className="grid grid-cols-12 gap-10 p-4 bg-white rounded-xl">
+          <div className="col-span-8">
+            <div className="py-6 ms-4 grid grid-cols-12 mb-4">
+              <p className="col-span-8 font-extrabold text-2xl">
+                Pemasukan dan Pengeluaran
+              </p>
+              <div className="col-span-4">
+                <TimeSelectOption
+                  selected={selectOption}
+                  handleSelect={handleSelectOption}
+                  handleClickWindow={handleIsClickedTimeOption}
+                  isClicked={isClickedTimeOption}
+                />
+              </div>
+            </div>
+            <HomeLineChart
+              data={graphData}
+              xDataKey={"period"}
+              line1DataKey={"Debit"}
+              line2DataKey={"Kredit"}
+              height={185}
+              dot={false}
+              isLoading={isLoadingChart}
+            />
+          </div>
+          <div className="col-span-4 bg-primary-background p-6 rounded-[30px] text-xl flex align-middle items-center">
+            <div className="">
+              <div>
+                <div className="flex text-primary font-bold gap-3 items-center">
+                  <FaMoneyCheckDollar />
+                  <p className=" ">Pemasukan</p>
+                </div>
+                <div className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold block">
+                  <p className="block min-w-44">
+                    <span className="font-normal pe-6">IDR</span>
+                    {valueFormatter(totalDebit)}
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6">
+                <div className="flex text-red-800 font-bold gap-3 items-center">
+                  <FaMoneyBillTrendUp />
+                  <p className=" ">Pengeluaran</p>
+                </div>
+                <p className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold">
+                  <p className="block min-w-44">
+                    <span className="font-normal pe-6">IDR</span>
+                    {valueFormatter(totalCredit)}
+                  </p>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {isLoadingChart && (
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex bg-white rounded-xl">
+            <div className="items-center content-center m-auto">
+              <FaCircleNotch
+                className="
+            animate-spin w-10 h-10 text-primary"
               />
             </div>
           </div>
-          <HomeLineChart
-            data={graphData}
-            xDataKey={"period"}
-            line1DataKey={"Debit"}
-            line2DataKey={"Kredit"}
-            height={175}
-            dot={false}
-            isLoading={isLoadingChart}
-          />
-        </div>
-        <div className="col-span-4 bg-primary-background p-6 rounded-[30px] text-xl flex align-middle items-center">
-          <div className="">
-            <div>
-              <div className="flex text-primary font-bold gap-3 items-center">
-                <FaMoneyCheckDollar />
-                <p className=" ">Pemasukan</p>
-              </div>
-              <div className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold block">
-                <p className="block min-w-44">
-                  <span className="font-normal pe-6">IDR</span>
-                  {valueFormatter(totalDebit)}
-                </p>
-              </div>
-            </div>
-            <div className="mt-6">
-              <div className="flex text-red-800 font-bold gap-3 items-center">
-                <FaMoneyBillTrendUp />
-                <p className=" ">Pengeluaran</p>
-              </div>
-              <p className="my-3 me-2 py-1 ps-4 pe-6 rounded-md bg-white text-blue-900 font-bold">
-                <p className="block min-w-44">
-                  <span className="font-normal pe-6">IDR</span>
-                  {valueFormatter(totalCredit)}
-                </p>
-              </p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -39,7 +39,23 @@ export const HomePageProvider = ({ children }) => {
   const [userMutation, setUserMutation] = useState(null);
   const [isLoadingChart, setIsLoadingChart] = useState(true);
 
+  useEffect(() => {
+    const totalDebit = graphData.reduce((prev, curr) => {
+      prev += curr.Debit;
+      return prev;
+    }, 0);
+
+    const totalCredit = graphData.reduce((prev, curr) => {
+      prev += curr.Kredit;
+      return prev;
+    }, 0);
+
+    setTotalDebit(totalDebit);
+    setTotalCredit(totalCredit);
+  }, [graphData])
+
   const fetchMutation = async () => {
+    setIsLoadingChart(true);
     let data = [];
     for (let i = 11; i >= 0; i--) {
       try {
@@ -50,7 +66,7 @@ export const HomePageProvider = ({ children }) => {
           1
         ).toLocaleString("id", { month: "long", year: "numeric" });
         const [month, year] = date.split(" ");
-        const cardNumber = userInfo?.rekenings[0].cardNumber;
+        const cardNumber = selectedSavings?.cardNumber;
         const mutationUrl = `https://satu.cekrek.shop/api/v1/mutasi?cardNumber=${cardNumber}&periodeMutasi=${month}%20${year}&jenisTransaksi=SEMUA`;
         const response = await axios.get(mutationUrl, {
           headers: { Authorization: `Bearer ${authState?.accessToken}` },
@@ -89,8 +105,8 @@ export const HomePageProvider = ({ children }) => {
         );
       }
     }
-    setUserMutation(data);
     setIsLoadingChart(false);
+    setUserMutation(data);
   };
 
   const handleCloseNotification = () => {
@@ -135,12 +151,6 @@ export const HomePageProvider = ({ children }) => {
   }, [isClickedTimeOption]);
 
   useEffect(() => {
-    if (userInfo) {
-      fetchMutation();
-    }
-  }, [userInfo]);
-
-  useEffect(() => {
     if (userMutation) {
       setMutation(userMutation);
     }
@@ -153,27 +163,16 @@ export const HomePageProvider = ({ children }) => {
     );
     setGraphData(graphData);
   }, [mutation]);
-
+  
   useEffect(() => {
     const graphData = GraphData.getPeriodiclyTransaction(
       selectOption === false ? 0 : selectOption,
       mutation
     );
     setGraphData(graphData);
-
-    const totalDebit = graphData.reduce((prev, curr) => {
-      prev += curr.Debit;
-      return prev;
-    }, 0);
-
-    const totalCredit = graphData.reduce((prev, curr) => {
-      prev += curr.Kredit;
-      return prev;
-    }, 0);
-
-    setTotalDebit(totalDebit);
-    setTotalCredit(totalCredit);
   }, [selectOption]);
+
+  
 
   useEffect(() => {
     if (userInfo) {
@@ -210,10 +209,14 @@ export const HomePageProvider = ({ children }) => {
       });
 
       setAccounts(newRekenings);
-      console.log(newRekenings);
       setSelectedSavings(newRekenings[0]);
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    if(Object.entries(selectedSavings).length > 0)
+    fetchMutation();
+  }, [selectedSavings]);
 
   const handleIsClickedSavings = () => {
     setIsClickedSavings(!isClickedSavings);

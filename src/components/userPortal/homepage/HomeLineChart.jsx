@@ -14,9 +14,6 @@ import { FaCircleNotch } from "react-icons/fa6";
 
 const tickFormatter = (label) => label / 1000;
 
-// const isLoading = false;
-// const isLoading = true;
-
 const HomeLineChart = ({
   data,
   xDataKey,
@@ -24,7 +21,7 @@ const HomeLineChart = ({
   line2DataKey,
   height,
   dot,
-  isLoading
+  isLoading,
 }) => {
   return (
     <div className="relative">
@@ -32,7 +29,15 @@ const HomeLineChart = ({
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 5" />
           <XAxis dataKey={xDataKey} />
-          <YAxis tickFormatter={tickFormatter} />
+          <YAxis
+            tickFormatter={tickFormatter}
+            label={{
+              value: "Rupiah (dalam ribuan)",
+              angle: -90,
+              dx: -25,
+              style: { fontSize: "0.9rem" },
+            }}
+          />
           <Tooltip
             formatter={(value) => valueFormatter(value)}
             contentStyle={{ zIndex: 1000 }}
@@ -40,16 +45,14 @@ const HomeLineChart = ({
           <Line
             type="linear"
             dataKey={line1DataKey}
-            // stroke="#a63030"
             stroke="#8884d8"
             strokeWidth="2"
             dot={dot ?? true}
-            />
+          />
           <Line
             type="linear"
             dataKey={line2DataKey}
             stroke="#a63030"
-            // stroke="#8884d8"
             strokeWidth="2"
             strokeDasharray="5 5"
             activeDot={false}
