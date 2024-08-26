@@ -8,6 +8,7 @@ import { RiSettings4Line } from "react-icons/ri";
 import { PiNumberOneBold } from "react-icons/pi";
 import { useAuth } from "../../context/AuthContext";
 import moment from "moment";
+import "moment/locale/id";
 
 const Sidebar = () => {
   const [isTransaksiOpen, setTransaksiOpen] = useState(false);
@@ -33,7 +34,8 @@ const Sidebar = () => {
     location.pathname === path ? "bg-[#272D87] text-[#F7F8FC]" : "";
 
   const isoString = userInfo?.lastLoggedIn;
-  const formatedDate = moment(isoString).format("DD MMMM YYYY, HH:mm:ss");
+  moment.locale("id");
+  const formatedDate = moment(isoString).format("dddd, D MMMM YYYY, HH:mm:ss");
 
   return (
     <div className="w-72 h-screen bg-[#333999] text-white flex flex-col overflow-y-auto scrollbar-hide">
@@ -45,7 +47,7 @@ const Sidebar = () => {
             <p className="text-xs font-semibold">Selamat Datang</p>
             <p className="text-base font-bold">{userInfo?.fullName}</p>
             <p className="text-xs font-normal text-[#C6C8EC]">
-              Terakhir Login: {formatedDate}
+              Terakhir Login: {formatedDate} WIB
             </p>
           </div>
           <hr className="my-2 border-white/25" />
