@@ -133,7 +133,7 @@ export default function Savings() {
                   {selectedSavings.replaceCardNumber}
                 </p>
                 <p className="absolute bottom-[6%] left-9 text-white select-none text-sm">
-                  {selectedSavings.fullName}
+                  {selectedSavings.name}
                 </p>
               </div>
             </div>
