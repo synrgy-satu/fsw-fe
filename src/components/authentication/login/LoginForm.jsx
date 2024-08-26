@@ -1,6 +1,4 @@
-// components/authentication/login/LoginForm.jsx
-// eslint-disable-next-line no-unused-vars
-import React from 'react';import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -28,21 +26,28 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (data) => {
-    setLoading(true); // Set loading state to true
+    setLoading(true);
     const { email, password } = data;
     try {
       await login(email, password);
-      navigate("/portal"); // Navigate on success
+      navigate("/portal");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
-  if (authState) {
-    return navigate("/portal");
-  }
+  useEffect(() => {
+    const hash = window.location.hash;
+    setIsResetPassword(hash === "#forgot-password");
+  }, [window.location.hash]);
+
+  useEffect(() => {
+    if (authState) {
+      navigate("/portal");
+    }
+  }, [authState, navigate]);
 
   return (
     <div className="flex justify-end pt-32 pe-6">
@@ -139,7 +144,7 @@ export default function LoginForm() {
                     render={({ field }) => (
                       <input
                         id="password"
-                        type={showPassword ? "text" : "password"} // Toggle between text and password
+                        type={showPassword ? "text" : "password"}
                         placeholder="Masukkan Kata Sandi"
                         {...field}
                         className={`mt-1 block w-full px-3 py-3 rounded-lg focus:outline-none focus:ring-2 text-base font-semibold bg-[#F3F3F3] text-black placeholder-[#B3B3B3] opacity-90 ${
@@ -154,6 +159,9 @@ export default function LoginForm() {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#333999] hover:text-[#272D87]"
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showPassword ? (
                       <i className="fa-solid fa-eye-slash"></i>
@@ -194,7 +202,7 @@ export default function LoginForm() {
             <div className="space-y-4 mt-4">
               <div className="flex justify-center">
                 <a
-                  href="#"
+                  href="#forgot-password"
                   onClick={() => setIsResetPassword(true)}
                   className="font-bold text-[#333999]"
                 >
