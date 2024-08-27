@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "../../../context/AuthContext";
