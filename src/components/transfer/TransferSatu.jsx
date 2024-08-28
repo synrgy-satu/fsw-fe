@@ -163,6 +163,7 @@ const TransferSatu = () => {
                   value={selectedAccount}
                   onChange={handleChange}
                   aria-required="true"
+                  aria-label= {selectedAccount}
                   required
                 >
                   <option value="">Pilih nomor rekening</option>
