@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useAuth } from "../../context/AuthContext";
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -10,6 +11,7 @@ function cn(...inputs) {
 const AccountPrivacy = () => {
   const [isEditPassword, setIsEditPassword] = useState(false);
   const [isEditPIN, setIsEditPIN] = useState(false);
+  const { userInfo } = useAuth();
 
   const handleEditPassword = (event) => {
     event.preventDefault();
@@ -98,7 +100,7 @@ const AccountPrivacy = () => {
           </svg>
 
           <h2 className="font-bold text-[#333999] text-2xl uppercase">
-            Karina Atifah Hana
+            {userInfo?.fullName}
           </h2>
         </div>
 
@@ -108,7 +110,7 @@ const AccountPrivacy = () => {
               <label htmlFor="email" className="font-bold text-lg">
                 Alamat Email
               </label>
-              <p>karinaatifahhana@gmail.com</p>
+              <p>{userInfo?.emailAddress}</p>
             </div>
           </form>
           <form className="flex flex-row justify-between items-center p-4 rounded-lg border-2 w-full">
