@@ -48,7 +48,7 @@ const MutationResult = ({ userData, mutationData, jenisTransaksi }) => {
     return number;
   };
 
-  console.log(mutationData);
+  // console.log(mutationData);
 
   return (
     <>

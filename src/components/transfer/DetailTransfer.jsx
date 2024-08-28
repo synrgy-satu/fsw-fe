@@ -62,7 +62,7 @@ const DetailTransfer = () => {
           }
         )
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           const referenceNumber = res.data.data.referenceNumber;
           const dateTransaction = res.data.data.created_date;
           // alert("Berhasil Transfer")
