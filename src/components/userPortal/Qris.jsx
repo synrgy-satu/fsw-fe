@@ -191,7 +191,7 @@ const Qris = () => {
                 className="w-[260px] text-white bg-[#CB3A31] hover:bg-[#aa372f] font-bold text-base rounded-lg px-5 py-3 text-center"
                 onClick={handleDeleteClick}
               >
-                Nonaktifkan QRISx
+                Nonaktifkan QRIS
               </button>
             </div>
           ) : (
