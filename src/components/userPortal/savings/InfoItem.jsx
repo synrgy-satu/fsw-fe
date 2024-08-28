@@ -11,7 +11,7 @@ const InfoItem = ({ label, value, isStatus, isSaving, savingType }) => {
     value2 = (
       <img
         src={`/images/${savingType}.png`}
-        alt="Savings Icon"
+        alt= {`Savings Icon ${savingType}`} 
         style={{ height: "14px" }}
       />
     );

@@ -126,7 +126,7 @@ export default function Savings() {
                 <img
                   src={`/images/${selectedSavings["accountType"]}-card.png`}
                   draggable={false}
-                  alt="Savings Card"
+                  alt={`Savings Card ${selectedSavings.accountType}`}
                   className="object-contain"
                 />
                 <p className="absolute top-[52%] left-8 text-xl text-white select-none tracking-[0.23rem] font-bold">

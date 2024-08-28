@@ -90,7 +90,7 @@ const FormPIN = () => {
           pin: localStorage.getItem("pin"),
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           navigate("/register/success");
         });
     } catch (error) {

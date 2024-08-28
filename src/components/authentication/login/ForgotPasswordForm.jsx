@@ -15,7 +15,7 @@ export default function ForgotPasswordForm() {
 
   const handleResetSubmit = async (data) => {
     const { email } = data;
-    console.log("email: ", email);
+    // console.log("email: ", email);
 
     // use AuthContext.jsx to post email to forgot-password api to the server
     try {
