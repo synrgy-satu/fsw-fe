@@ -45,7 +45,7 @@ const Onboarding = () => {
         <img 
           src="/images/imgHeader.png" 
           alt="Gambar header bank Satu" 
-          className="max-md:h-96 absolute right-0" 
+          className="max-md:h-auto max-md:max-w-[150%] absolute -z-50 right-0 " 
         />
       </main>
 
@@ -54,7 +54,7 @@ const Onboarding = () => {
         <img 
           src="/images/imgFooter.png" 
           alt="Gambar footer bank Satu" 
-          className="max-md:mt-64 max-md:h-96 max-md:absolute max-md:right-72 w-[601px]"
+          className="max-md:mt-64 max-md:h-96 max-md:absolute -z-50 max-md:right-72 w-[601px]"
         />
         <section className="mt-[90px] mr-20 max-md:mr-4 max-md:mt-0">
           <div className="flex justify-end">
